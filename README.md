@@ -1,8 +1,9 @@
-# epr-integration-cara
-EPR Integration documentation for CARA
+# IKIT Documentation
 
-documentation is maintained in docs folder using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/):
-- develop docs: mkdocs serve
-- publish docs: mkdocs gh-deploy --force
+Integration KIT documentation for CARA
 
-docs are then available at https://ahdis.github.io/epr-integration-cara/
+The documentation is maintained in docs folder using [mkdocs-material](https://squidfunk.github.io/mkdocs-material/):
+- develop docs: `mkdocs serve`
+- build docs: `mkdocs gh-deploy --force`
+
+The documentation is then available at https://ikit.cara.ch/docs/

@@ -1,4 +1,4 @@
-site_name: EPR Integration Kit for CARA
+site_name: IKIT for CARA
 theme:
   name: material
   favicon: assets/favicon.ico
@@ -8,15 +8,15 @@ extra_css:
   - stylesheets/extra.css
 nav:
   - index.md
-  - EPRIK Configuration: 'eprik-config.md'
-  - EPRIK Usecases: 'usecases.md'
+  - IKIT Configuration: 'ikit-config.md'
+  - IKIT Usecases: 'usecases.md'
   - EPR Primary System Integration: 'primarysystems-epr.md'
   - Transferts Integration: 'transferts.md'
   - PMP Integration: 'pmp.md'
   - CARA Requirements: 'requirements.md'
   - FAQ: 'faq.md'
   - CARA INT Changelog: 'changelog.md'
-  - EPRIK Changelog: 'changelog_eprik.md'
+  - IKIT Changelog: 'changelog_ikit.md'
 markdown_extensions:
   - admonition
   - attr_list
