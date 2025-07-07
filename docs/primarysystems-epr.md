@@ -18,7 +18,9 @@ examples [[fr]](https://www.e-health-suisse.ch/fr/technique-semantique/raccordem
 
 You find test patients which you can use for publication of documents [here](testpatients.md).
 
-Please find below additional information relevant for CARA and EPRIK:
+The healthcare professional portal can be found at [https://professional.test.emedo.ch/login](https://professional.test.emedo.ch/login).
+
+Please find below additional information relevant for CARA and IKIT:
 
 ## 1. Integrate the strong authentication into the primary system with and IdP
 
@@ -26,11 +28,11 @@ Authenticate a user at an identity provider certified for the Swiss EPR. Primary
 retrieve a IdP assertion. The IdP assertion is required to retrieve the XUA Assertion to be used with EPR transactions.
 See detailed description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/AuthenticateUser.md).
 
-See EPRIK example
+See IKIT example
 for [AuthnRequest](https://test.ahdis.ch/eprik-cara/#/transaction/bd0e0019-53f1-4525-9bd2-3164ce79162c)
 and [ArtifactResolve](https://test.ahdis.ch/eprik-cara/#/transaction/0d4c9995e29edd8b7475e4562534f7ad503ee4cc).
 
-If you have a test user you can [use the IdP Assertion from EPRIK](usecases/#use-the-idp-assertion-from-eprik) until you
+If you have a test user you can [use the IdP Assertion from IKIT](usecases/#use-the-idp-assertion-from-eprik) until you
 have done the IdP integration yourself.
 
 ## 2. Search for patients in the community
@@ -53,25 +55,27 @@ Once that is done, you can feed your patient local identifier to the MPI (descri
 With the PIX V3 query You can use AHVN13/NAVS13 to check if the patient has an EPR (EPR-SPID is returned), and if the
 patient
 is already registered in the community (MPI-PID is returned). See
-example [request](https://test.ahdis.ch/eprik-cara/#/transaction/b7429b34-ffd5-4c57-a04a-702fab2f54b5) for patient
-Gassmann, which returns EPR-SPID and MPI-PID in the id elements. For a test patient who has no EPR (as of 31.3.2023)
+example [request](https://ikit.cara.ch/dep/#/transaction/fe4f70cc-de27-4b2e-9ea6-9d230ae8f608) for patient
+Larissa Weinmann, which returns EPR-SPID and MPI-PID in the id elements. For a test patient who has no EPR (as of 7.7.2025)
 with AHVN13 7560739410295 no EPR-SPID and MPI-PID is returned,
-see [request](https://test.ahdis.ch/eprik-cara/#/transaction/8a1323d4-3f0c-470d-89f6-d16126fd3dea). If the the AHVN13 is
+see [request](https://ikit.cara.ch/dep/#/transaction/25ba71b3-7352-4f54-a83c-700cdb2f1759). If the the AHVN13 is
 not found, an Application Error (AE) will
-be [returned](https://test.ahdis.ch/eprik-cara/index.html#/transaction/ccdc62d8-7451-49fe-99c3-846091713f41). For a test
-patient who has an EPR but not in CARA int (as of 31.3.2023) with AHVN13 7560520619845 only EPR-SPID is returned,
-see [request](https://test.ahdis.ch/eprik-cara/index.html#/transaction/ac000d64-e795-400c-8bcb-63a889a7bfc4).
+be [returned](https://ikit.cara.ch/dep/#/transaction/8d0093bc-1e66-4441-a0a2-480ecdf90be8). For a test
+patient who has an EPR but not in CARA int (as of 7.7.2025) with AHVN13 7560520619845 only EPR-SPID is returned,
+see [request](https://ikit.cara.ch/dep/#/transaction/480b9e79-f9cf-4e87-8468-90a86f6a9c70).
 
 ### 2.2 Demographics Query
 
 A search for a patient is done via a demographics query. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/PDQ.md).
 
-EPRIK example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/cd50db51-d218-4157-8848-d2b28be8ae67).
+IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/2d69a46b-7a85-4b9d-9248-088ab97ff450).
 This example search is done on the family name, other demographics query parameters are possible. Please note that Swiss
-Extension requires that an error is returned if more than 5 matched would be returned. You need to provide creationTime,
-sender OID and receiver OID in addition to the query parameters in the request. For the communication you need a client
-certificate but with EPRIK a client certificate is not necessary.
+Extension requires that an error is returned if more than 5 matched would be returned, but on integration system this is currently 
+not the case [#1](https://github.com/CARA-ch/ikit-docs/issues/1).
+
+You need to provide creationTime, sender OID and receiver OID in addition to the query parameters in the request. For the communication you need a client
+certificate but with IKIT a client certificate is not necessary.
 
 ## 3. Register a patient from the primary system in the community and query the patient community id
 
@@ -81,17 +85,17 @@ Register a patient in a community. Primary systems need to use this transaction 
 able to provide and retrieve documents to the patients EPR. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/PIXFeed.md).
 
-EPRIK example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/a3e50707-6662-4fc4-a593-3ee7ea300c7c).
-This example registers the local id from the primary system P003 of the patient identity domain 2.16.756.5.30.1.145.1.3
+IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/bab59fe9-d03a-465d-a896-405290a927d9).
+This example registers the local id from the primary system P003 of the patient identity domain 2.16.756.5.30.1.191.999.10
 in the MPI. You need to provide creationTime, sender OID and receiver OID in addition to the patient parameters (
-EPR-SPID, MPI-ID) in the request. For the communication you need a client certificate, but with EPRIK a client
+EPR-SPID, MPI-ID) in the request. For the communication you need a client certificate, but with IKIT a client
 certificate is not necessary.
 
 
 !!! danger
 
     Never feed a patient identifier with a domain that is not yours, and especially a domain equal to the configured
-    receiver OID of the plateform. It would make the patient unreachable from PDQ queries.
+    receiver OID of the platefrm. It would make the patient unreachable from PDQ queries.
 
 ### 3.2 Query MPI-PID and EPR-SPID based on local ID
 
@@ -99,7 +103,7 @@ The primary systems needs to query the master patient ID (MPI-ID) for patients t
 based on the local id registered above. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/PIXQuery.md).
 
-EPRIK example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/f9c72b8d-15d8-47df-81e1-cb38e082f6aa).
+IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/94e3f233-8019-46fa-8bf6-c0cb53327a81).
 
 ## 4. Query and retrieve documents for a patient from the EPR
 
@@ -117,26 +121,26 @@ To query and retrieve documents the HCP needs to be authorized based on the IdP 
 EPR-SPID), purposeOfUse (NORM, EMER) and role (HCP).
 See detailed description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/GetXAssertion.md).
 
-EPRIK
+IKIT
 example [request, response](https://test.ahdis.ch/eprik-cara/index.html#/transaction/a6b31484-c1d4-4701-9f0d-58e837e9eab6).
 
-Example STS requests with [IdP](requests/sts-eprik.http) or [EPRIK-httpheader](requests/sts-idp-httpheader-eprik.http).
+Example STS requests with [IdP](requests/sts-eprik.http) or [IKIT-httpheader](requests/sts-idp-httpheader-eprik.http).
 
 ### 4.2a Query documents from the CARA community
 
 Retrieve the document metadata for the documents stored in a patients EPR for the CARA community. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/RegistryStoredQuery.md).
 
-EPRIK example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/3ece4177-ab0a-47ab-9431-6ebad553aa75).
+IKIT example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/3ece4177-ab0a-47ab-9431-6ebad553aa75).
 For the Query the MPI-ID of the patient needs to be added. This example requests includes the security token necessary.
-With the EPRIK you can do the user authentication there and reuse the
+With the IKIT you can do the user authentication there and reuse the
 token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
-EPRIK a client certificate is not necessary.
+IKIT a client certificate is not necessary.
 
 ### 4.2b Query documents from remote communities
 
 To retrieve the document metadata for the documents stored in a patients EPR but registered in remote communities, the
-initiating gateway has to be called with an IIT-18 query. EPRIK
+initiating gateway has to be called with an IIT-18 query. IKIT
 example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/c2e8503a-97c6-4446-b233-155d57cf8e5e).
 Gassmann has an example document in the remote community urn:oid:2.16.756.5.30.1.177.1.0.
 
@@ -145,16 +149,16 @@ Gassmann has an example document in the remote community urn:oid:2.16.756.5.30.1
 To retrieve documents from a patients EPR the IHE XDS.b profile and transactions needs to be used. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/RetrieveDocumentSet.md).
 
-EPRIK example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/62065f91-91ec-4125-9dd8-aa8f3d90027a).
-With EPRIK you can do the user authentication there and reuse the
+IKIT example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/62065f91-91ec-4125-9dd8-aa8f3d90027a).
+With IKIT you can do the user authentication there and reuse the
 token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
-EPRIK a client certificate is not necessary. You will need to add the HomeCommunityId, RepositoryUniqueId and
+IKIT a client certificate is not necessary. You will need to add the HomeCommunityId, RepositoryUniqueId and
 DocumentUniqueId.
 
 ### 4.3b Retrieve documents from remote communities
 
 To retrieve the documents stored in remote communities, the initiating gateway has to be called with an ITI-43 query
-with the homeCommunityId added from result 4.2b. EPRIK
+with the homeCommunityId added from result 4.2b. IKIT
 example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/b5e221c3-7f83-4418-a53d-1bfbe3500ad5).
 
 ## 5. Publish documents for a patient by a healthcare professional
@@ -166,10 +170,10 @@ This sequence diagram shows the publication of a document by a healthcare profes
 To provide documents and metadata about the documents the IHE XDS.b profile and transactions needs to be used. See
 detailed description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/ProvideAndRegister.md).
 
-EPRIK example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/5e770d0b-db8c-4fda-8ed5-8a2128a162c8).
-With EPRIK you can do the user authentication there and reuse the
+IKIT example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/5e770d0b-db8c-4fda-8ed5-8a2128a162c8).
+With IKIT you can do the user authentication there and reuse the
 token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
-EPRIK a client certificate is not necessary. You will need to add metadata for the document.
+IKIT a client certificate is not necessary. You will need to add metadata for the document.
 
 ### confidentiality code in metadata
 
@@ -207,10 +211,10 @@ user [see factsheet in french](https://www.e-health-suisse.ch/fileadmin/user_upl
 You are required to create a client certificate for this technical user and let it register in the HPD. See
 the [developer platform](https://developer.post.ch/en/e-health/basic-epr-workflows) for exact steps.
 
-EPRIK allows you to work with a specific test technical user during integration. You can get the TCU IdP SAML2 assertion
+IKIT allows you to work with a specific test technical user during integration. You can get the TCU IdP SAML2 assertion
 from [here](https://test.ahdis.ch/eprik-cara/camel/tcu). This assertion is valid for 10 minutes. With this assertion you
 can get then the XUA (STS) token for the XDS requests, for the urn:e-health-suisse:principal-id you need to put the GLN
-to 2000040030829 when using EPRIK's technical user.
+to 2000040030829 when using IKIT's technical user.
 [example](https://test.ahdis.ch/eprik-cara/#/transaction/e1159556-36e9-41c1-b9d4-740d21d0bf8b)
 
 ### change metadata of existing documents (2.223)
@@ -236,7 +240,7 @@ addition of a specific `Association` element that shows which document is to be 
                  id="(a unique id)"/>
 ```
 
-EPRIK example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/5e770d0b-db8c-4fda-8ed5-8a2128a162c8).
+IKIT example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/5e770d0b-db8c-4fda-8ed5-8a2128a162c8).
 
 ### Using entryUUIDs
 

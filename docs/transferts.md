@@ -34,7 +34,7 @@ The integration system is can be found [here](https://b2b.cara.int.post-ehealth.
 
 ## eprik integration with transferts (tra)
 
-EPRIK supports the development during the integration with the predefined HCP **2000040030829** configured that the
+IKIT supports the development during the integration with the predefined HCP **2000040030829** configured that the
 primary systems can use the transaction without authentication / authorization.
 
 1. An authorization token can be received for HCP
