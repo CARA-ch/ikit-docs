@@ -95,7 +95,7 @@ certificate is not necessary.
 !!! danger
 
     Never feed a patient identifier with a domain that is not yours, and especially a domain equal to the configured
-    receiver OID of the platefrm. It would make the patient unreachable from PDQ queries.
+    receiver OID of the platform. It would make the patient unreachable from PDQ queries.
 
 ### 3.2 Query MPI-PID and EPR-SPID based on local ID
 
@@ -298,30 +298,32 @@ and relationship between them (_ou=Relationship_).
 With the [ITI-58](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can query the
 Healthcare Professional Directory (HPD) for the entries you are interested in.
 You can query entries with LDAP filters on LDAP attributes and select the attributes to return.
-[Example](https://test.ahdis.ch/eprik-cara/index.html#/transaction/50b2a089-cb39-45f6-90f3-16c3c98f8b74), [request](https://github.com/ahdis/epr-integration-cara/tree/main/docs/requests/iti-58-int-eprik.http).
+[Example](https://ikit.cara.ch/dep/#/transaction/804e7064-f21a-4c7c-98f0-aeea2e0902d4), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-add.http).
 
 ### 7.2 Add an entry
 
 With the [ITI-59](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can add an
 entry to the HPD with an _addRequest_.
-[Example](https://test.ahdis.ch/eprik-cara/index.html#/transaction/301e8560-1a1a-4a0d-ad4c-622847eccf29), [request](https://github.com/ahdis/epr-integration-cara/tree/main/docs/requests/iti-59-int-add.http).
+[Example]https://ikit.cara.ch/dep/#/transaction/e71b48eb-d65a-4e01-b221-26b5e7c476e2), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-add.http).
 
 ### 7.3 Modify an entry
 
 With the [ITI-59](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can update an
 entry in the HPD with a _modifyRequest_.
-[Example](https://test.ahdis.ch/eprik-cara/index.html#/transaction/705d8021-bb71-4c7c-bc5c-debf0245d630), [request](https://github.com/ahdis/epr-integration-cara/tree/main/docs/requests/iti-59-int-modify.http).
+[Example](https://ikit.cara.ch/dep/#/transaction/d85ac270-97d0-4915-9bcb-3a2d117a20d2), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-modify.http).
 
 ### 7.4 Delete an entry
 
 With the [ITI-59](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can delete an
 entry from the HPD with a _delRequest_.
-[Example](https://test.ahdis.ch/eprik-cara/index.html#/transaction/cc0597ef-dd71-41bd-809d-105883fa5af4), [request](https://github.com/ahdis/epr-integration-cara/tree/main/docs/requests/iti-59-int-delete.http).
+[Example](https://ikit.cara.ch/dep/#/transaction/3ecd8b6b-480c-4e1e-827c-598581296bfd), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-delete.http).
 
 ## 8. OID Configuration
 
+TODO 
+
 | Parameter                 | Integration                         | Production                         |
 |---------------------------|-------------------------------------|------------------------------------|
-| MPI OID Patient           | 2.16.756.5.30.1.191.1.0.2.1         | 2.16.756.5.30.1.191.3.0.2.1        |
-| HL7 v3 Receiver Device ID | 2.16.756.5.30.1.191.1.0.12.1.101.2  | 2.16.756.5.30.1.191.3.0.12.1.101.2 |
-| Repository unique ID      | 2.16.756.5.30.1.191.1.0.12.1.101.31 |                                    |
+| MPI OID Patient           | 2.16.756.5.30.1.177.2.2.1.1         | TODO                               |
+| HL7 v3 Receiver Device ID | 2.16.756.5.30.1.191.1.0.12.1.101.2 (TODO, not yet changed )  | TODO                               |
+| Repository unique ID      | TODO                                |                                    |

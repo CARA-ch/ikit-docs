@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SOAP-ENV:Envelope 
+  xmlns:SOAP-ENV='http://www.w3.org/2003/05/soap-envelope' 
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+  xmlns:s='http://www.w3.org/2001/XMLSchema' 
+  xmlns:wsa='http://www.w3.org/2005/08/addressing'>
+  <SOAP-ENV:Header>
+    <wsa:Action>urn:hl7-org:v3:PRPA_IN201306UV02</wsa:Action>
+    <wsa:MessageID>urn:uuid:F779CDAC-5BE9-11F0-BEDD-0050568D7D0A</wsa:MessageID>
+    <wsa:RelatesTo>urn:uuid:88c76963-f467-49e2-a2c0-a772a4685ee3</wsa:RelatesTo>
+    <wsa:To>http://www.w3.org/2005/08/addressing/anonymous</wsa:To>
+  </SOAP-ENV:Header>
+  <SOAP-ENV:Body>
+    <PRPA_IN201306UV02 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns="urn:hl7-org:v3" 
+      xmlns:hl7="urn:hl7-org:v3" ITSVersion="XML_1.0">
+      <id root="F7D6A1E3-5BE9-11F0-9E70-0050568D7D0A"/>
+      <creationTime value="20250708125449+0200"/>
+      <interactionId root="2.16.840.1.113883.1.6" extension="PRPA_IN201306UV02"/>
+      <processingCode code="T"/>
+      <processingModeCode code="T"/>
+      <acceptAckCode code="NE"/>
+      <hl7:receiver typeCode="RCV">
+        <device classCode="DEV" determinerCode="INSTANCE">
+          <id root="2.16.756.5.30.1.145.1.1"/>
+        </device>
+      </hl7:receiver>
+      <hl7:sender typeCode="SND">
+        <device classCode="DEV" determinerCode="INSTANCE">
+          <id root="2.16.756.5.30.1.191.1.0.12.1.101.2"/>
+        </device>
+      </hl7:sender>
+      <acknowledgement>
+        <typeCode code="AA"/>
+        <targetMessage>
+          <id root="1.3.6.1.4.1.21367.2017.2.1.104" extension="1659464609650"/>
+        </targetMessage>
+      </acknowledgement>
+      <controlActProcess moodCode="EVN" classCode="CACT">
+        <code code="PRPA_TE201306UV02" codeSystem="2.16.840.1.113883.1.6"/>
+        <subject typeCode="SUBJ" contextConductionInd="false">
+          <registrationEvent moodCode="EVN" classCode="REG">
+            <id nullFlavor="NA"/>
+            <statusCode code="active"/>
+            <subject1 typeCode="SBJ">
+              <patient classCode="PAT">
+                <id root="2.16.756.5.30.1.177.2.2.1.1" extension="100000656"/>
+                <id root="2.16.756.5.30.1.177.2.2.1.3" extension="c4d074e4-353e-42a8-a654-21efb5d89cc4"/>
+                <id root="2.16.756.5.30.1.127.3.10.3" extension="761337617347058192"/>
+                <id root="2.16.756.5.32" extension="7560810115644"/>
+                <statusCode code="active"/>
+                <patientPerson classCode="PSN" determinerCode="INSTANCE">
+                  <name>
+                    <given>Anouk Senta</given>
+                    <family>Wenger-Berner</family>
+                  </name>
+                  <telecom use="HP" value="mailto:samueljost@gmx.ch"/>
+                  <administrativeGenderCode code="F"/>
+                  <birthTime value="19820328"/>
+                </patientPerson>
+                <providerOrganization classCode="ORG" determinerCode="INSTANCE">
+                  <id root="2.16.756.5.30.1.177.2.2.1.3"/>
+                  <name/>
+                  <contactParty classCode="CON"/>
+                </providerOrganization>
+                <subjectOf1>
+                  <queryMatchObservation classCode="COND" moodCode="EVN">
+                    <code code="IHE_PDQ"/>
+                    <value xsi:type="INT" value="60"/>
+                  </queryMatchObservation>
+                </subjectOf1>
+              </patient>
+            </subject1>
+            <custodian typeCode="CST">
+              <assignedEntity classCode="ASSIGNED">
+                <id root="2.16.756.5.30.1.177"/>
+                <code code="NotHealthDataLocator" codeSystem="1.3.6.1.4.1.19376.1.2.27.2"/>
+              </assignedEntity>
+            </custodian>
+          </registrationEvent>
+        </subject>
+        <subject typeCode="SUBJ" contextConductionInd="false">
+          <registrationEvent moodCode="EVN" classCode="REG">
+            <id nullFlavor="NA"/>
+            <statusCode code="active"/>
+            <subject1 typeCode="SBJ">
+              <patient classCode="PAT">
+                <id root="2.16.756.5.30.1.177.2.2.1.1" extension="100000738"/>
+                <id root="2.16.756.5.30.1.127.3.10.3" extension="761337615794334579"/>
+                <id root="2.16.756.5.30.1.177.2.2.1.3" extension="42ee9e5b50961646f4e8c30eb1b2a57c2f7f96d5"/>
+                <id root="2.16.756.5.30.1.177.2.2.1.3" extension="vjqrLwq9ct4g6lNLJfbybCElGuUcJL/pkC9iJz9Qipo="/>
+                <id root="2.16.756.5.32" extension="7560623855379"/>
+                <statusCode code="active"/>
+                <patientPerson classCode="PSN" determinerCode="INSTANCE">
+                  <name>
+                    <given>Jonas Marcel</given>
+                    <family>Werkhoven</family>
+                    <family qualifier="BR">Bänziger</family>
+                  </name>
+                  <telecom use="H" value="mailto:htlaehe+7560623855379@gmail.com"/>
+                  <telecom use="H" value="tel:0763663903"/>
+                  <administrativeGenderCode code="M"/>
+                  <birthTime value="19690213"/>
+                  <addr use="H">
+                    <streetAddressLine>Laurenzenvorstadt 11</streetAddressLine>
+                    <city>Aarau</city>
+                    <country>CH</country>
+                    <postalCode>5000</postalCode>
+                  </addr>
+                </patientPerson>
+                <providerOrganization classCode="ORG" determinerCode="INSTANCE">
+                  <id root="2.16.756.5.30.1.177.2.2.1.3"/>
+                  <name/>
+                  <contactParty classCode="CON"/>
+                </providerOrganization>
+                <subjectOf1>
+                  <queryMatchObservation classCode="COND" moodCode="EVN">
+                    <code code="IHE_PDQ"/>
+                    <value xsi:type="INT" value="60"/>
+                  </queryMatchObservation>
+                </subjectOf1>
+              </patient>
+            </subject1>
+            <custodian typeCode="CST">
+              <assignedEntity classCode="ASSIGNED">
+                <id root="2.16.756.5.30.1.177"/>
+                <code code="NotHealthDataLocator" codeSystem="1.3.6.1.4.1.19376.1.2.27.2"/>
+              </assignedEntity>
+            </custodian>
+          </registrationEvent>
+        </subject>
+        <subject typeCode="SUBJ" contextConductionInd="false">
+          <registrationEvent moodCode="EVN" classCode="REG">
+            <id nullFlavor="NA"/>
+            <statusCode code="active"/>
+            <subject1 typeCode="SBJ">
+              <patient classCode="PAT">
+                <id root="2.16.756.5.30.1.177.2.2.1.1" extension="100000901"/>
+                <id root="2.16.756.5.30.1.177.2.2.1.3" extension="006c0831-39ff-43e6-9909-ad9e1b5b672d"/>
+                <id root="2.16.756.5.30.1.127.3.10.3" extension="761337613262932302"/>
+                <id root="2.16.756.5.32" extension="7560685740026"/>
+                <statusCode code="active"/>
+                <patientPerson classCode="PSN" determinerCode="INSTANCE">
+                  <name>
+                    <given>PHILIP KEVIN</given>
+                    <family>WEINMANN-HUGUENIN</family>
+                  </name>
+                  <telecom use="HP" value="mailto:testsuedost+WEINMANN-HUGUENIN@gmail.com"/>
+                  <administrativeGenderCode code="M"/>
+                  <birthTime value="20110705"/>
+                </patientPerson>
+                <providerOrganization classCode="ORG" determinerCode="INSTANCE">
+                  <id root="2.16.756.5.30.1.177.2.2.1.3"/>
+                  <name/>
+                  <contactParty classCode="CON"/>
+                </providerOrganization>
+                <subjectOf1>
+                  <queryMatchObservation classCode="COND" moodCode="EVN">
+                    <code code="IHE_PDQ"/>
+                    <value xsi:type="INT" value="60"/>
+                  </queryMatchObservation>
+                </subjectOf1>
+              </patient>
+            </subject1>
+            <custodian typeCode="CST">
+              <assignedEntity classCode="ASSIGNED">
+                <id root="2.16.756.5.30.1.177"/>
+                <code code="NotHealthDataLocator" codeSystem="1.3.6.1.4.1.19376.1.2.27.2"/>
+              </assignedEntity>
+            </custodian>
+          </registrationEvent>
+        </subject>
+        <subject typeCode="SUBJ" contextConductionInd="false">
+          <registrationEvent moodCode="EVN" classCode="REG">
+            <id nullFlavor="NA"/>
+            <statusCode code="active"/>
+            <subject1 typeCode="SBJ">
+              <patient classCode="PAT">
+                <id root="2.16.756.5.30.1.177.2.2.1.1" extension="100000929"/>
+                <id root="2.16.756.5.30.1.177.2.2.1.3" extension="65bb097b-db10-4552-a840-7831bd14c9f6"/>
+                <id root="2.16.756.5.30.1.127.3.10.3" extension="761337611211704970"/>
+                <id root="2.16.756.5.32" extension="7560656450749"/>
+                <statusCode code="active"/>
+                <patientPerson classCode="PSN" determinerCode="INSTANCE">
+                  <name>
+                    <given>Lorena Raphaela</given>
+                    <family>Wenger-Schwaiger</family>
+                  </name>
+                  <telecom use="HP" value="mailto:trameri.giordano@gmail.com"/>
+                  <administrativeGenderCode code="F"/>
+                  <birthTime value="19670309"/>
+                </patientPerson>
+                <providerOrganization classCode="ORG" determinerCode="INSTANCE">
+                  <id root="2.16.756.5.30.1.177.2.2.1.3"/>
+                  <name/>
+                  <contactParty classCode="CON"/>
+                </providerOrganization>
+                <subjectOf1>
+                  <queryMatchObservation classCode="COND" moodCode="EVN">
+                    <code code="IHE_PDQ"/>
+                    <value xsi:type="INT" value="60"/>
+                  </queryMatchObservation>
+                </subjectOf1>
+              </patient>
+            </subject1>
+            <custodian typeCode="CST">
+              <assignedEntity classCode="ASSIGNED">
+                <id root="2.16.756.5.30.1.177"/>
+                <code code="NotHealthDataLocator" codeSystem="1.3.6.1.4.1.19376.1.2.27.2"/>
+              </assignedEntity>
+            </custodian>
+          </registrationEvent>
+        </subject>
+        <subject typeCode="SUBJ" contextConductionInd="false">
+          <registrationEvent moodCode="EVN" classCode="REG">
+            <id nullFlavor="NA"/>
+            <statusCode code="active"/>
+            <subject1 typeCode="SBJ">
+              <patient classCode="PAT">
+                <id root="2.16.756.5.30.1.177.2.2.1.1" extension="100001143"/>
+                <id root="2.16.756.5.30.1.191.999.10" extension="SSI00004"/>
+                <id root="2.16.756.5.30.1.127.3.10.3" extension="761337612097656117"/>
+                <id root="2.16.756.5.30.1.191.999.10" extension="SSI00002"/>
+                <id root="2.16.756.5.30.1.191.999.10" extension="SSI00001"/>
+                <id root="2.16.756.5.30.1.177.2.2.1.3" extension="oLxqzte9EO2Oos+4c6C0UsyITZJtpRXQo63QDXEoVy4="/>
+                <id root="2.16.756.5.30.1.177.2.2.1.3" extension="1d8cd0e3fcccb967f38cff424f7949ff747846c3"/>
+                <id root="2.16.756.5.32" extension="7560625139705"/>
+                <statusCode code="active"/>
+                <patientPerson classCode="PSN" determinerCode="INSTANCE">
+                  <name>
+                    <given>Larissa Bénédicte Albertine</given>
+                    <family>WEINMANN-HUGUENIN</family>
+                  </name>
+                  <telecom use="H" value="tel:+41767053112"/>
+                  <telecom use="HP" value="mailto:ssi@cara.ch"/>
+                  <administrativeGenderCode code="F"/>
+                  <birthTime value="20130530"/>
+                </patientPerson>
+                <providerOrganization classCode="ORG" determinerCode="INSTANCE">
+                  <id root="2.16.756.5.30.1.191.999.10"/>
+                  <name/>
+                  <contactParty classCode="CON"/>
+                </providerOrganization>
+                <subjectOf1>
+                  <queryMatchObservation classCode="COND" moodCode="EVN">
+                    <code code="IHE_PDQ"/>
+                    <value xsi:type="INT" value="60"/>
+                  </queryMatchObservation>
+                </subjectOf1>
+              </patient>
+            </subject1>
+            <custodian typeCode="CST">
+              <assignedEntity classCode="ASSIGNED">
+                <id root="2.16.756.5.30.1.177"/>
+                <code code="NotHealthDataLocator" codeSystem="1.3.6.1.4.1.19376.1.2.27.2"/>
+              </assignedEntity>
+            </custodian>
+          </registrationEvent>
+        </subject>
+        <reasonOf typeCode="RSON">
+          <detectedIssueEvent classCode="ALRT" moodCode="EVN">
+            <code code="ActAdministrativeDetectedIssueCode" codeSystem="2.16.840.1.113883.5.4"/>
+            <triggerFor typeCode="TRIG">
+              <actOrderRequired classCode="ACT" moodCode="RQO">
+                <code code="PatientAddressRequested" codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/>
+              </actOrderRequired>
+              <actOrderRequired classCode="ACT" moodCode="RQO">
+                <code code="LivingSubjectAdministrativeGenderRequested" codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/>
+              </actOrderRequired>
+              <actOrderRequired classCode="ACT" moodCode="RQO">
+                <code code="PatientTelecomRequested" codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/>
+              </actOrderRequired>
+              <actOrderRequired classCode="ACT" moodCode="RQO">
+                <code code="LivingSubjectBirthPlaceNameRequested" codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/>
+              </actOrderRequired>
+              <actOrderRequired classCode="ACT" moodCode="RQO">
+                <code code="LivingSubjectBirthPlaceAddressRequested" codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/>
+              </actOrderRequired>
+              <actOrderRequired classCode="ACT" moodCode="RQO">
+                <code code="MothersMaidenNameRequested" codeSystem="1.3.6.1.4.1.19376.1.2.27.1"/>
+              </actOrderRequired>
+            </triggerFor>
+          </detectedIssueEvent>
+        </reasonOf>
+        <queryAck>
+          <queryId root="1.3.6.1.4.1.21367.2017.2.1.104" extension="1659464609651"/>
+          <statusCode code="deliveredResponse"/>
+          <queryResponseCode code="OK"/>
+          <resultTotalQuantity value="5"/>
+          <resultCurrentQuantity value="5"/>
+          <resultRemainingQuantity value="0"/>
+        </queryAck>
+        <queryByParameter>
+          <queryId extension="1659464609651" root="1.3.6.1.4.1.21367.2017.2.1.104"/>
+          <statusCode code="new"/>
+          <responseModalityCode code="R"/>
+          <responsePriorityCode code="I"/>
+          <parameterList>
+            <livingSubjectName>
+              <value use="SRCH">
+                <family>WE</family>
+              </value>
+              <semanticsText>LivingSubject.name</semanticsText>
+            </livingSubjectName>
+          </parameterList>
+        </queryByParameter>
+      </controlActProcess>
+    </PRPA_IN201306UV02>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
