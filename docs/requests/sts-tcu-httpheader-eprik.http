@@ -1,46 +1,69 @@
+### POST https://ikit.cara.ch/dep/proxy/cara/ahdis/STS/services/SecurityTokenService HTTP/1.1
 ### ITI-18 with adding X-Eprik-IDP-Assertio 
-POST https://test.ahdis.ch/eprik-cara/camel/cara/STS/services/SecurityTokenService HTTP/1.1
+
+POST https://adapter.test.emedo.ch/STS/services/SecurityTokenService HTTP/1.1
 Content-Type: application/soap+xml;charset=UTF-8
 
 <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
    <env:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
       <wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>
    <wsa:MessageID>6ed3440a-0164-49c4-b9d2-235422819e90</wsa:MessageID><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
-<saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="Assertion_bdec08bb-e70b-4f35-ab52-926a3432ca05" IssueInstant="2023-10-11T13:33:12.121Z" Version="2.0"><saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">urn:oid:2.16.756.5.30.1.999.9.1.1.1</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#Assertion_bdec08bb-e70b-4f35-ab52-926a3432ca05"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>+zBPv0tAj2IoOuJiJimymYH7HLmcys+AhpqtwR7KPnQ=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>YQF5e3NsysjMH0XH8FY0g5nAbA+p59/QrpXWNZKsM7d5i7vJmL+B4cK41Yp6K/msGnJjtj+df052yBhKUOE1AXiYqftDpDPfgDym052XJQHmtB5nGCgCinpTtoRcFUSiW7C08gRVX2VbzH6KEklt+CssYSWGsp6s1TdivqsI8WBso72MsftntZOJWfxsyEkYLlDCOCiH+lLhLRIBEj1jbRE9AJ2rjuf5zI1Bv5HmzDPpe+rpHlh8INrGFd84PpdyWR5h15DirCSPd/Yg93SOxYdhQw6sYoxy5ZHIiFYzyHhHh6e4R3g0Lvx1mGMzYNqayw8cysQuCdveGi8AyNDfJWUv/2dwfZebOEQ48mhBH98UlX9aU2ml4K9sWtKW3gF7/WgW7dyuomuuPcTdRhP6LqCIrrc6bPCVsWwkYBuqOOvBYh6WODOhQFxDYjfkIsPexey766MQUC4UvyOMNi9LOwZ0hWW5Pgwe7MfzgZRIJ5bGi+uMGA64xPqKHd0GsHa+IJSTjp3lGJiXg8p0M8VAwKHZgPSEm8DACIsEwl9HkTnOTYgnxd7VXQWoocN5hZoj+2CZULUaSj1uUdjUC71iGNiFt13Md6VMFUwvibHpc2szW81FZN26uHdoZGUEaHIHrScdCT+FBKA0/O0lnm61Db2N0sAutaMv4HSRZpFTIFY=</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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
-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
-eHwpUjnQYSSfpbx8sObJKFOJECZnbpA=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+
+<saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="Assertion_3e96a3cb-5e57-4c7f-82d1-01810208c54a" IssueInstant="2025-07-08T13:26:48.697Z" Version="2.0"><saml2:Issuer>urn:oid:2.16.756.5.30.1.999.9.1.1.1</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+<ds:Reference URI="#Assertion_3e96a3cb-5e57-4c7f-82d1-01810208c54a">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+<ds:DigestValue>ZWkIekia9pOEy1DwyudY2cRrg/fWXcQL7GDkCOT8YQc=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue>
+oMcY/aSXunFhGO1ps3W0pJtdONirVzfFBn0dJ4utMFwVai6rq7KkBUYlPkuigs7hXaL7Z2gPUeQZ&#13;
+hQqAi7Piz3I0jYxQW1/yL+uTPB+0khFZ4ytk32qWyKpgUSHM2kb5nK5rM4C3RzOC1ociB8QZEXWw&#13;
+3ovtie9+j7sP/z6nl4V/l9HEB8CfkUa4pouuVhk+BIqna1tEYvWQGEmBiBb0gKLQ1L7bxnnC3et9&#13;
+3n0MSMn9W2zPqXkbUTbySQQWxgapQGTy4N7cw3E7Kbjr9aHZxPz5vr/uszCZ33DoKX9BMjM4CtFC&#13;
+fibNHMI3xCcIslKVdC9jEYPxG8sE6QYLK1+iMqd7ZOY0dX4eniI9D2vNHzdsbCKJ8iQNBalGW8lH&#13;
+5KcTDwzh3+WI/VkBeQAWq2lcazv4v0z00oCWvlvwSHO0ZIveneHzO+MTHhSXbd1SFXnhHvzCLldc&#13;
+zdGFjPcEqZC449Oni40S2HnC5zhBGtPjBhk2O+VJWHrGT5Qu7UzmpHvO
+</ds:SignatureValue>
+<ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIF7DCCBNSgAwIBAgIQAtkW5++akCVO2v2+bczREDANBgkqhkiG9w0BAQsFADBTMQswCQYDVQQG
+EwJVUzEWMBQGA1UEChMNRGlnaUNlcnQgSW5jLjEsMCoGA1UEAxMjRGlnaUNlcnQgUHJpdmF0ZSBT
+U0wgU0hBMjU2IENBIC0gRzIwHhcNMjUwNTIzMDAwMDAwWhcNMjYwNTIzMjM1OTU5WjCBkzELMAkG
+A1UEBhMCQ0gxEjAQBgNVBAcTCUVwYWxpbmdlczEZMBcGA1UEChMQQXNzb2NpYXRpb24gQ0FSQTEW
+MBQGA1UECxMNMjAwMDAxMDY2MDAxODEZMBcGA1UEAwwQdGN1X2NhcmFpa2l0X2ludDEiMCAGCSqG
+SIb3DQEJARYTaW50ZWdyYXRpb25AY2FyYS5jaDCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoC
+ggGBAKo5v4QGZJ9JObIyZnaHcLcyXDctPbWrAcrh67I9jY5OBTg1pQC0+cSb2ev8sIXrDooh6MHK
+rr/ww9auJUDcmlyXsybGx1Qc4xchD65EzJdDYwYuIiGN9aFVLQXNkq7T27Q0gBnV+26XWL0Rmv8r
+uKCRmrCsVFaFoRkTVNLbLYof3FoURAOet53uB2LgTPwibfzlmGKBRkspjdZv/4gFsOqOsw39wAx/
+olgxIzxRky2A/UvuAwQnzoI8aghSGfC04Q97zLqu1oG0eDXCMFp6FajSA94+yd41t5LyA9qARncD
+Zf0OGYz8nRY66AdlRvEVtIuvBiraXl59k2KFkJIScB7EDyoFtAPVZnsOT895KfOj/uhVuZQqaDb0
+E1uhF6ykpAhkqO1l579wT++JXQbR0lPomnc08UxvOlxd8URzEt++MSzlbqlt5cvUwjU/Y1aw4+4c
+STeA8isEWYYN1Yb+ZWijFbJV61MfkbrasrIyEiPhnCDMbXi1n/dFanqFRSjMlQIDAQABo4IB+TCC
+AfUwHwYDVR0jBBgwFoAUVu2GFAl6E83cCXPDA/Gdt9p2KxQwHQYDVR0OBBYEFEjPdP8JTaMkz2+p
+Yo8wOLevrILdMAwGA1UdEwEB/wQCMAAwHgYDVR0RBBcwFYETaW50ZWdyYXRpb25AY2FyYS5jaDAO
+BgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMEMGA1UdIAQ8MDow
+OAYKYIZIAYb9bAQBAjAqMCgGCCsGAQUFBwIBFhxodHRwczovL3d3dy5kaWdpY2VydC5jb20vQ1BT
+MIGPBgNVHR8EgYcwgYQwQKA+oDyGOmh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFBy
+aXZhdGVTU0xTSEEyNTZDQS1HMi5jcmwwQKA+oDyGOmh0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9E
+aWdpQ2VydFByaXZhdGVTU0xTSEEyNTZDQS1HMi5jcmwwfwYIKwYBBQUHAQEEczBxMCQGCCsGAQUF
+BzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wSQYIKwYBBQUHMAKGPWh0dHA6Ly9jYWNlcnRz
+LmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFByaXZhdGVTU0xTSEEyNTZDQS1HMi5jcnQwDQYJKoZIhvcN
+AQELBQADggEBAK8JxXjbG0MD6nm5hDx54St1jf1dvMUC+UOfjBw66vHAADeN9FeNakYeGXrDHeza
+dplcpoZRElWNOJ+afB8GKOMe1oNSYscNwYF3aWTz3jyatWR8UjJVR09z9PzgRTkIuX2vv+wuPZbt
+APefSvJ7DxQkYNN9Bt31x7mtAV2KLtcplQ/V3Guj8okPQBIb0WzGWODuMwo1X28qBqYP200Lzds7
+hZKO9ZgHmhNxjILeOFZadgLyz0xFEj3zcVjN4RUomrhW7JrxfTrb8v0Z++mXZ59z+q47pPQjgSNG
+q3G8cwjVdVv/RDx+lL9wwPjPshgIZrSMYeoqBfQSGuA2BdMKhok=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject>
 <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">2.16.756.5.30.1.999.9.1.1.1</saml2:NameID>
-<saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
-    <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" NameQualifier="urn:e-health-suisse:technical-user-id">2.16.756.5.30.1.999.9.1.1.1</saml2:NameID>
-</saml2:SubjectConfirmation>
-</saml2:Subject><saml2:Conditions NotBefore="2023-10-11T13:33:12.121Z" NotOnOrAfter="2023-10-11T13:43:12.121Z"/><saml2:AuthnStatement AuthnInstant="2023-10-11T13:33:12.121Z" SessionNotOnOrAfter="2023-10-11T13:43:12.121Z"><saml2:AuthnContext xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+    <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>
+</saml2:Subject><saml2:Conditions NotBefore="2025-07-08T13:26:48.697Z" NotOnOrAfter="2025-07-08T13:36:48.697Z"/><saml2:AuthnStatement AuthnInstant="2025-07-08T13:26:48.697Z" SessionNotOnOrAfter="2025-07-08T13:36:48.697Z"><saml2:AuthnContext>
 <saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified</saml2:AuthnContextClassRef>
-</saml2:AuthnContext></saml2:AuthnStatement></saml2:Assertion>   
-   
+</saml2:AuthnContext></saml2:AuthnStatement></saml2:Assertion>
+
    </wsse:Security></env:Header>
    <env:Body>
       <wst:RequestSecurityToken xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">
@@ -52,7 +75,7 @@ eHwpUjnQYSSfpbx8sObJKFOJECZnbpA=</ds:X509Certificate></ds:X509Data></ds:KeyInfo>
          </wsp:AppliesTo>
          <wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>
          <wst:Claims Dialect="http://www.bag.admin.ch/epr/2017/annex/5/amendment/2">
-         <saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:resource:resource-id"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">761337613645876216^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xspa:1.0:subject:purposeofuse"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType"><PurposeOfUse xmlns="urn:hl7-org:v3" code="AUTO" codeSystem="2.16.756.5.30.1.127.3.10.5" codeSystemName="eHealth Suisse Verwendungszweck" displayName="Normal Access" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:subject:role" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema"><Role xmlns="urn:hl7-org:v3" code="TCU" codeSystem="2.16.756.5.30.1.127.3.10.6" codeSystemName="eHealth Suisse EPR Akteure" displayName="Technical User" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute>                  <saml2:Attribute
+         <saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:resource:resource-id"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">761337612097656117^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xspa:1.0:subject:purposeofuse"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType"><PurposeOfUse xmlns="urn:hl7-org:v3" code="AUTO" codeSystem="2.16.756.5.30.1.127.3.10.5" codeSystemName="eHealth Suisse Verwendungszweck" displayName="Normal Access" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:subject:role" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema"><Role xmlns="urn:hl7-org:v3" code="TCU" codeSystem="2.16.756.5.30.1.127.3.10.6" codeSystemName="eHealth Suisse EPR Akteure" displayName="Technical User" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute>                  <saml2:Attribute
                     xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
                     Name="urn:e-health-suisse:principal-id">
                     <saml2:AttributeValue

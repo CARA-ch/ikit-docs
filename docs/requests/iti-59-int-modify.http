@@ -1,11 +1,7 @@
 ### Modify an healthcare professional
 
-POST http://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService HTTP/1.1
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
 content-type: application/soap+xml; charset=UTF-8
-accept: */*
-user-agent: Apache-CXF/3.5.5
-cache-control: no-cache
-pragma: no-cache
 
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
 	<soap:Header>
@@ -18,9 +14,9 @@ pragma: no-cache
 	</soap:Header>
    <soap:Body>
       <batchRequest requestID="12345" xmlns="urn:oasis:names:tc:DSML:2:0:core">
-         <modifyRequest dn="uid=Cara:12345,ou=HCProfessional,dc=HPD,o=CARA,c=CH" requestID="54321">
+         <modifyRequest dn="uid=EMEDOINT:12345,ou=HCProfessional,dc=HPD,o=BAG,c=CH" requestID="54321">
             <modification name="hcIdentifier" operation="add">
-               <value>CARA:localId:1234566666:active</value>
+               <value>EMEDOINT:localId:1234566666:active</value>
             </modification>
             
             <modification name="title" operation="delete"/>
