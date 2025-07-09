@@ -325,5 +325,6 @@ TODO
 | Parameter                 | Integration                         | Production                         |
 |---------------------------|-------------------------------------|------------------------------------|
 | MPI OID Patient           | 2.16.756.5.30.1.177.2.2.1.1         | TODO                               |
-| HL7 v3 Receiver Device ID | 2.16.756.5.30.1.191.1.0.12.1.101.2 (TODO, not yet changed )  | TODO                               |
+| HL7 v3 Receiver Device ID PIX V3 | 2.16.756.5.30.1.177.2.2.1.1.3       | 2.16.756.5.30.1.177.2.2.2.1.3   |
+| HL7 v3 Receiver Device ID PDQ V3 | 2.16.756.5.30.1.177.2.2.1.1.7       | 2.16.756.5.30.1.177.2.2.2.1.7    |
 | Repository unique ID      | TODO                                |                                    |

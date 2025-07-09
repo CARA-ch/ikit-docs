@@ -8,42 +8,38 @@ By default it lists all transactions made during the day. You can filter by IHE 
 
 ## EPR Endpoints
 
-https://adapter.test.emedo.ch/UPIProxy/services/PIXPDQV3ManagerService 
-(PIX/PDQ kombiniert analog zum Postsystem und Antworten enthalten AHVN) "
-https://adapter.test.emedo.ch/UPIProxy/services/PDQV3ManagerService  
-https://adapter.test.emedo.ch/UPIProxy/services/PIXV3ManagerService 
-https://adapter.test.emedo.ch/HPD/services/HPDService 
-https://adapter.test.emedo.ch/STS/services/SecurityTokenService 
-https://adapter.test.emedo.ch/wsproxy/services/SpidQueryService2/ 
-https://adapter.test.emedo.ch/wsproxy/services/SpidManagementService/ 
-
 That the requests are routed through **IKIT** the following endpoints need to be configured in your primary system
 for IKIT instead of CARA INT for an EPR integration:
 
 | Transaction             | IKIT                                        |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| Host                    | https://ikit.cara.ch/dep                                |
+| Host                    | https://ikit.cara.ch                                |
 | Port                    | 443 (https) or 80 (http)                     |
-| XDS [[ITI-18]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-18.html)                                    | /eprik-cara/camel/cara/Registry/services/RegistryService          |
-| XDS [[ITI-18]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-18.html) Initiating Gateway                 | /eprik-cara/camel/cara/XCA/services/InitiatingGatewayService      |
-| XDS [[ITI-41]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-41.html)                                    | /eprik-cara/camel/cara/Repository/services/RepositoryService      |
-| XDS [[ITI-43]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-43.html)                                    | /eprik-cara/camel/cara/Repository/services/RepositoryService      |
-| XDS [[ITI-43]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-43.html) Initiating Gateway                 | /eprik-cara/camel/XCA/services/InitiatingGatewayService           |
-| XDS MU [[ITI-57]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-57.html)                                 | /eprik-cara/camel/cara/Registry/services/RegistryService          |
-| XDS RMU [[ITI-92]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-92.html)                                | /eprik-cara/camel/cara/Registry/services/RegistryService          |
-| XDS-I RAD [[ITI-69]](https://www.ihe.net/uploadedFiles/Documents/Radiology/IHE_RAD_TF_Vol2.pdf)        | /eprik-cara/camel/cara/Repository/services/RepositoryService      |
-| PIX V3 [[ITI-44]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-44.html)                                 | /eprik-cara/camel/cara/UPIProxy/services/PIXPDQV3ManagerService   |
-| PIX V3 [[ITI-44]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-44.html)                                 | /eprik-cara/camel/cara/UPIProxy/services/PIXV3ManagerService      |
-| PIX V3 [[ITI-45]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-45.html)                                 | /eprik-cara/camel/cara/UPIProxy/services/PIXPDQV3ManagerService   |
-| PIX V3 [[ITI-45]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-45.html)                                 | /eprik-cara/camel/cara/UPIProxy/services/PIXV3ManagerService      |
-| PDQ V3 [[ITI-47]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-47.html)                                 | /eprik-cara/camel/cara/UPIProxy/services/PIXPDQV3ManagerService   |
-| PDQ V3 [[ITI-47]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-47.html)                                 | /eprik-cara/camel/cara/UPIProxy/services/PDQV3ManagerService      |
-| HPD [[ITI-58]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-58.html)                                    | /eprik-cara/camel/cara/HPD/services/HPDService                    |
-| HPD [[ITI-59]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-598.html)                                   | /eprik-cara/camel/cara/HPD/services/HPDService                    |
-| XUA [[ITI-40]](https://www.bag.admin.ch/dam/bag/de/dokumente/nat-gesundheitsstrategien/strategie-ehealth/gesetzgebung-elektronisches-patientendossier/gesetze/anhang_5_ergaenzung_1_epdv_edi_ausgabe_4.pdf.download.pdf/EPDV-EDI_Anhang_5_E1_DE_Ausgabe_4.pdf)       | /eprik-cara/camel/cara/STS/services/SecurityTokenService          |
-| TCU SAML2               | /eprik-cara/camel/tcu                        |
-| ATNA [[ITI-20]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-20.html) <br/>    | atna.ikit.cara.ch:8080 or :80 (currently 83.228.202.234) unsecured TCP according to [RFC5425](https://www.rfc-editor.org/rfc/rfc5425) |
+| XDS [[ITI-18]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-18.html)                                    | /dep/proxy/cara/Registry/services/RegistryService          |
+| XDS [[ITI-18]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-18.html) Initiating Gateway                 | /dep/proxy/cara/XCA/services/InitiatingGatewayService      |
+| XDS [[ITI-41]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-41.html)                                    | /dep/proxy/cara/Repository/services/RepositoryService      |
+| XDS [[ITI-43]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-43.html)                                    | /dep/proxy/cara/Repository/services/RepositoryService      |
+| XDS [[ITI-43]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-43.html) Initiating Gateway                 | /dep/proxy/cara/XCA/services/InitiatingGatewayService           |
+| XDS MU [[ITI-57]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-57.html)                                 | /dep/proxy/cara/Registry/services/RegistryService          |
+| XDS RMU [[ITI-92]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-92.html)                                | /dep/proxy/cara/Registry/services/RegistryService          |
+| XDS-I RAD [[ITI-69]](https://www.ihe.net/uploadedFiles/Documents/Radiology/IHE_RAD_TF_Vol2.pdf)        | /dep/proxy/cara/Repository/services/RepositoryService      |
+| PIX V3 [[ITI-44]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-44.html)                                 | /dep/proxy/cara/UPIProxy/services/PIXPDQV3ManagerService   |
+| PIX V3 [[ITI-44]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-44.html)                                 | /dep/proxy/cara/UPIProxy/services/PIXV3ManagerService      |
+| PIX V3 [[ITI-45]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-45.html)                                 | /dep/proxy/cara/UPIProxy/services/PIXPDQV3ManagerService   |
+| PIX V3 [[ITI-45]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-45.html)                                 | /dep/proxy/cara/UPIProxy/services/PIXV3ManagerService      |
+| PDQ V3 [[ITI-47]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-47.html)                                 | /dep/proxy/cara/UPIProxy/services/PIXPDQV3ManagerService   |
+| PDQ V3 [[ITI-47]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-47.html)                                 | /dep/proxy/cara/UPIProxy/services/PDQV3ManagerService      |
+| HPD [[ITI-58]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-58.html)                                    | /dep/proxy/cara/HPD/services/HPDService                    |
+| HPD [[ITI-59]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-598.html)                                   | /dep/proxy/cara/HPD/services/HPDService                    |
+| XUA [[ITI-40]](https://www.bag.admin.ch/dam/bag/de/dokumente/nat-gesundheitsstrategien/strategie-ehealth/gesetzgebung-elektronisches-patientendossier/gesetze/anhang_5_ergaenzung_1_epdv_edi_ausgabe_4.pdf.download.pdf/EPDV-EDI_Anhang_5_E1_DE_Ausgabe_4.pdf)       | /dep/proxy/cara/STS/services/SecurityTokenService          |
+| eCH-0213 (SEDEX Client / UPI Feed)       | /dep/proxy/cara/wsproxy/services/SpidManagementService         |
+| eCH-0214 (SEDEX Client / UPI Query)      | /dep/proxy/cara/wsproxy/services/SpidQueryService2          |
 
+
+
+ATNA [[ITI-20]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-20.html) <br/> atna.ikit.cara.ch:8080 or :80 (currently 83.228.202.234) unsecured TCP according to [RFC5425](https://www.rfc-editor.org/rfc/rfc5425) |
+
+For an IDP or TCU SAML2 assertion you can use [https://ikit.cara.ch/idp/](https://ikit.cara.ch/idp/) (in progress).
 
 You find an overview of the current relevant specifications and the associated links for the Swiss Electronic Patient
 Record EPR
