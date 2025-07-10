@@ -2,7 +2,7 @@
 
 !!! note
 
-    07.07.2025 ikit.cara.ch for emedo: This release  documents the integration with the emedo platform
+    07.07.2025 ikit.cara.ch for emedo: This release  documents the integration with the emedo platform and the documentaiton is in progress, currently ATNA/IdP/TCU integration is not yet working with the IKIT
 
 This documentation describes how the [Integration Kit](https://ikit.cara.ch/dep/) can be used to test
 the integration of a primary system with the [CARA](https://www.cara.ch/) integration system.
@@ -10,9 +10,6 @@ the integration of a primary system with the [CARA](https://www.cara.ch/) integr
 CARA offers different services:
 
 - EPR [https://portal.test.emedo.ch](https://portal.test.emedo.ch/login)
-- Transferts [https://b2b.cara.int.post-ehealth.ch/](https://b2b.cara.int.post-ehealth.ch/).
-- PMP (eMedication
-  Service) [https://cara-ch.github.io/emed-service-guide/](https://cara-ch.github.io/emed-service-guide/)
 
 To access the integration system you will need to sign a contract/CGUE with [CARA](https://www.cara.ch/) and provide an
 OID concept for your organization,
