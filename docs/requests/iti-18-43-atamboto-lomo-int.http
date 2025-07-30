@@ -90,7 +90,7 @@ Content-Type: application/soap+xml;charset=UTF-8
 
 #name iti43
 POST https://ws.epr.cara.int.post-ehealth.ch/Repository/services/RepositoryService HTTP/1.1
-Content-Type: multipart/related; boundary="uuid:f42c35e4-54b2-45ca-8fda-ed58b11f6fce";type="application/xop+xml";
+Content-Type: multipart/related; boundary=uuid:f42c35e4-54b2-45ca-8fda-ed58b11f6fce;type="application/xop+xml";
 
 --uuid:f42c35e4-54b2-45ca-8fda-ed58b11f6fce
 Content-Type: application/xop+xml; charset=UTF-8; type="application/soap+xml"

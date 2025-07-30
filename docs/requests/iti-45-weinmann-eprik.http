@@ -32,7 +32,7 @@ Content-Type: application/soap+xml;charset=UTF-8
             <responsePriorityCode code="I"/>
             <parameterList>
                 <dataSource>
-                    <value root="2.16.756.5.30.1.191.1.0.2.1"/>
+                    <value root="2.16.756.5.30.1.177.2.2.1.1"/>
                     <semanticsText>DataSource.id</semanticsText>
                 </dataSource>
                 <dataSource>
@@ -40,7 +40,7 @@ Content-Type: application/soap+xml;charset=UTF-8
                     <semanticsText>DataSource.id</semanticsText>
                 </dataSource>
                 <patientIdentifier>
-                    <value extension="P003" root="2.16.756.5.30.1.191.999.10"/>
+                    <value extension="A001" root="2.16.756.5.30.1.145"/>
                     <semanticsText>Patient.id</semanticsText>
                 </patientIdentifier>
             </parameterList>

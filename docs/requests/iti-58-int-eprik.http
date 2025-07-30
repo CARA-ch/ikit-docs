@@ -100,7 +100,7 @@ content-type: application/soap+xml; charset=UTF-8
             <searchRequest dn="ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases" sizeLimit="0" timeLimit="0" typesOnly="false" requestID="1">
 				<filter>
 						<substrings name="hcRegisteredName">
-							<initial>ahdis ag</initial>
+							<initial>Stargate</initial>
 						</substrings>
 				</filter>
 				<attributes>

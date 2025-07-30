@@ -24,16 +24,10 @@ Please find below additional information relevant for CARA and IKIT:
 
 ## 1. Integrate the strong authentication into the primary system with and IdP
 
-Authenticate a user at an identity provider certified for the Swiss EPR. Primary systems need to use this transaction to
-retrieve a IdP assertion. The IdP assertion is required to retrieve the XUA Assertion to be used with EPR transactions.
-See detailed description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/AuthenticateUser.md).
-
-See IKIT example
-for [AuthnRequest](https://test.ahdis.ch/eprik-cara/#/transaction/bd0e0019-53f1-4525-9bd2-3164ce79162c)
-and [ArtifactResolve](https://test.ahdis.ch/eprik-cara/#/transaction/0d4c9995e29edd8b7475e4562534f7ad503ee4cc).
-
 If you have a test user you can [use the IdP Assertion from IKIT](usecases/#use-the-idp-assertion-from-eprik) until you
-have done the IdP integration yourself.
+have done the IdP integration yourself. 
+
+Note: The NameID has to be currently registered manually on the plattform, please contact us if you want to use strong authentication.
 
 ## 2. Search for patients in the community
 
@@ -71,8 +65,7 @@ description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/fil
 
 IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/2d69a46b-7a85-4b9d-9248-088ab97ff450).
 This example search is done on the family name, other demographics query parameters are possible. Please note that Swiss
-Extension requires that an error is returned if more than 5 matched would be returned, but on integration system this is currently 
-not the case [#1](https://github.com/CARA-ch/ikit-docs/issues/1).
+Extension requires that an error is returned if more than 5 matched are returned.
 
 You need to provide creationTime, sender OID and receiver OID in addition to the query parameters in the request. For the communication you need a client
 certificate but with IKIT a client certificate is not necessary.
@@ -85,17 +78,16 @@ Register a patient in a community. Primary systems need to use this transaction 
 able to provide and retrieve documents to the patients EPR. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/PIXFeed.md).
 
-IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/bab59fe9-d03a-465d-a896-405290a927d9).
-This example registers the local id from the primary system P003 of the patient identity domain 2.16.756.5.30.1.191.999.10
-in the MPI. You need to provide creationTime, sender OID and receiver OID in addition to the patient parameters (
+IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/3d201f25-1a7a-415f-ae49-3b90be4a3c1f).
+This example registers the local id from the primary system A001 of the patient identity domain 2.16.756.5.30.1.145
+in the MPI. You need to provide creationTime, sender OID and receiver OID in addition to the patient parameters
 EPR-SPID, MPI-ID) in the request. For the communication you need a client certificate, but with IKIT a client
 certificate is not necessary.
-
 
 !!! danger
 
     Never feed a patient identifier with a domain that is not yours, and especially a domain equal to the configured
-    receiver OID of the platform. It would make the patient unreachable from PDQ queries.
+    receiver OID of the platform. It would make the patient unreachable from PDQ queries. The OID (patient assigning authority) needs to be configured first, otherwise it will give an error.
 
 ### 3.2 Query MPI-PID and EPR-SPID based on local ID
 
@@ -103,63 +95,75 @@ The primary systems needs to query the master patient ID (MPI-ID) for patients t
 based on the local id registered above. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/PIXQuery.md).
 
-IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/94e3f233-8019-46fa-8bf6-c0cb53327a81).
+IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/c51533bc-e10f-4235-89ee-2e4e7592c417).
+
+You see in the response that the patient has the MPI-PID 100001143 in 2.16.756.5.30.1.177.2.2.1.1 .
 
 ## 4. Query and retrieve documents for a patient from the EPR
 
 ![Sequence diagram for searching and retrieving documents](img/search_and_get.svg)
 
 This sequence diagram shows the search and retrieval of documents.
-Searching documents in CARA is described in section 4.2a, searching in other communities is described in section 4.2b.
+Searching documents in emedo is described in section 4.2a, searching in other communities is described in section 4.2b.
 Retrieving a document is described in sections 4.3a and 4.3b, depending on the community.
 The PIXv3 query is shown as a reminder.
 For these calls, another mandatory step is the Get X-User Assertion call to get a XUA token from the EPR.
 
 ### 4.1 Authorization
 
-To query and retrieve documents the HCP needs to be authorized based on the IdP token, the patient (resourceID with
+To query and retrieve documents the HCP needs to be authorized based on the IdP or TCU token, the patient (resourceID with
 EPR-SPID), purposeOfUse (NORM, EMER) and role (HCP).
 See detailed description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/GetXAssertion.md).
 
 IKIT
-example [request, response](https://test.ahdis.ch/eprik-cara/index.html#/transaction/a6b31484-c1d4-4701-9f0d-58e837e9eab6).
+example [request, response](https://ikit.cara.ch/dep/#/transaction/49e3463f-596a-402a-b45c-b1ad2234b131).
 
-Example STS requests with [IdP](requests/sts-eprik.http) or [IKIT-httpheader](requests/sts-idp-httpheader-eprik.http).
+Example STS requests with [IdP](requests/sts-ikit.http).
 
-### 4.2a Query documents from the CARA community
+### 4.2a Query documents from the community
 
-Retrieve the document metadata for the documents stored in a patients EPR for the CARA community. See detailed
+Retrieve the document metadata for the documents stored in a patients EPR for the  community. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/RegistryStoredQuery.md).
 
-IKIT example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/3ece4177-ab0a-47ab-9431-6ebad553aa75).
+IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/46565ff4-bc8e-4489-8394-325cb2ba499d).
 For the Query the MPI-ID of the patient needs to be added. This example requests includes the security token necessary.
+
 With the IKIT you can do the user authentication there and reuse the
 token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
 IKIT a client certificate is not necessary.
 
+Note 1: You need to add two namespace prefix to your XDS request if you copy the assertion into your request (add xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s="http://www.w3.org/2001/XMLSchema" to wsse:Security).
+
 ### 4.2b Query documents from remote communities
 
 To retrieve the document metadata for the documents stored in a patients EPR but registered in remote communities, the
-initiating gateway has to be called with an IIT-18 query. IKIT
-example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/c2e8503a-97c6-4446-b233-155d57cf8e5e).
-Gassmann has an example document in the remote community urn:oid:2.16.756.5.30.1.177.1.0.
+initiating gateway has to be called with an IIT-18 query. 
+
+IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/3de59826-9d00-49b8-ba8b-3810fdb721d9).
+Gassmann has also documents in the remote community (cara-ith) urn:oid:urn:oid:2.16.756.5.30.1.191.1.0
+
+See Note 1.
 
 ### 4.3a Retrieve documents from the CARA community
 
 To retrieve documents from a patients EPR the IHE XDS.b profile and transactions needs to be used. See detailed
 description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/files/RetrieveDocumentSet.md).
 
-IKIT example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/62065f91-91ec-4125-9dd8-aa8f3d90027a).
+IKIT example [request,response](https://ikit.cara.ch/dep/#/transaction/60ab92ac-d1f2-4548-9a4d-764b9e0becd2).
 With IKIT you can do the user authentication there and reuse the
 token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
 IKIT a client certificate is not necessary. You will need to add the HomeCommunityId, RepositoryUniqueId and
 DocumentUniqueId.
 
+Note 2: You need to add a start-info to the Content-Type header (e.g: Content-Type: multipart/related; boundary=uuid:f42c35e4-54b2-45ca-8fda-ed58b11f6fce;type="application/xop+xml"; start-info="application/soap+xml; charset=utf-8") as well as check Note 1.
+
 ### 4.3b Retrieve documents from remote communities
 
 To retrieve the documents stored in remote communities, the initiating gateway has to be called with an ITI-43 query
 with the homeCommunityId added from result 4.2b. IKIT
-example [request, response](https://test.ahdis.ch/eprik-cara/#/transaction/b5e221c3-7f83-4418-a53d-1bfbe3500ad5).
+example [request, response](https://ikit.cara.ch/dep/#/transaction/1ea6f104-a8c8-432e-ae07-523b0066149a).
+
+See Note 1 & 2.
 
 ## 5. Publish documents for a patient by a healthcare professional
 
@@ -194,6 +198,8 @@ Ratchawat (secret: EPR-SPID 761337610888245779)
 
 ### metadata in portal
 
+TODO: 
+
 The portal displays the metadata provided in the publication. The patient name is only visible if it is provided in
 PID-5
 in [sourcePatientInfo](https://profiles.ihe.net/ITI/TF/Volume3/ch-4.2.html#4.2.3.2.23). [example](https://test.ahdis.ch/eprik-cara/#/transaction/e1159556-36e9-41c1-b9d4-740d21d0bf8b)
@@ -212,17 +218,18 @@ You are required to create a client certificate for this technical user and let 
 the [developer platform](https://developer.post.ch/en/e-health/basic-epr-workflows) for exact steps.
 
 IKIT allows you to work with a specific test technical user during integration. You can get the TCU IdP SAML2 assertion
-from [here](https://test.ahdis.ch/eprik-cara/camel/tcu). This assertion is valid for 10 minutes. With this assertion you
+from [here](https://ikit.cara.ch/idp/). This assertion is valid for 10 minutes. With this assertion you
 can get then the XUA (STS) token for the XDS requests, for the urn:e-health-suisse:principal-id you need to put the GLN
-to 2000040030829 when using IKIT's technical user.
-[example](https://test.ahdis.ch/eprik-cara/#/transaction/e1159556-36e9-41c1-b9d4-740d21d0bf8b)
+to 2012345681729 when using IKIT's technical user EPR INT Emedo Frehner.
+[example](https://ikit.cara.ch/dep/#/transaction/84a97266-e842-43f1-956a-80f0a96eb511)
 
 ### change metadata of existing documents (2.223)
 
+TODO new platform:
 If a document has been added the metadata can be changed with the IHE Restricted Metadata Update
 Profile [(RMU)](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_RMU.pdf). See an example message here,
 where the document title
-is [changed](https://test.ahdis.ch/eprik-cara/index.html#/transaction/d6e2b67b-8f0f-44ca-b7f0-36e56391922c). A new
+is [changed](TODO https://test.ahdis.ch/eprik-cara/index.html#/transaction/d6e2b67b-8f0f-44ca-b7f0-36e56391922c). A new
 ITI-18 query shows the
 changed [title (Line 312)](https://test.ahdis.ch/eprik-cara/index.html#/transaction/6ab0d5fb-6c20-4ee1-ae83-d82fbbf1ec32).
 If you are working with a Technical User you would need to store the DocumentEntry including entryUUID during the
@@ -240,6 +247,7 @@ addition of a specific `Association` element that shows which document is to be 
                  id="(a unique id)"/>
 ```
 
+TODO new platform:
 IKIT example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/5e770d0b-db8c-4fda-8ed5-8a2128a162c8).
 
 ### Using entryUUIDs
@@ -327,4 +335,4 @@ TODO
 | MPI OID Patient           | 2.16.756.5.30.1.177.2.2.1.1         | TODO                               |
 | HL7 v3 Receiver Device ID PIX V3 | 2.16.756.5.30.1.177.2.2.1.1.3       | 2.16.756.5.30.1.177.2.2.2.1.3   |
 | HL7 v3 Receiver Device ID PDQ V3 | 2.16.756.5.30.1.177.2.2.1.1.7       | 2.16.756.5.30.1.177.2.2.2.1.7    |
-| Repository unique ID      | TODO                                |                                    |
+| Repository unique ID      | 2.16.756.5.30.1.177.2.2.1.1.2                   |                                    |

@@ -1,4 +1,4 @@
-### Need first to get an IDP Token, use https://test.ahdis.ch/eprik-cara/ to Login
+### Need first to get an IDP Token, use https://test.ahdis.ch/eprik-cara/ to Login and replace <saml2:assertion> below
 
 ### STS with
 POST https://ikit.cara.ch/dep/proxy/cara/ahdis/STS/services/SecurityTokenService HTTP/1.1
@@ -8,7 +8,6 @@ Content-Type: application/soap+xml;charset=UTF-8
    <env:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
       <wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>
    <wsa:MessageID>6ed3440a-0164-49c4-b9d2-235422819e90</wsa:MessageID><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
-   
    
 <saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" ID="Assertion_dcfb3527c1f94653d2a9e8d016ef899757469a17" IssueInstant="2025-07-29T08:24:10.772Z" Version="2.0"><saml2:Issuer>test.epr.fed.hin.ch</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#Assertion_dcfb3527c1f94653d2a9e8d016ef899757469a17"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"><ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="xs"/></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>krtCTU+K3yVWbG7UGJSUW7VzMS3udMjLhuA2+E99B3w=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>Ac492bH/8EbSzZBU7wk1VUqaj3bV/rqoHFPMOxJD71R1JSPVS7IzWEpcp3ZMaoWA7QdOLtKB4e+2O9OPdGGfFOYl9Qaf+++iF2ZTS9/nryJ2Orvzcp1dH4dHYOrk6rF9nAR3jGzyoh09nAPPx4dtg7xxTSD8vc3fDxWV08nWkBiBdh7RcoqFi0agxO/ZTrel1RX0Q9VeFz1ER2PnI/c9uT5nOtgPbQtjkkCc5vbKFCVkX0KBemIadgpAs7sAStnuoNPALZyHU0ABJnxMbDxVQHrvnBlYT2QXBVJVXse7w+DaoM7blDzlrW9Jym01lDJ5O3vzMXISk2B3ezxvdeWoW+1E6lMmTT+W7wYVFXWdCdgADo3S4giMtgW9+Y0kWpR0HFOQHpYAKqCW80Y7Qufn4TWjylJG4n6SXUGzjhPvYR8iWNO8dmnUSteqMyKgEV9+BCpTfzdT6WNj5GXI0K0DstA4ngCb406H2GldEfSuN3kOLE6WvlOHL4E/0fwOSJdpHWUo1l08IFZnoNTF1Xou2ldMVxGMT10KhG/T+OoId3OrNzUvizJHN1AlFYp7lurHqhK1+H/3Hq9civ+A7DgUSj7pkBgdzDPrljs0x1q7SAD9e2+P5lbKSh9iYDB+NRo7uZQsKqbdafIvDouamEvdAEPrNMvcVgaDik+QUIufGvk=</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIJhzCCB2+gAwIBAgIUH59ByS0i0pPqdarzE2uaUOaCBM8wDQYJKoZIhvcNAQELBQAwVjELMAkG
 A1UEBhMCTkwxIDAeBgNVBAoMF1F1b1ZhZGlzIFRydXN0bGluayBCLlYuMSUwIwYDVQQDDBxRdW9W

@@ -2,7 +2,7 @@
 
 !!! note
 
-    07.07.2025 ikit.cara.ch for emedo: This release  documents the integration with the emedo platform and the documentaiton is in progress, currently ATNA/IdP/TCU integration is not yet working with the IKIT
+    07.07.2025 ikit.cara.ch for emedo: This release  documents the integration with the emedo platform and the documentation is in progress, currently ATNA/IdP integration is not yet working with the IKIT
 
 This documentation describes how the [Integration Kit](https://ikit.cara.ch/dep/) can be used to test
 the integration of a primary system with the [CARA](https://www.cara.ch/) integration system.
@@ -11,8 +11,11 @@ CARA offers different services:
 
 - EPR [https://portal.test.emedo.ch](https://portal.test.emedo.ch/login)
 
-To access the integration system you will need to sign a contract/CGUE with [CARA](https://www.cara.ch/) and provide an
-OID concept for your organization,
+To access the integration system you will need to sign a contract/CGUE with [CARA](https://www.cara.ch/) and provide
+
+- an OID concept for your organization,
+- define a OID for the patient assigning authority (needs to be configured manually by emedo/ofac)
+
 in return you will get:
 
 - an HCP test user for which you need an online authentication yourself (e.g. HIN ID) and connect that HCP test user
@@ -24,7 +27,7 @@ This will allow you to start the integration of the primary system.
 The [Integration Kit](https://ikit.cara.ch/dep/) (short **IKIT**) provides the
 following [functionality](usecases.md):
 
-- Authenticate an User and obtain an IdP assertion
+- Authenticate an User and obtain an IdP assertion or a TCU assertion
 - Proxy and log IHE transactions without client certificates and with basic validation of request / response
 
 <figure markdown>
@@ -155,8 +158,3 @@ curl -v --cert cert.pem --key private_key.key  \
 In case of success, you will see the content of the "HTTP 404 - Not Found" page of EMEDO.
 In case of error, you may see an error like "_curl: (56) OpenSSL SSL_read: error:14094410:SSL 
 routines:ssl3_read_bytes:sslv3 alert handshake failure, errno 0_".
-
-!!! warning
-
-    We had errors testing the Webservices connection with `openssl`, although it is working fine for the Syslog 
-    connection at the same time.

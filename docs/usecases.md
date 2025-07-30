@@ -70,20 +70,14 @@ For document access you need to have an assertion which is based on a IdP token.
 assertion which you can use for retrieving the SAML2 assertion token if your primary system is not integrated yet with
 the IdP.
 
-Authenticate with your Identity Provider. If you are authenticated successfully you can add either add
-the IdP Token directly to your request or reference it it via the HTTP header (replace x-eprik-idp-assertion-id with
-value received after authenticating).
+Authenticate with your Identity Provider. 
 
-reference IdP Token with [HTTP header](requests/sts-idp-httpheader-eprik.http):
+For web authenticated users you can get the IdP token through: https://test.ahdis.ch/eprik-cara/ and use Login: ... 
 
-```bash
-curl --request POST \
-  --url https://test.ahdis.ch/eprik-cara/camel/cara/STS/services/SecurityTokenService \
-  --header 'content-type: application/soap+xml;charset=UTF-8' \
-  --header 'user-agent: vscode-restclient' \
-  --header 'x-eprik-idp-assertion-id: 4790' \
-  --data '<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"><env:Header xmlns:wsa="http://www.w3.org/2005/08/addressing"><wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action><wsa:MessageID>6ed3440a-0164-49c4-b9d2-235422819e90</wsa:MessageID><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"></wsse:Security></env:Header><env:Body><wst:RequestSecurityToken xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512"><wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType><wsp:AppliesTo xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"><wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing"><wsa:Address>https://test.ahdis.ch/mag-cara</wsa:Address></wsa:EndpointReference></wsp:AppliesTo><wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType><wst:Claims Dialect="http://www.bag.admin.ch/epr/2017/annex/5/amendment/2"><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:resource:resource-id"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">761337613645876216^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xspa:1.0:subject:purposeofuse"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType"><PurposeOfUse xmlns="urn:hl7-org:v3" code="NORM" codeSystem="2.16.756.5.30.1.127.3.10.5" codeSystemName="eHealth Suisse Verwendungszweck" displayName="Normal Access" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:subject:role" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema"><Role xmlns="urn:hl7-org:v3" code="HCP" codeSystem="2.16.756.5.30.1.127.3.10.6" codeSystemName="eHealth Suisse EPR Akteure" displayName="Healthcare professional" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute></wst:Claims></wst:RequestSecurityToken></env:Body></env:Envelope>'
-```
+Note1: This is a temporary workaround until https://ikit.cara.ch/idp/ has integrated support for HIN and TrustID
+Note2: If you use https://test.ahdis.ch/eprik-cara with HinId or Trust Id the NameId would be to adapted in emedo currently
+
+If you are authenticated successfully you can add the IdP Token directly to your requests.
 
 !!! danger
 

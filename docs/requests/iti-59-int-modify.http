@@ -14,20 +14,12 @@ content-type: application/soap+xml; charset=UTF-8
 	</soap:Header>
    <soap:Body>
       <batchRequest requestID="12345" xmlns="urn:oasis:names:tc:DSML:2:0:core">
-         <modifyRequest dn="uid=EMEDOINT:12345,ou=HCProfessional,dc=HPD,o=BAG,c=CH" requestID="54321">
-            <modification name="hcIdentifier" operation="add">
-               <value>EMEDOINT:localId:1234566666:active</value>
-            </modification>
-            
-            <modification name="title" operation="delete"/>
-            
-            <modification name="telephoneNumber" operation="replace">
-            	<value>076 371 42 20</value>
-            </modification>
-            
+         <modifyRequest dn="uid=CARAINT:1729007208102,ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH" requestID="54321">
+            <modification name="hcIdentifier" operation="replace">
+               <value>RefData:OID:1.9.1:ACTIVE</value>
+            </modification>                        
          </modifyRequest>
       </batchRequest>
-
    </soap:Body>
 </soap:Envelope>
 
