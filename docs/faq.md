@@ -28,6 +28,24 @@ tag [source](https://profiles.ihe.net/ITI/TF/Volume2/ch-V.html#Appendix%20V:~:te
 with linebreaks you get an HTTP 500 error (currently the EPR Integration kit shows it all the time wrapped, verify it
 with download request).
 
+### STS error
+
+Problem generating STS [see request](https://ikit.cara.ch/dep/#/transaction/6889628d-6f9c-4e87-805f-088964e8a0e4):
+
+```
+<![CDATA[ERROR <Ens>ErrBPTerminated: Terminating BP BINT.AD.XUA.Process.AssertionProviderProcess # due to error: ERROR #5002: ObjectScript error: <SUBSCRIPT>GetGroupsForHCP+20^BINT.AD.XUA.WebServices.1 *tGroupsArr() Subscript 1 is "" > ERROR #5002: ObjectScript error: <SUBSCRIPT>GetGroupsForHCP+20^BINT.AD.XUA.WebServices.1 *tGroupsArr() Subscript 1 is ""]]>
+```
+
+Check that the HPD organization has the hcIdentifier capitalized as the following:
+
+```xml
+         <attr xsi:type="s01:DsmlAttr" name="hcIdentifier">
+            <value xsi:type="s01:DsmlValue">RefData:OID:1.9.1:ACTIVE</value>
+          </attr>
+```
+
+(before it was refdata:oid:1.9.1:active)
+
 ### STS error 500 with TCU
 
 if some STS TCU requests work and some not, check that you are in sync with the NTP time server, even below second
@@ -57,7 +75,10 @@ identifier to the patient and CARA needs to clean it manually.
 ### IdP HIN ID
 
 1. you need to have a GLN assigned to the HIN user that, otherwise the STS [ITI-40] will not work since the NameID is
-   not known
+   not known -> GLN not supported yet by emedo, you will receive an error message with:
+
+   Terminating BP BINT.AD.XUA.Process.AssertionProviderProcess # due to error: ERROR #5001: Failed to load user:HIN_8a48175e776d770c414b37f1236b4a03553f6da1a94ccb7d990fe3c1b75941c1
+
 2. the test HIN ID expires after six months
 
 ### IdP TRUST ID
