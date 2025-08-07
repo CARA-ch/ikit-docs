@@ -37,7 +37,9 @@ for IKIT instead of CARA INT for an EPR integration:
 
 
 
-ATNA [[ITI-20]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-20.html) <br/> atna.ikit.cara.ch:8080 or :80 (currently 83.228.202.234) unsecured TCP according to [RFC5425](https://www.rfc-editor.org/rfc/rfc5425) |
+### ATNA [[ITI-20]](https://profiles.ihe.net/ITI/TF/Volume2/ITI-20.html) 
+
+atna.ikit.cara.ch:8080 or :80 (currently 83.228.202.234) unsecured TCP according to [RFC5425](https://www.rfc-editor.org/rfc/rfc5425) (no TLS supported) |
 
 For an IDP or TCU SAML2 assertion you can use [https://ikit.cara.ch/idp/](https://ikit.cara.ch/idp/) (in progress).
 
