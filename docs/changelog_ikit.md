@@ -1,3 +1,17 @@
+## Version 2.0.1 - 25/08/2025
+
+- Ignore HTTP traffic sent on the syslog port #133.
+- Handle null bytes in syslog messages.
+- Fixed syslog proxying errors that were not displayed in the frontend.
+- Many improvements of the syslog listener.
+
+## Version 2.0.0 - 01/08/2025
+
+- Refactor of the IKIT to support multiple deployment (one per proxied service)
+- IdP integration has been moved to its own project
+- Implement support for the traceparent header
+- Various improvements
+
 ## Version 1.2.11 - 06/09/2024
 
 - Made the recipient list load faster.
