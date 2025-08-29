@@ -8,32 +8,33 @@ POST https://adapter.test.emedo.ch/STS/services/SecurityTokenService HTTP/1.1
 POST https://ikit.cara.ch/dep/proxy/cara/ahdis/STS/services/SecurityTokenService HTTP/1.1
 Content-Type: application/soap+xml;charset=UTF-8
 
-<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+<<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
    <env:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
       <wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>
    <wsa:MessageID>6ed3440a-0164-49c4-b9d2-235422819e90</wsa:MessageID><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
 
-<saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="Assertion_f3c14d29-f596-4f15-a83d-4933ab3b6bf4" IssueInstant="2025-07-29T11:46:18.333Z" Version="2.0"><saml2:Issuer>urn:oid:2.16.756.5.30.1.191.999.10</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+>
+<saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="Assertion_d5793a6d-0f30-412a-8a3b-311f0a40128a" IssueInstant="2025-08-26T20:46:59.989Z" Version="2.0"><saml2:Issuer>urn:oid:2.16.756.5.30.1.191.999.10</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 <ds:SignedInfo>
 <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-<ds:Reference URI="#Assertion_f3c14d29-f596-4f15-a83d-4933ab3b6bf4">
+<ds:Reference URI="#Assertion_d5793a6d-0f30-412a-8a3b-311f0a40128a">
 <ds:Transforms>
 <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
 <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 </ds:Transforms>
 <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-<ds:DigestValue>sGztwt+lEX7M8RD4sdv9zmzq8trfpo7dhX0DKuGGaAs=</ds:DigestValue>
+<ds:DigestValue>Qol2YRX5FnSrKM/O9NbzfGo+l0Ad6cd06Tq309ReQLU=</ds:DigestValue>
 </ds:Reference>
 </ds:SignedInfo>
 <ds:SignatureValue>
-ZexE3bn66lbsGGZL2lKcG/R8q3J9OYfEMMOD6HczuyKyqCraXZ2Gjv8VvwnADeThSFIyQHmYEo8B&#13;
-CgRNELtZBixwDuYLhEShP50l56wkttoJFMKMH0G2gQ9YdS7CZQH5AXszWT+X7fK+mYBHSBW+BMNF&#13;
-J3P9VTARhgHzsz6gbu258U0YfGOUrlYYAjQ8+qTL0xuxmB4sN2EY5XDExwG14tdIbpnCfGBzzqzx&#13;
-94C5KmwZaQPwu/1vuEgP5WmWeKyyNu0yJP8RYP1YVqwwBl65vLU51IliQYZE45xh/kP5YqVYCpQR&#13;
-QZU1I/KCIIXXCiPQo/+94rgVv1CvyjuLx9NPIfiXzERW7pbiGoRdXJrHGVwaW7qMUAncPpjswTau&#13;
-qTDlC2tAApyC1raYlk6SmtpvYD3YLLlka3zzNFDa0mRF7J9SawfwgQxxtP4YEpd+Hxwbkfskzxe+&#13;
-f52H0clAsIba+qSbTd/zD9pWPoqm4n4qtRbC47OjuhXS9025qbTkf1EZ
+WlIZflQRP/AXYruq34Don1uAvHNdt7JP1i/6Hg0tf7sZNTSG8lp9HoRJC04oUUGF735q3aeo9YXv&#13;
+EY/9tkT72i0cpOrxrOpQ/5BLTrKDDToLuTTSOLlt24lPUf11qULpCDeJ25hbifE2KrZpat6Od0Vo&#13;
+OSWV0WADf9wRsAZmeYMOEdELvZuUeZY5+xbPPPMSR4PoWMA5kMAjgX+MVEZ6GtTtDgg7EuTtFPqY&#13;
+bCVl3YdvfmcEvMKuAzaavyqoOxDLdOUMpfcnnrexlJgeKz8Spx7d3SduswC7kiYPbfAW0Ruhpmd1&#13;
+3JMHsdn9aHe11wv78dbXGeigbXiaVwCRmIeF8riZptXEMp1fmvTqdvNj+tq3g8Krt0C8+z17stG9&#13;
+fqE5zeiyS4xKABXHi/jb5oWNJjS1sIFqracACXUdC+oEq9CaHjJvGGIjCt1SDMliqld4jQbQYgRS&#13;
+ym9v8fgPsd//laklrnKSDVQcXWOC0zsBXC7NQDYBjWs1KuiHpgAfmGjv
 </ds:SignatureValue>
 <ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIF7DCCBNSgAwIBAgIQAtkW5++akCVO2v2+bczREDANBgkqhkiG9w0BAQsFADBTMQswCQYDVQQG
 EwJVUzEWMBQGA1UEChMNRGlnaUNlcnQgSW5jLjEsMCoGA1UEAxMjRGlnaUNlcnQgUHJpdmF0ZSBT
@@ -64,9 +65,10 @@ hZKO9ZgHmhNxjILeOFZadgLyz0xFEj3zcVjN4RUomrhW7JrxfTrb8v0Z++mXZ59z+q47pPQjgSNG
 q3G8cwjVdVv/RDx+lL9wwPjPshgIZrSMYeoqBfQSGuA2BdMKhok=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject>
 <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">2.16.756.5.30.1.191.999.10</saml2:NameID>
     <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>
-</saml2:Subject><saml2:Conditions NotBefore="2025-07-29T11:46:18.333Z" NotOnOrAfter="2025-07-29T11:56:18.333Z"/><saml2:AuthnStatement AuthnInstant="2025-07-29T11:46:18.333Z" SessionNotOnOrAfter="2025-07-29T11:56:18.333Z"><saml2:AuthnContext>
+</saml2:Subject><saml2:Conditions NotBefore="2025-08-26T20:46:59.989Z" NotOnOrAfter="2025-08-26T20:56:59.989Z"/><saml2:AuthnStatement AuthnInstant="2025-08-26T20:46:59.989Z" SessionNotOnOrAfter="2025-08-26T20:56:59.989Z"><saml2:AuthnContext>
 <saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified</saml2:AuthnContextClassRef>
 </saml2:AuthnContext></saml2:AuthnStatement></saml2:Assertion>
+
 
    </wsse:Security></env:Header>
    <env:Body>

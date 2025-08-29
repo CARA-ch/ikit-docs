@@ -4,7 +4,17 @@ The following test patients are setup for the integration systems to test public
 For retrieval you will need to ask the integration community that you get read access for the patients for your health
 professional.
 
-### Test patients with CARA as home community
+### Test patients with CARA as home community emedo
+
+| **FirstName**         | **LastName**                  | **DateOfBirth** | **Gender** | **SSN**       | Comment                                                                  |
+|-----------------------|-------------------------------|-----------------|------------|---------------|--------------------------------------------------------------------------|
+| Romain Théophile      | ZELLER-ROBERT-NICOUD	        | 08.03.84        | M          | 7560741992116 |                                                                          |
+| Evelyne Muriel        | TESTA-MUSCIA                  | 12.01.74        | F          | 7560742155602 |                                                                          |
+| Larissa Bénédicte Albertine  | WEINMANN-HUGUENIN      | 30.05.13        | F          | 7560625139705 |                                                                          |
+
+
+### Test patients with CARA previous community 
+
 
 | **FirstName**         | **LastName**        | **DateOfBirth** | **Gender** | **SSN**       | Comment                                                                  |
 |-----------------------|---------------------|-----------------|------------|---------------|--------------------------------------------------------------------------|
