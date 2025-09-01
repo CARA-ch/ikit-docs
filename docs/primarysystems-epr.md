@@ -306,25 +306,25 @@ and relationship between them (_ou=Relationship_).
 With the [ITI-58](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can query the
 Healthcare Professional Directory (HPD) for the entries you are interested in.
 You can query entries with LDAP filters on LDAP attributes and select the attributes to return.
-[Example](https://ikit.cara.ch/dep/#/transaction/804e7064-f21a-4c7c-98f0-aeea2e0902d4), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-add.http).
+[Example](https://ikit.cara.ch/dep/#/transaction/5d0cb0d6-1dcc-41f6-9e92-504ae027a2d9).
 
 ### 7.2 Add an entry
 
 With the [ITI-59](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can add an
 entry to the HPD with an _addRequest_.
-[Example]https://ikit.cara.ch/dep/#/transaction/e71b48eb-d65a-4e01-b221-26b5e7c476e2), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-add.http).
+[Example](https://ikit.cara.ch/dep/#/transaction/620b0416-c372-4d0f-917d-e460fdefb3f7).
 
 ### 7.3 Modify an entry
 
 With the [ITI-59](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can update an
 entry in the HPD with a _modifyRequest_.
-[Example](https://ikit.cara.ch/dep/#/transaction/d85ac270-97d0-4915-9bcb-3a2d117a20d2), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-modify.http).
+[Example](https://ikit.cara.ch/dep/#/transaction/e22ec8aa-af81-48ab-8bb6-fbd605c5a83a).
 
 ### 7.4 Delete an entry
 
 With the [ITI-59](https://www.ihe.net/uploadedFiles/Documents/ITI/IHE_ITI_Suppl_HPD.pdf) transaction, you can delete an
 entry from the HPD with a _delRequest_.
-[Example](https://ikit.cara.ch/dep/#/transaction/3ecd8b6b-480c-4e1e-827c-598581296bfd), [request](https://github.com/CARA-ch/ikit-docs/blob/main/docs/requests/iti-59-int-delete.http).
+[Example](https://ikit.cara.ch/dep/#/transaction/01504df0-c60e-4f8b-96fb-4f00503a481a).
 
 ## 8. OID Configuration
 

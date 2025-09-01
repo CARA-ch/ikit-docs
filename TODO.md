@@ -1,7 +1,6 @@
 Platform testing todos
 ============
 
-
 - Manual configuration for IdPs for using STS Provider with [HIN](https://ikit.cara.ch/dep/#/transaction/18cf8487-927a-4b99-ab44-06beaf8541f8)
 - No Webservice CH:PPQ / CH:ATC or SVS  endpoint  
 
@@ -39,28 +38,11 @@ Verified and udpated IKIT requests
 - 5. Publish documents for a patient by a healthcare professional
 - 5.1 provide a document with a technical user (TCU)
 
-TCU works, problen when using a PDF as binary in MTOM/XOP, base64 works
-How does author needs to be specified that it appears in emedo?
-
 metadata:
- - check confidentiality code behaviour for publication on plattform (create two paitents with conf code (restricted accessible)	and secret
-   -> tested with zeller, does not work, needs still iteration
  - change metadata of existing documents (2.223)
  - replace documents
-
-TCU tested with Ludovic, works with caveats to also adapt STS response and add start-info
 
 - 7.1 Query entries
 - 7.2 Add an entry
 - 7.3 Modify an entry
 - 7.4 Delete an entry
-
-  All HPD transactions have been tested, need to add to POSTMAN collection
-
-
-  IdP integration
-  ===============
-
-  http header integration for Idp Token?
-
-   or [IKIT-httpheader](requests/sts-idp-httpheader-eprik.http)
