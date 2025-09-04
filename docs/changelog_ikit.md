@@ -1,3 +1,10 @@
+## Version 2.0.2 - 04/09/2025
+
+- Also match the CONNECT method when ignoring HTTP traffic on the syslog port (follow-up to #133).
+- More robust multipart highlighting #136.
+- Implement a custom STS validator for Emedo.
+- Implement a SAML assertion validator.
+
 ## Version 2.0.1 - 25/08/2025
 
 - Ignore HTTP traffic sent on the syslog port #133.
