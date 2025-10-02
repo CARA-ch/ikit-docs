@@ -18,7 +18,14 @@ indicate with a reasonOf/detectedIssueEvent entry that more specific search crit
 #### STS XUA token response for XDS calls
 
 The namespace declarations for xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' and xmlns:s='http://www.w3.org/2001/XMLSchema' are in the outer xml block in the response, meaning that if you extract the saml:Assertion by text it will be invalid xml without the above namespaces declared (this might not be the case if you reuse it directly). Verify for follow up requests that you have xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:s='http://www.w3.org/2001/XMLSchema' declared before.
-[example](https://ikit.cara.ch/dep/#/transaction/d95ed4e6-2e75-4926-b43b-129deb3c9b3d)
+[example](https://ikit.cara.ch/dep/#/transaction/d95ed4e6-2e75-4926-b43b-129deb3c9b3d). 
+
+In addition the display names for the coded claims have to be provided, otherwise a follow up usage of the token can fail (open issue EPR-1404: SAML token validation failure: saml2:Assertion/saml2:AttributeStatement/saml2:Attribute[@Name='urn:oasis:names:tc:xspa:1.0:subject:purposeofuse']/saml2:AttributeValue/PurposeOfUse@displayName attribute required)
+
+### HPD queries
+
+HPD queries need to have scope="wholeSubtree", singleLevel does not work.
+
 
 #### XDS
 
