@@ -31,6 +31,6 @@ Ensure that start-info is in the http content-type header: (e.g. content-type: m
 
 HPD queries need to have scope="wholeSubtree", singleLevel does not work.
 
-### XDS: ITI-18/43 Requests to Initiating Gateway sufficient (no Document Registry / Repository calls necessary)
+#### XDS: ITI-18/43 Requests to Initiating Gateway sufficient (no Document Registry / Repository calls necessary)
 
 An ITI-18 Query to the Initiating Gateway will return all document entries in all communities including document entries in the community of the Initiating Gateway. This means a separate request to the ITI-18 registry is not necessary, or otherwise duplicates would need to be filtered out. Equivalent an ITI-43 retrieve to the Initiating Gateway can handle also document retrieve within the own community, not only for the external communities. 
