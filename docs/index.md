@@ -12,7 +12,8 @@ the integration of a primary system with the [CARA](https://www.cara.ch/) integr
 
 CARA offers different services:
 
-- EPR [https://portal.test.emedo.ch](https://portal.test.emedo.ch/login)
+- EPR patient portal [https://portal.test.emedo.ch](https://portal.test.emedo.ch/login)
+- EPR professional portal [https://professional.test.emedo.ch/login](https://professional.test.emedo.ch/login)
 
 To access the integration system you will need to sign a contract/CGUE with [CARA](https://www.cara.ch/) and provide
 

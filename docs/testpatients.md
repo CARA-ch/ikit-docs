@@ -6,12 +6,14 @@ professional.
 
 ### Test patients with CARA as home community emedo
 
-| **FirstName**         | **LastName**                  | **DateOfBirth** | **Gender** | **SSN**       | Comment                                                                  |
-|-----------------------|-------------------------------|-----------------|------------|---------------|--------------------------------------------------------------------------|
-| Romain Théophile      | ZELLER-ROBERT-NICOUD	        | 08.03.84        | M          | 7560741992116 |                                                                          |
-| Evelyne Muriel        | TESTA-MUSCIA                  | 12.01.74        | F          | 7560742155602 |                                                                          |
-| Larissa Bénédicte Albertine  | WEINMANN-HUGUENIN      | 30.05.13        | F          | 7560625139705 |                                                                          |
+| **FirstName**         | **LastName**                  | **DateOfBirth** | **Gender** | **SSN**       | **EPR-SPID**        | **MPI_PID***  |
+|-----------------------|-------------------------------|-----------------|------------|---------------|---------------------|---------------|
+| Romain Théophile      | ZELLER-ROBERT-NICOUD	        | 08.03.84        | M          | 7560741992116 | 761337614242240684  | 100001177     |
+| Evelyne Muriel        | TESTA-MUSCIA                  | 12.01.74        | F          | 7560742155602 | 761337615140885281  | 100001181     |
+| Larissa Bénédicte Albertine  | WEINMANN-HUGUENIN      | 30.05.13        | F          | 7560625139705 | 761337612097656117  | 100001143     |
 
+
+761337615140885281
 
 ### Test patients with CARA previous community 
 

@@ -1,7 +1,6 @@
 Platform testing todos
 ============
 
-
 - Manual configuration for IdPs for using STS Provider with [HIN](https://ikit.cara.ch/dep/#/transaction/18cf8487-927a-4b99-ab44-06beaf8541f8)
 - No Webservice CH:PPQ / CH:ATC or SVS  endpoint  
 
@@ -32,21 +31,8 @@ Verified and udpated IKIT requests
   4.3b Retrieve documents from remote communities
   
   see above comments apply (prefix, start-info)
-  TODO need to add examples to POSTMAN collection
-
- check XCA abilis  https://ikit.cara.ch/dep/#/transaction/cb9fd22c-9e63-4bee-bf77-f812bc175660 No response from ABILIS_XCARetrieve
 
 - 5. Publish documents for a patient by a healthcare professional
-- 5.1 provide a document with a technical user (TCU)
-
-TCU works, problen when using a PDF as binary in MTOM/XOP, base64 works
-How does author needs to be specified that it appears in emedo?
-
-metadata:
- - check confidentiality code behaviour for publication on plattform (create two paitents with conf code (restricted accessible)	and secret
-   -> tested with zeller, does not work, needs still iteration
- - change metadata of existing documents (2.223)
- - replace documents
 
 TCU tested with Ludovic, works with caveats to also adapt STS response and add start-info
 
@@ -55,12 +41,7 @@ TCU tested with Ludovic, works with caveats to also adapt STS response and add s
 - 7.3 Modify an entry
 - 7.4 Delete an entry
 
-  All HPD transactions have been tested, need to add to POSTMAN collection
 
+TODO
+ - change metadata of existing documents (2.223)
 
-  IdP integration
-  ===============
-
-  http header integration for Idp Token?
-
-   or [IKIT-httpheader](requests/sts-idp-httpheader-eprik.http)
