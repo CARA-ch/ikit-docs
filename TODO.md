@@ -34,7 +34,7 @@ Verified and udpated IKIT requests
 
 - 5. Publish documents for a patient by a healthcare professional
 
-TCU tested with Ludovic, works with caveats to also adapt STS response and add start-info
+TCU tested with Ludovic and Oliver
 
 - 7.1 Query entries
 - 7.2 Add an entry
