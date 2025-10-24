@@ -1,3 +1,23 @@
+## Version 2.0.5 - 24/10/2025
+
+- Various frontend design improvements.
+- Enable XSD validation for ITI-41, ITI-43 and ITI-44 requests (#105).
+- Upgraded to Java 25 LTS.
+- Other dependency upgrades.
+
+## Version 2.0.4 - 23/10/2025
+
+- Re-enable the ITI-44 and ITI-45 validators (#141).
+- Using the AHVN13 instead of the EPR-SPID in ITI-44 is no longer a warning.
+- Implement validation of AHVN13 and EPR-SPID values in ITI-44 (#140).
+- Implement column resizing in the transaction list.
+- Implement validation of Content-Type header in MTOM/XOP requests (#135).
+- Implement XSD validation for ITI-18, ITI-45 and ITI-47 requests (#105).
+
+## Version 2.0.3 - 09/09/2025
+
+- Fix the STS validator.
+
 ## Version 2.0.2 - 04/09/2025
 
 - Also match the CONNECT method when ignoring HTTP traffic on the syslog port (follow-up to #133).
