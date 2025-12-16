@@ -1,3 +1,28 @@
+## Version 2.0.9 - 16/12/2025
+
+- Fix validation of Content-Type headers in multipart SOAP messages (#158).
+- Update ATNA validators of Gazelle (#157).
+- Hide 'external validation not run' message when there's no external validator (#156).
+
+## Version 2.0.8 - 05/12/2025
+
+- Ignore more spammy requests on the syslog socket (#154).
+
+## Version 2.0.7 - 28/11/2025
+
+- Fix extraction of HTTP headers in message validation.
+- Various technical improvements.
+
+## Version 2.0.6 - 03/11/2025
+
+- Fix loading of custom validators (#149).
+- 'External validation not run' message is now an info message instead of a warning (#147).
+- Don't validate ActiveParticipants for 'Application activity' ATNA Audit Messages (#146).
+- Fix analysis of SOAP 1.1 messages (#145).
+- Improve handling of null bytes in syslog messages (#150).
+- Display a proper error message when the SAML assertion doesn't contain the signing certificate in KeyInfo (#152).
+- Fix improper validation error in ITI-41 request (#153).
+
 ## Version 2.0.5 - 24/10/2025
 
 - Various frontend design improvements.
