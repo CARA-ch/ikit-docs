@@ -1,3 +1,8 @@
+## Version 2.0.10 - 21/01/2026
+
+- Add validation of `DocumentEntry.title` in ITI-41 (#161).
+- Improve validation of GetDocumentList, DeleteDocumentList and SubmitDocuments transactions.
+
 ## Version 2.0.9 - 16/12/2025
 
 - Fix validation of Content-Type headers in multipart SOAP messages (#158).
