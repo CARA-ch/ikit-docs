@@ -1,3 +1,7 @@
+## Version 2.0.11 - 22/01/2026
+
+- Fix the XML Schema of the SubmitDocuments transaction (#162).
+
 ## Version 2.0.10 - 21/01/2026
 
 - Add validation of `DocumentEntry.title` in ITI-41 (#161).
