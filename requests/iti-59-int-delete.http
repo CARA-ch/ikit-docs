@@ -1,0 +1,40 @@
+### Delete an entry
+
+### Modify an healthcare professional
+
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationFeed</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:9a770a33-15af-41b2-94a1-d2c3fa340813</MessageID>
+		<To xmlns="http://www.w3.org/2005/08/addressing">https://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService</To>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+      <soap:Body>
+        <batchRequest requestID="1234" xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <delRequest dn="uid=EMEDOINT:12345,ou=HCProfessional,dc=HPD,o=BAG,c=CH" requestID="54321"/>
+        </batchRequest>
+    </soap:Body>
+</soap:Envelope>
+
+###
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+accept: */*
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:oasis:names:tc:DSML:2:0:core">
+    <soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+        <wsa:Action>urn:ihe:iti:2010:ProviderInformationFeed</wsa:Action>
+        <wsa:MessageID>uuid:a5502416-e3b1-11ed-a92d-da66d518a963</wsa:MessageID>
+        <wsa:To>http://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService</wsa:To>
+    </soap:Header>
+    <soap:Body>
+        <batchRequest requestID="1234" xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <delRequest dn="cn=relation1234,ou=Relationship,DC=HPD,O=CARA,C=CH" requestID="54321"/>
+        </batchRequest>
+    </soap:Body>
+</soap:Envelope>

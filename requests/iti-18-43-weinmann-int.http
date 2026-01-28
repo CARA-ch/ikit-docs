@@ -1,0 +1,129 @@
+### Need first to get an IDP Token, use https://test.ahdis.ch/eprik-cara/ to Login and copy saml2 asseriton on Line 6
+# @name sts
+ 
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/STS/services/SecurityTokenService HTTP/1.1
+Content-Type: application/soap+xml;charset=UTF-8
+
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+   <env:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+      <wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>
+   <wsa:MessageID>6ed3440a-0164-49c4-b9d2-235422819e90</wsa:MessageID><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+
+<saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" ID="Assertion_7f211c9345112c6906f304509b2443851e7a5dd1" IssueInstant="2025-07-29T14:41:07.957Z" Version="2.0"><saml2:Issuer>test.epr.fed.hin.ch</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#Assertion_7f211c9345112c6906f304509b2443851e7a5dd1"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"><ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="xs"/></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>GDBwzJNVoaSpYsEyIjUWz5DZYP2LdBNoVgrhoaRrceg=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>glj2yzt08wQCLNmKYmE7cg49pvxs7QzZk8aMZ8olC3DkeCd+DIOv+e+pQtUjTTfdoJSkx2JEDta53n3Uee4RJaR69zye2OnklBPOy+1UopCQksM56vdalNfaJoxRPxMcIpcBEj2BDUOWLiznd7WeAHE9Ff3A1X1V4DsXBfXwFSUQQboV4eskSdCai1rV7iJ/qx1zD1mfp6F2uyhQwH11otFbR1VCoQq+6Y0vC7xx9eqAZGh3dd6KI2vSiI+TqbBmC+Vl1ZhO+8gZrn++ltxJ7KcftVCiXpgkl2/XRQGQsPg4SeXygF+DXMfeuAsO+l26bt19ua49eby0Uxx7AUztfMm4iJImd99FliWbiIQgu5v9hBegFtvE2IB/NB/Vj3zLWM1njUuHhrTINiA6950kusilLmHCwM4/xIWadwQSL4RBn7x0K3fTXweGAB2f8s7NBjia/XZV8O2MS8odFV0R2awDfV1kwhNlXTJHiQjPGJzbG5+atAjRLLRln5kt0p/PB3kAS7y37GHReH31a9Fkijb7IF5HwZe2ycWjQ2yq74YUaCZZo1Ueeg4SnIvlFH1+TkIIhZtM9vyx7LtluxgstzYeVo5ZXff3pTtSZVW/6NAUIiLXZ4KX+Fqb2VwoBV8fV1lMcpTxuewKp/7FPw2goRfpbCUqdTacyizwMMgrdr4=</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIJhzCCB2+gAwIBAgIUH59ByS0i0pPqdarzE2uaUOaCBM8wDQYJKoZIhvcNAQELBQAwVjELMAkG
+A1UEBhMCTkwxIDAeBgNVBAoMF1F1b1ZhZGlzIFRydXN0bGluayBCLlYuMSUwIwYDVQQDDBxRdW9W
+YWRpcyBFdXJvcGUgRVYgU1NMIENBIEcxMB4XDTI1MDMwNTE2MjMyNVoXDTI2MDMwNTE2MTgwMFow
+gdgxEzARBgsrBgEEAYI3PAIBAxMCQ0gxGDAWBgsrBgEEAYI3PAIBAgwHWsO8cmljaDEdMBsGA1UE
+DwwUUHJpdmF0ZSBPcmdhbml6YXRpb24xGDAWBgNVBAUTD0NIRS0xMDMuNDg5LjIxODELMAkGA1UE
+BhMCQ0gxEDAOBgNVBAgMB1rDvHJpY2gxFDASBgNVBAcMC1dhbGxpc2VsbGVuMRswGQYDVQQKDBJI
+ZWFsdGggSW5mbyBOZXQgQUcxHDAaBgNVBAMME3Rlc3QuZXByLmZlZC5oaW4uY2gwggIiMA0GCSqG
+SIb3DQEBAQUAA4ICDwAwggIKAoICAQDgAF0R4LO58R8JX/VhyY0asvH/Gff0JZHqny1drX+Lv46j
+579ZJyJQDjF+sKcfBFVFjEXSi94tnyZt0pl5LCX6R5QPMVQ/8xJdAF7p62bE20DTzzhZ82Luq3oG
+HBYlLnig4uRtfXitJNDpjyWqPECsgDngj6uy6X+iwklVEWcB9Gqd5ADTPxf+kG4AJdP5gRf/BLOs
+svLDepcDkasjYoBlG5ehr3uytGi/pLG3UQ5YOwSyY2ygQVSUiIfhVlyAb8L9z2dsdl6AAcNDfogZ
+fhBGltnxTc/3MhQPvNvKFOH3+7tvWZDUDFD6wAvknfL6Tq4D1g2XuP0XYQsFfDZ1epAsu2T/55XQ
+vTIYP/Yy8TsRvaDRITDHM0C4QJ2JpaQtoIwTMuue11Af/gkSLenzRn5ho1sjlRO235ol5u2aBJZU
+wlg2iVNWjmgaRf8IjnhoKXX26erXWzD/Ylmh3roLTAme5Uu15ZSCh90g2KSswwKgms6KDA16Swd7
+Z963zzX/+lXFdFnSpP4QTPU03n7v+CyC6jW6Iis1pBw+UH8Pmeu0McwgcqaXIVJJxCVZyCLQ7ZVh
+MHHWQnVruSJOja6EQI3R0oE7BDUOviszLAJP5CgYfKSw4DxOP4KAowPSHtT/1eH5ow05YrrijU7W
+3YhcgkgEOAMOGQcAXF7et1/cI9gsUwIDAQABo4IDyDCCA8QwDAYDVR0TAQH/BAIwADAfBgNVHSME
+GDAWgBRJPQ7cecXL2xKj1Q2r8s+pr+NmqTCBgwYIKwYBBQUHAQEEdzB1MEcGCCsGAQUFBzAChjto
+dHRwOi8vdHJ1c3QucXVvdmFkaXNnbG9iYWwuY29tL3F1b3ZhZGlzZXVyb3BlZXZzc2xjYWcxLmNy
+dDAqBggrBgEFBQcwAYYeaHR0cDovL29jc3AucXVvdmFkaXNnbG9iYWwuY29tMB4GA1UdEQQXMBWC
+E3Rlc3QuZXByLmZlZC5oaW4uY2gwWgYDVR0gBFMwUTBGBgwrBgEEAb5YAAJkAQIwNjA0BggrBgEF
+BQcCARYoaHR0cDovL3d3dy5xdW92YWRpc2dsb2JhbC5jb20vcmVwb3NpdG9yeTAHBgVngQwBATAd
+BgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwSgYDVR0fBEMwQTA/oD2gO4Y5aHR0cDovL2Ny
+bC5xdW92YWRpc2dsb2JhbC5jb20vcXVvdmFkaXNldXJvcGVldnNzbGNhZzEuY3JsMB0GA1UdDgQW
+BBTziGEOmKhH9zHGYB66mjhPyTE2XDAOBgNVHQ8BAf8EBAMCBaAwggH1BgorBgEEAdZ5AgQCBIIB
+5QSCAeEB3wB1AJaXZL9VWJet90OHaDcIQnfp8DrV9qTzNm5GpD8PyqnGAAABlWcnpLMAAAQDAEYw
+RAIgW3gywI6ei1Qzfos874fvOTZzlF6vyJ8iWBhYqT/jAnECIB5IlhsYg/B5tTEdnF8XT+Ver2l/
+6qi2Xpy5tmzmMZiCAHYAGYbUxyiqb/66A294Kk0BkarOLXIxD67OXXBBLSVMx9QAAAGVZyelqgAA
+BAMARzBFAiEA+Bd3NYLx8M5fKMgvQ9xufnDidxYr+zj2eSG9Y/ATO6MCIGp36DDTRJNRpysMAqkX
+CAEN83umq+bDK/Pnp9gSgLXwAHYADleUvPOuqT4zGyyZB7P3kN+bwj1xMiXdIaklrGHFTiEAAAGV
+ZyelXAAABAMARzBFAiEAiC0uVCDHP4BbFrDMyoYDZTZS6SsDzcxQCSC0wAAsLeECIE/08cbY2V/l
+jZwJGGY9qJaukLTZlAbGbFyDqm2UO/4tAHYAyzj3FYl8hKFEX1vB3fvJbvKaWc1HCmkFhbDLFMMU
+WOcAAAGVZyelLgAABAMARzBFAiAFBBW5qD36/2xUKHCLU+wkbrb/C1yFJjzOOGczLMnHZAIhAJhq
+Rj0Z58IJ4hr4qrJZi34HU4DAL2B5kzBNKSjj1AhGMA0GCSqGSIb3DQEBCwUAA4ICAQB7M4zWK/81
+spsfmZofRBU+Qunc6h49KuHo4LVyN/hbciXUi699BCv6xyI+YT94/5YJQkHMrz4Wo1AkTbhPyliI
+JOk9ohdmIg8RS2TkftRtMdR60voHp/Yudu1ZgKsAxM94y5Z1H3Zjb0FDSqmJqeWrqCFclcpFWYZ4
+ku2R/7Kc2Kw8JCEUvMWbxuU+wcVeGZVelt00ZaL/PUAQG+YFPzUZeOFPEPgwfS9yBt3SD60t8Dj9
+YcgxgjjpaRcx2CAu7wNlet4EQFXUcWEMFFC8Sz0GT3vqHfB4Sl9aYh9wKnW/uTfgssBv+BvqvoeL
+H9Wo6gti1XXPV2ZkWV5KWOun/REls+2yJ8WvIh7jOn0l5zt3sapFSqLrk7q8Eob0OAkMzBDi6LUm
+5SkgtL+YTzuiAtAcxj3UH+0ms/ojD4NYpD0a6lp7XxBEcKOr8TJLOY2OmIynSPmZaSi6G3r0kERL
+UZV3CZuFLQAgIDQXDrNge/iN/JeENU86Vw92pHQopuWBjXWXbgMLRI2nifFA6LIBGUDGeSihlgbe
+U0oKCv8n20o0rL+ypC+6TiuOBZ+ums2k5tZ/fAzDAMvYeqa/x80npngULHpTZqv8eIK1PkTV+0Pq
+tG1nC9fyrRds6E9M8UokkKvcUORn5hmTSuc8KsQtuVawS9Pl6L68eRcTwZhYS8kocQ==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject><saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">HIN_8a48175e776d770c414b37f1236b4a03553f6da1a94ccb7d990fe3c1b75941c1</saml2:NameID><saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"><saml2:SubjectConfirmationData InResponseTo="a49i73ge9f0cidi3eff7a14706ad98" NotOnOrAfter="2025-07-29T16:41:07.957Z" Recipient="https://test.ahdis.ch/eprik-cara/saml/SSO/alias/hin"/></saml2:SubjectConfirmation></saml2:Subject><saml2:Conditions NotBefore="2025-07-29T14:41:07.957Z" NotOnOrAfter="2025-07-29T14:46:07.957Z"><saml2:AudienceRestriction><saml2:Audience>https://test.ahdis.ch/eprik-cara/saml/SSO/alias/hin</saml2:Audience></saml2:AudienceRestriction></saml2:Conditions><saml2:AuthnStatement AuthnInstant="2025-07-29T14:41:07.957Z" SessionNotOnOrAfter="2025-07-29T16:41:07.957Z"><saml2:AuthnContext><saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified</saml2:AuthnContextClassRef></saml2:AuthnContext></saml2:AuthnStatement><saml2:AttributeStatement><saml2:Attribute Name="X-HIN-USEREXTID"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">68545</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-EAN-NO-MEDICAL"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">2000040030829</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-PERSON-CODE"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">24</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-COMMON-NAME"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Oliver Egger</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-LOCATION"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Zürich</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-USERTYPE"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Personal</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-LANGUAGE"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">de</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="GLN" NameFormat="urn:oasis:names:tc:ebcore:partyid-type:DataUniversalNumberingSystem:0060"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">2000040030829</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="dateofbirth"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">1900-01-01+01:00</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-LOGIN-NAME"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">oliegg1</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-INSTITUTION-CODE"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">1</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-SESSION-IDENTIFIER"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">6eed10ac480a9xmrEejkCeyvRbABVOet+HpJIrjAlJVZDJO1U6TBGQo=</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-ORGANIZATION"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">ahdis ag</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-ASAS-UserId"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">68545</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Egger</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-COUNTRY"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">ch</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-SURNAME"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Egger</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-POSTALCODE"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">8005</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Oliver</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-POSTAL-CODE"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">8005</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-ASAS-UserId"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">68545</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-MAIL"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">test-oliver.egger@hintest.ch</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-TEST-CODE"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">1</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-ADDRESS-1"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Sihlquai 131</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-GIVEN-NAME"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Oliver</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-ORGANIZATION-ID"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">M107098</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="X-HIN-AUTH-METHOD"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">FUTURAE</saml2:AttributeValue></saml2:Attribute></saml2:AttributeStatement></saml2:Assertion>
+   </wsse:Security></env:Header>
+   <env:Body>
+      <wst:RequestSecurityToken xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">
+         <wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>
+         <wsp:AppliesTo xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+               <wsa:Address>https://test.ahdis.ch/mag-cara</wsa:Address>
+            </wsa:EndpointReference>
+         </wsp:AppliesTo>
+         <wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>
+         <wst:Claims Dialect="http://www.bag.admin.ch/epr/2017/annex/5/amendment/2">
+         <saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:resource:resource-id"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">761337612097656117^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xspa:1.0:subject:purposeofuse"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType"><PurposeOfUse xmlns="urn:hl7-org:v3" code="NORM" codeSystem="2.16.756.5.30.1.127.3.10.5" codeSystemName="eHealth Suisse Verwendungszweck" displayName="Normal Access" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:subject:role" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema"><Role xmlns="urn:hl7-org:v3" code="HCP" codeSystem="2.16.756.5.30.1.127.3.10.6" codeSystemName="eHealth Suisse EPR Akteure" displayName="Healthcare professional" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute></wst:Claims>
+      </wst:RequestSecurityToken>
+   </env:Body>
+</env:Envelope>
+
+
+### ITI-18 request with above token
+### Note: xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s="http://www.w3.org/2001/XMLSchema" has to be included in the request for wsse:security because they are not defined in the assertion itself
+### POST https://adapter.test.emedo.ch/Registry/services/RegistryService
+# @name iti18
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/Registry/services/RegistryService HTTP/1.1
+Content-Type: application/soap+xml;charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2007:RegistryStoredQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">37dd8054-e894-4180-bd3c-6d4ba7b7d417</MessageID>
+		<To xmlns="http://www.w3.org/2005/08/addressing">https://ikit.cara.ch/dep/proxy/cara/ahdis/Registry/services/RegistryService</To>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+		<wsse:Security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">{{sts.response.body./*[local-name()='Envelope']/*[local-name()='Body']/*[local-name()='RequestSecurityTokenResponseCollection']/*[local-name()='RequestSecurityTokenResponse']/*[local-name()='RequestedSecurityToken']}}</wsse:Security>
+	</soap:Header>
+	<soap:Body>
+		<ns4:AdhocQueryRequest xmlns:ns6="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" xmlns:ns5="urn:ihe:iti:xds-b:2007" xmlns:ns4="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:ns3="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" xmlns:ns2="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+			<ns4:ResponseOption returnType="LeafClass" returnComposedObjects="true"/>
+			<ns2:AdhocQuery id="urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d">
+				<ns2:Slot name="$XDSDocumentEntryPatientId">
+					<ns2:ValueList>
+						<ns2:Value>'100001143^^^&amp;2.16.756.5.30.1.177.2.2.1.1&amp;ISO'</ns2:Value>
+					</ns2:ValueList>
+				</ns2:Slot>
+				<ns2:Slot name="$XDSDocumentEntryStatus">
+					<ns2:ValueList>
+						<ns2:Value>('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')</ns2:Value>
+					</ns2:ValueList>
+				</ns2:Slot>
+			</ns2:AdhocQuery>
+		</ns4:AdhocQueryRequest>
+	</soap:Body>
+</soap:Envelope>
+
+### ITI-43 Download the first document via eprik-cara from above list
+
+#name iti43
+### POST https://adapter.test.emedo.ch/Repository/services/RepositoryService HTTP/1.1
+
+### POST https://adapter.test.emedo.ch/Repository/services/RepositoryService HTTP/1.1
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/Repository/services/RepositoryService HTTP/1.1
+Content-Type: multipart/related; boundary=uuid:f42c35e4-54b2-45ca-8fda-ed58b11f6fce; type=application/xop+xml; start-info="application/soap+xml; charset=utf-8"
+
+--uuid:f42c35e4-54b2-45ca-8fda-ed58b11f6fce
+Content-Type: application/xop+xml; charset=UTF-8; type="application/soap+xml"
+Content-Transfer-Encoding: binary
+Content-ID: <root.message@cxf.apache.org>
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><wsse:Security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+{{sts.response.body./*[local-name()='Envelope']/*[local-name()='Body']/*[local-name()='RequestSecurityTokenResponseCollection']/*[local-name()='RequestSecurityTokenResponse']/*[local-name()='RequestedSecurityToken']}}
+</wsse:Security><Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2007:RetrieveDocumentSet</Action><MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:c0fd273c-f092-4145-a411-e2db6598f21d</MessageID><To xmlns="http://www.w3.org/2005/08/addressing">https://adapter.test.emedo.ch/Repository/services/RepositoryService</To><ReplyTo xmlns="http://www.w3.org/2005/08/addressing"><Address>http://www.w3.org/2005/08/addressing/anonymous</Address></ReplyTo></soap:Header><soap:Body><ns2:RetrieveDocumentSetRequest xmlns:ns7="urn:ihe:iti:rmd:2017" xmlns:ns6="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" xmlns:ns5="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:ns4="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" xmlns:ns3="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:ns2="urn:ihe:iti:xds-b:2007">
+<ns2:DocumentRequest>
+   <ns2:RepositoryUniqueId>{{iti18.response.body./*[local-name()='Envelope']/*[local-name()='Body']/*[local-name()='AdhocQueryResponse']/*[local-name()='RegistryObjectList'][1]/*[local-name()='ExtrinsicObject']/*[local-name()='Slot' and @name='repositoryUniqueId']/*[local-name()='ValueList']/*[local-name()='Value']}}</ns2:RepositoryUniqueId>
+   <ns2:DocumentUniqueId>{{iti18.response.body./*[local-name()='Envelope']/*[local-name()='Body']/*[local-name()='AdhocQueryResponse']/*[local-name()='RegistryObjectList'][1]/*[local-name()='ExtrinsicObject']/*[local-name()='ExternalIdentifier' and ./*[local-name()='Name']/*[local-name()='LocalizedString']/@value='XDSDocumentEntry.uniqueId']/@value}}</ns2:DocumentUniqueId>
+</ns2:DocumentRequest></ns2:RetrieveDocumentSetRequest></soap:Body></soap:Envelope>
+--uuid:f42c35e4-54b2-45ca-8fda-ed58b11f6fce--
