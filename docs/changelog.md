@@ -7,7 +7,7 @@ to migrate to the emedo platform from the existing integration platform the foll
 3. configure your new patient assigning authority source oid with CARA
 4. configure your IdP (e.g. HIN SAML NameID) with CARA for document access
 
-You can download the [ITI.postman_collection.json](../ITI.postman_collection.json) for example requests.
+You can download the [ITI.postman_collection.json](assets/ITI.postman_collection.json) for example requests.
 
 Please note a few different platform behaviours:
 
