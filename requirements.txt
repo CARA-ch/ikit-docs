@@ -1,1 +1,2 @@
-mkdocs-material~=9.6.14
+properdocs~=1.6.7
+mkdocs-materialx~=10.1.1
