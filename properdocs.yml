@@ -1,6 +1,6 @@
 site_name: IKIT for CARA
 theme:
-  name: material
+  name: materialx
   favicon: assets/favicon.ico
   palette:
     scheme: matchbox
