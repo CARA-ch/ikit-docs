@@ -1,3 +1,16 @@
+## Version 2.0.13 - 02/06/2026
+
+- Fix splitter incorrect position when the body is scrolled horizontally.
+- Fix OutOfBoundsException on the Syslog listener (#168).
+- Add validation of `DocumentEntry.sourcePatientId` and `DocumentEntry.sourcePatientInfo` in ITI-41 (#171).
+- Update dependencies.
+
+## Version 2.0.12 - 09/03/2026
+
+- Fix authorPerson validation warning incorrectly triggered when authorPerson is not provided (#163).
+- Fix buffer read position in TolerantRfc5425Decoder causing AuditMessage loss (#164).
+- Fix support for media-type parameters of the 'start-info' header in multipart messages (#159).
+
 ## Version 2.0.11 - 22/01/2026
 
 - Fix the XML Schema of the SubmitDocuments transaction (#162).
