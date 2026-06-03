@@ -1,0 +1,361 @@
+### https://test.ahdis.ch/eprik-cara/index.html#/transaction/db5e0aa9-e2c0-4de5-a2d6-75ba9a39e25b
+
+# POST http://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService HTTP/1.1
+POST https://adapter.test.emedo.ch/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases" sizeLimit="0" timeLimit="0" typesOnly="false" requestID="1">
+                <filter>
+                    <present name="uid"/>
+                </filter>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+
+### Search by uid
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases" sizeLimit="0" timeLimit="0" typesOnly="false" requestID="1">
+				<filter>
+						<substrings name="uid">
+							<initial>EMEDO</initial>
+						</substrings>
+				</filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="hcIdentifier"/>
+                    <attribute name="hcProfession"/>
+                    <attribute name="hpdProviderStatus"/>
+                    <attribute name="displayName"/>
+                    <attribute name="title"/>
+                    <attribute name="givenName"/>
+                    <attribute name="initials"/>
+                    <attribute name="sn"/>
+                    <attribute name="cn"/>
+                    <attribute name="hpdProviderLanguageSupported"/>
+                    <attribute name="gender"/>
+                    <attribute name="hpdMedicalRecordsDeliveryEmailAddress"/>
+                    <attribute name="mail"/>
+                    <attribute name="userSMIMECertificate"/>
+                    <attribute name="hcSigningCertificate"/>
+                    <attribute name="userCertificate"/>
+                    <attribute name="physicalDeliveryOfficeName"/>
+                    <attribute name="hpdProviderMailingAddress"/>
+                    <attribute name="hpdProviderBillingAddress"/>
+                    <attribute name="hpdProviderPracticeAddress"/>
+                    <attribute name="hcPracticeLocation"/>
+                    <attribute name="telephoneNumber"/>
+                    <attribute name="mobile"/>
+                    <attribute name="pager"/>
+                    <attribute name="facsimileTelephoneNumber"/>
+                    <attribute name="hcSpecialisation"/>
+                    <attribute name="hpdProviderLegalAddress"/>
+                    <attribute name="hcRegistrationStatus"/>
+                    <attribute name="objectClass"/>				</attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+###
+
+
+### Search by hcRegisteredName
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases" sizeLimit="0" timeLimit="0" typesOnly="false" requestID="1">
+				<filter>
+						<substrings name="hcRegisteredName">
+							<initial>Stargate</initial>
+						</substrings>
+				</filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="hcIdentifier"/>
+                    <attribute name="hcProfession"/>
+                    <attribute name="hpdProviderStatus"/>
+                    <attribute name="hcRegisteredName"/>
+                </attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+
+### Search by uid
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases" sizeLimit="0" timeLimit="0" typesOnly="false" requestID="1">
+				<filter>
+						<substrings name="hcRegisteredName">
+							<initial>ahdis ag</initial>
+						</substrings>
+				</filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="hcIdentifier"/>
+                    <attribute name="hpdProviderStatus"/>
+                    <attribute name="hcRegisteredName"/>
+                </attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+
+### Search by uid
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases"  requestID="2">
+				<filter>
+						<substrings name="hcIdentifier">
+							<initial>RefData:OID:2.16.756.5.30.1.145:ACTIVE</initial>
+						</substrings>
+				</filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="hcIdentifier"/>
+                </attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+### Search Professional by cn
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCProfessional,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases"  requestID="2">
+				<filter>
+						<substrings name="cn">
+							<initial>Egger</initial>
+						</substrings>
+				</filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="cn"/>
+                    <attribute name="hcIdentifier" />
+                    <attribute name="hcProfession" />
+                    <attribute name="hpdProviderStatus" />
+                    <attribute name="displayName" />
+                    <attribute name="title" />
+                    <attribute name="givenName" />
+                    <attribute name="sn" />
+                    <attribute name="cn" />
+                    <attribute name="hpdProviderLanguageSupported" />
+                    <attribute name="gender" />
+                    <attribute name="hpdProviderMailingAddress" />
+                    <attribute name="telephoneNumber" />
+                    <attribute name="facsimileTelephoneNumber" />
+                    <attribute name="mail" />
+                    <attribute name="objectClass" />
+                    <attribute name="hcRegistrationStatus" />
+                        </attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+
+### Search Professional by exac
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCProfessional,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases"  requestID="2">
+                <filter>
+                    <equalityMatch name="hcIdentifier">
+                    <value>RefData:GLN:2000040030829:ACTIVE</value>
+                    </equalityMatch>
+                </filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="cn"/>
+                    <attribute name="hcIdentifier" />
+                    <attribute name="hcProfession" />
+                    <attribute name="hpdProviderStatus" />
+                    <attribute name="displayName" />
+                    <attribute name="title" />
+                    <attribute name="givenName" />
+                    <attribute name="sn" />
+                    <attribute name="cn" />
+                    <attribute name="hpdProviderLanguageSupported" />
+                    <attribute name="gender" />
+                    <attribute name="hpdProviderMailingAddress" />
+                    <attribute name="telephoneNumber" />
+                    <attribute name="facsimileTelephoneNumber" />
+                    <attribute name="mail" />
+                    <attribute name="objectClass" />
+                    <attribute name="hcRegistrationStatus" />
+                        </attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+
+### Search Professional by ludovic
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCProfessional,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases"  requestID="2">
+                <filter>
+                    <equalityMatch name="hcIdentifier">
+                    <value>RefData:GLN:2012345681729:ACTIVE</value>
+                    </equalityMatch>
+                </filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="cn"/>
+                    <attribute name="hcIdentifier" />
+                    <attribute name="hcProfession" />
+                    <attribute name="hpdProviderStatus" />
+                    <attribute name="displayName" />
+                    <attribute name="title" />
+                    <attribute name="givenName" />
+                    <attribute name="sn" />
+                    <attribute name="cn" />
+                    <attribute name="hpdProviderLanguageSupported" />
+                    <attribute name="gender" />
+                    <attribute name="hpdProviderMailingAddress" />
+                    <attribute name="telephoneNumber" />
+                    <attribute name="facsimileTelephoneNumber" />
+                    <attribute name="mail" />
+                    <attribute name="objectClass" />
+                    <attribute name="hcRegistrationStatus" />
+                        </attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
+
+
+### Search Professional by exac
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationQuery</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:accece9c-1ba6-4291-ab04-c19103338cf4</MessageID>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+	<soap:Body>
+        <batchRequest xmlns="urn:oasis:names:tc:DSML:2:0:core">
+            <searchRequest dn="ou=HCProfessional,dc=HPD,o=BAG,c=CH" scope="wholeSubtree" derefAliases="neverDerefAliases"  requestID="2">
+                <filter>
+                    <equalityMatch name="uid">
+                    <value>EMEDOINT:12345</value>
+                    </equalityMatch>
+                </filter>
+				<attributes>
+                    <attribute name="uid"/>
+                    <attribute name="cn"/>
+                    <attribute name="hcIdentifier" />
+                    <attribute name="hcProfession" />
+                    <attribute name="hpdProviderStatus" />
+                    <attribute name="displayName" />
+                    <attribute name="title" />
+                    <attribute name="givenName" />
+                    <attribute name="sn" />
+                    <attribute name="cn" />
+                    <attribute name="hpdProviderLanguageSupported" />
+                    <attribute name="gender" />
+                    <attribute name="hpdProviderMailingAddress" />
+                    <attribute name="telephoneNumber" />
+                    <attribute name="facsimileTelephoneNumber" />
+                    <attribute name="mail" />
+                    <attribute name="objectClass" />
+                    <attribute name="hcRegistrationStatus" />
+                        </attributes>
+            </searchRequest>
+        </batchRequest>
+	</soap:Body>
+</soap:Envelope>
