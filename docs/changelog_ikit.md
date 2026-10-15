@@ -1,3 +1,11 @@
+## Version 2.0.14 - 23/09/2026
+
+- Store the request even if an exception happens before the first store attempt, to avoid losing the request and its
+  exception (#173).
+- Return a text in the response if an exception happens during the transaction processing (#173).
+- Warn when the IdP assertion of an STS request was issued by the HIN legacy APIs, which will be disabled on
+  12/10/2026 (#182).
+
 ## Version 2.0.13 - 02/06/2026
 
 - Fix splitter incorrect position when the body is scrolled horizontally.
