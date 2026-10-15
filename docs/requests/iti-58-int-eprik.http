@@ -1,7 +1,7 @@
 ### https://test.ahdis.ch/eprik-cara/index.html#/transaction/db5e0aa9-e2c0-4de5-a2d6-75ba9a39e25b
 
 # POST http://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService HTTP/1.1
-POST https://adapter.test.emedo.ch/HPD/services/HPDService HTTP/1.1
+POST https://adapter.int.cara.ch/HPD/services/HPDService HTTP/1.1
 content-type: application/soap+xml; charset=UTF-8
 
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">

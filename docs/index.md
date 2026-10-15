@@ -59,7 +59,7 @@ Note that they may be stored in the same _[.pem](https://en.wikipedia.org/wiki/P
 
 You can test the Syslog connection with `openssl`:
 ```bash
-openssl s_client -connect adapter.test.emedo.ch:7003 -cert mtls_caraikit_int.cer -key mtls_caraikit_int.key
+openssl s_client -connect adapter.int.cara.ch:7003 -cert mtls_caraikit_int.cer -key mtls_caraikit_int.key
 
 Connecting to 194.209.244.46
 CONNECTED(00000005)
@@ -93,7 +93,7 @@ You can test the webservices connection with `curl`:
 curl -v --cert cert.pem --key private_key.key  \
   -H "Content-Type: application/soap+xml;charset=UTF-8" \
   -d '' \
-  https://adapter.test.emedo.ch/
+  https://adapter.int.cara.ch/
 ```
 
 In case of success, you will see the content of the "HTTP 404 - Not Found" page of EMEDO.

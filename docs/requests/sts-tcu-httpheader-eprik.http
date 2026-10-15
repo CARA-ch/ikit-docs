@@ -1,7 +1,7 @@
 ### POST https://ikit.cara.ch/dep/proxy/cara/ahdis/STS/services/SecurityTokenService HTTP/1.1
 ### ITI-18 with adding X-Eprik-IDP-Assertio 
 
-POST https://adapter.test.emedo.ch/STS/services/SecurityTokenService HTTP/1.1
+POST https://adapter.int.cara.ch/STS/services/SecurityTokenService HTTP/1.1
 
 
 ###
