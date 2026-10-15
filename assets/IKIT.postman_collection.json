@@ -1,0 +1,1552 @@
+{
+	"info": {
+		"_postman_id": "46cb4a21-a7fc-47ea-875a-924dd0dc1d63",
+		"name": "CARA INT (IKIT) - EMEDO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "143031",
+		"_collection_link": "https://speeding-trinity-275909.postman.co/workspace/workshop~037fb6d5-a281-4614-97ca-c6c5c9718c61/collection/143031-46cb4a21-a7fc-47ea-875a-924dd0dc1d63?action=share&source=collection_link&creator=143031"
+	},
+	"item": [
+		{
+			"name": "STS",
+			"item": [
+				{
+					"name": "STS PAT",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const { v4: uuidv4 } = require('uuid');",
+									"const moment = require('moment');",
+									"",
+									"pm.variables.set(\"uuid\", uuidv4());",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.text();\r",
+									"\r",
+									"const matches = response.match(/<saml:Assertion.+<\\/saml:Assertion>/s);\r",
+									"if (matches && matches[0]) {\r",
+									"  console.log(\"XUA Token Assertion successfully retrieved and stored.\");\r",
+									"  pm.collectionVariables.set(\"xuaToken\", matches[0]);\r",
+									"} else {\r",
+									"  console.log(\"XUA Token Assertion not retrieved.\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<env:Envelope xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<env:Header xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t<wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>\r\n\t\t<wsa:MessageID>{{$guid}}</wsa:MessageID>\r\n        <wsa:To>{{host}}/STS/services/SecurityTokenService</wsa:To>\r\n\t\t<wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n\t\t\t{{idpToken}}\r\n\t\t</wsse:Security>\r\n\t</env:Header>\r\n\t<env:Body>\r\n\t\t<wst:RequestSecurityToken xmlns:wst=\"http://docs.oasis-open.org/ws-sx/ws-trust/200512\">\r\n\t\t\t<wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>\r\n\t\t\t<wsp:AppliesTo xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2004/09/policy\">\r\n\t\t\t\t<wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t\t\t<wsa:Address>https://test.ahdis.ch/mag-cara</wsa:Address>\r\n\t\t\t\t</wsa:EndpointReference>\r\n\t\t\t</wsp:AppliesTo>\r\n\t\t\t<wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>\r\n\t\t\t<wst:Claims Dialect=\"http://www.bag.admin.ch/epr/2017/annex/5/amendment/2\">\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:resource:resource-id\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">{{eprSpid}}^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xspa:1.0:subject:purposeofuse\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:anyType\">\r\n\t\t\t\t\t\t<PurposeOfUse xmlns=\"urn:hl7-org:v3\" code=\"NORM\" codeSystem=\"2.16.756.5.30.1.127.3.10.5\" codeSystemName=\"eHealth Suisse Verwendungszweck\" displayName=\"Normal Access\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:subject:role\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\r\n\t\t\t\t\t\t<Role xmlns=\"urn:hl7-org:v3\" code=\"PAT\" codeSystem=\"2.16.756.5.30.1.127.3.10.6\" codeSystemName=\"eHealth Suisse EPR Akteure\" displayName=\"Patient\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t</wst:Claims>\r\n\t\t</wst:RequestSecurityToken>\r\n\t</env:Body>\r\n</env:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/STS/services/SecurityTokenService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"STS",
+								"services",
+								"SecurityTokenService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STS HCP",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.text();\r",
+									"\r",
+									"const matches = response.match(/<saml:Assertion.+<\\/saml:Assertion>/s);\r",
+									"if (matches && matches[0]) {\r",
+									"  console.log(\"XUA Token Assertion successfully retrieved and stored.\");\r",
+									"  pm.collectionVariables.set(\"xuaToken\", matches[0]);\r",
+									"} else {\r",
+									"  console.log(\"XUA Token Assertion not retrieved.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<env:Envelope xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<env:Header xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t<wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>\r\n\t\t<wsa:MessageID>{{$guid}}</wsa:MessageID>\r\n        <wsa:To>{{host}}/STS/services/SecurityTokenService</wsa:To>\r\n\t\t<wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n\t\t\t{{idpToken}}\r\n\t\t</wsse:Security>\r\n\t</env:Header>\r\n\t<env:Body>\r\n\t    <wst:RequestSecurityToken xmlns:wst=\"http://docs.oasis-open.org/ws-sx/ws-trust/200512\">\r\n        <wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>\r\n        <wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>\r\n            <wst:Claims Dialect=\"http://www.bag.admin.ch/epr/2017/annex/5/amendment/2\">\r\n        <saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Name=\"urn:oasis:names:tc:xacml:2.0:subject:role\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified\">\r\n          <saml2:AttributeValue>\r\n            <Role xmlns=\"urn:hl7-org:v3\" code=\"HCP\" codeSystem=\"2.16.756.5.30.1.127.3.10.6\"  displayName=\"Healthcare professional\" />\r\n          </saml2:AttributeValue>\r\n        </saml2:Attribute>\r\n        <saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xspa:1.0:subject:purposeofuse\">\r\n          <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:anyType\">\r\n            <PurposeOfUse xmlns=\"urn:hl7-org:v3\" code=\"NORM\" codeSystem=\"2.16.756.5.30.1.127.3.10.5\" displayName=\"Normal Access\" codeSystemName=\"eHealth Suisse Verwendungszweck\" />\r\n          </saml2:AttributeValue>\r\n        </saml2:Attribute>\r\n        <saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:resource:resource-id\">\r\n          <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">{{eprSpid}}^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue>\r\n        </saml2:Attribute>\r\n      </wst:Claims>\r\n    </wst:RequestSecurityToken>\r\n\t</env:Body>\r\n</env:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/STS/services/SecurityTokenService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"STS",
+								"services",
+								"SecurityTokenService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STS HCP SSI",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const { v4: uuidv4 } = require('uuid');",
+									"const moment = require('moment');",
+									"",
+									"pm.variables.set(\"uuid\", uuidv4());",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.text();\r",
+									"\r",
+									"const matches = response.match(/<saml:Assertion.+<\\/saml:Assertion>/s);\r",
+									"if (matches && matches[0]) {\r",
+									"  console.log(\"XUA Token Assertion successfully retrieved and stored.\");\r",
+									"  pm.collectionVariables.set(\"xuaToken\", matches[0]);\r",
+									"} else {\r",
+									"  console.log(\"XUA Token Assertion not retrieved.\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<env:Envelope xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<env:Header xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t<wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>\r\n\t\t<wsa:MessageID>{{uuid}}</wsa:MessageID>\r\n        <wsa:To>{{host}}/STS/services/SecurityTokenService</wsa:To>\r\n\t\t<wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n\t\t\t{{idpToken}}\r\n\t\t</wsse:Security>\r\n\t</env:Header>\r\n\t<env:Body>\r\n\t    <wst:RequestSecurityToken xmlns:wst=\"http://docs.oasis-open.org/ws-sx/ws-trust/200512\">\r\n        <wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>\r\n        <wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>\r\n            <wst:Claims Dialect=\"http://www.bag.admin.ch/epr/2017/annex/5/amendment/2\">\r\n        <saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Name=\"urn:oasis:names:tc:xacml:2.0:subject:role\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified\">\r\n          <saml2:AttributeValue>\r\n            <Role xmlns=\"urn:hl7-org:v3\" code=\"HCP\" codeSystem=\"2.16.756.5.30.1.127.3.10.6\"/>\r\n          </saml2:AttributeValue>\r\n        </saml2:Attribute>\r\n        <saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xspa:1.0:subject:purposeofuse\">\r\n          <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:anyType\">\r\n            <PurposeOfUse xmlns=\"urn:hl7-org:v3\" code=\"NORM\" codeSystem=\"2.16.756.5.30.1.127.3.10.5\" codeSystemName=\"eHealth Suisse Verwendungszweck\" displayName=\"Normal Access\"/>\r\n          </saml2:AttributeValue>\r\n        </saml2:Attribute>\r\n        <saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:resource:resource-id\">\r\n          <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">{{eprSpid}}^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue>\r\n        </saml2:Attribute>\r\n      </wst:Claims>\r\n    </wst:RequestSecurityToken>\r\n\t</env:Body>\r\n</env:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/STS/services/SecurityTokenService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"STS",
+								"services",
+								"SecurityTokenService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STS Technical User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.text();\r",
+									"\r",
+									"const matches = response.match(/<saml:Assertion.+<\\/saml:Assertion>/s);\r",
+									"if (matches && matches[0]) {\r",
+									"  console.log(\"XUA Token Assertion successfully retrieved and stored.\");\r",
+									"  pm.collectionVariables.set(\"xuaToken\", matches[0]);\r",
+									"} else {\r",
+									"  console.log(\"XUA Token Assertion not retrieved.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"async function fetchTCUAssertion() {\r",
+									"    const response = await pmFetch({\r",
+									"        url: 'https://ikit.cara.ch/idp/tcu/epr_int_emedo_frehner',\r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Accept': 'application/xml'\r",
+									"        }\r",
+									"    });\r",
+									"\r",
+									"    const htmlResponse = await response.text();\r",
+									"\r",
+									"    const matches = htmlResponse.match(/<saml2:Assertion.+<\\/saml2:Assertion>/s);\r",
+									"    if (matches && matches[0]) {\r",
+									"        pm.collectionVariables.set(\"idpToken\", matches[0]);\r",
+									"        console.log(\"SAML Assertion successfully retrieved and stored.\");\r",
+									"        console.log(matches[0]); // Affiche le contenu dans la console Postman\r",
+									"    } else {\r",
+									"        console.warn(\"SAML Assertion not found in response.\");\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"function pmFetch(options) {\r",
+									"    return new Promise((resolve, reject) => {\r",
+									"        pm.sendRequest(options, function (err, res) {\r",
+									"            if (err) reject(err);\r",
+									"            else resolve(res);\r",
+									"        });\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"fetchTCUAssertion();\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<env:Envelope xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<env:Header xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t<wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>\r\n\t\t<wsa:MessageID>{{$guid}}</wsa:MessageID>\r\n        <wsa:To>{{host}}/STS/services/SecurityTokenService</wsa:To>\r\n\t\t<wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n\t\t\t{{idpToken}}\r\n\t\t</wsse:Security>\r\n\t</env:Header>\r\n\t<env:Body>\r\n        <wst:RequestSecurityToken xmlns:wst=\"http://docs.oasis-open.org/ws-sx/ws-trust/200512\">\r\n\t\t\t<wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>\r\n\t\t\t<wsp:AppliesTo xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2004/09/policy\">\r\n\t\t\t\t<wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t\t\t<wsa:Address>https://test.ahdis.ch/mag-cara</wsa:Address>\r\n\t\t\t\t</wsa:EndpointReference>\r\n\t\t\t</wsp:AppliesTo>\r\n\t\t\t<wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>\r\n\t\t\t<wst:Claims Dialect=\"http://www.bag.admin.ch/epr/2017/annex/5/amendment/2\">\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:resource:resource-id\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">{{eprSpid}}^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xspa:1.0:subject:purposeofuse\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:anyType\">\r\n\t\t\t\t\t\t<PurposeOfUse xmlns=\"urn:hl7-org:v3\" code=\"AUTO\" codeSystem=\"2.16.756.5.30.1.127.3.10.5\" codeSystemName=\"eHealth Suisse Verwendungszweck\" displayName=\"Automatic Upload\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:subject:role\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\r\n\t\t\t\t\t\t<Role xmlns=\"urn:hl7-org:v3\" code=\"TCU\" codeSystem=\"2.16.756.5.30.1.127.3.10.6\" codeSystemName=\"eHealth Suisse EPR Akteure\" displayName=\"Technical user\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n                <saml2:Attribute Name=\"urn:e-health-suisse:principal-id\" xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">\r\n                    <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">2000040030829</saml2:AttributeValue>\r\n                </saml2:Attribute>\r\n                    <saml2:Attribute Name=\"urn:e-health-suisse:principal-name\" xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">\r\n                    <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">Oliver Egger</saml2:AttributeValue>\r\n                </saml2:Attribute>\r\n\t\t\t</wst:Claims>\r\n\t\t</wst:RequestSecurityToken>\r\n\t</env:Body>\r\n</env:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/STS/services/SecurityTokenService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"STS",
+								"services",
+								"SecurityTokenService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STS Technical User Ludovic",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"async function fetchTCUAssertion() {\r",
+									"    const response = await pmFetch({\r",
+									"        url: 'https://ikit.cara.ch/idp/tcu/epr_int_emedo_frehner',\r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Accept': 'application/xml'\r",
+									"        }\r",
+									"    });\r",
+									"\r",
+									"    const htmlResponse = await response.text();\r",
+									"\r",
+									"    const matches = htmlResponse.match(/<saml2:Assertion.+<\\/saml2:Assertion>/s);\r",
+									"    if (matches && matches[0]) {\r",
+									"        pm.collectionVariables.set(\"idpToken\", matches[0]);\r",
+									"        console.log(\"SAML Assertion successfully retrieved and stored.\");\r",
+									"        console.log(matches[0]); // Affiche le contenu dans la console Postman\r",
+									"    } else {\r",
+									"        console.warn(\"SAML Assertion not found in response.\");\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"function pmFetch(options) {\r",
+									"    return new Promise((resolve, reject) => {\r",
+									"        pm.sendRequest(options, function (err, res) {\r",
+									"            if (err) reject(err);\r",
+									"            else resolve(res);\r",
+									"        });\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"fetchTCUAssertion();\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.text();\r",
+									"\r",
+									"function base64ToBytes(base64) {\r",
+									"  const binString = atob(base64);\r",
+									"  return Uint8Array.from(binString, (m) => m.codePointAt(0));\r",
+									"}\r",
+									"\r",
+									"function bytesToBase64(bytes) {\r",
+									"  const binString = Array.from(bytes, (byte) =>\r",
+									"    String.fromCodePoint(byte),\r",
+									"  ).join(\"\");\r",
+									"  return btoa(binString);\r",
+									"}\r",
+									"\r",
+									"const matches = response.match(/<saml:Assertion.+<\\/saml:Assertion>/s);\r",
+									"if (matches && matches[0]) {\r",
+									"  console.log(\"XUA Token Assertion successfully retrieved and stored.\");\r",
+									"  pm.collectionVariables.set(\"bearer\", bytesToBase64(new TextEncoder().encode(matches[0])));\r",
+									"  pm.collectionVariables.set(\"xuaToken\", matches[0]);\r",
+									"} else {\r",
+									"  console.log(\"XUA Token Assertion not retrieved.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<env:Envelope xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<env:Header xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t<wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>\r\n\t\t<wsa:MessageID>{{$guid}}</wsa:MessageID>\r\n        <wsa:To>{{host}}/STS/services/SecurityTokenService</wsa:To>\r\n\t\t<wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n\t\t\t{{idpToken}}\r\n\t\t</wsse:Security>\r\n\t</env:Header>\r\n\t<env:Body>\r\n        <wst:RequestSecurityToken xmlns:wst=\"http://docs.oasis-open.org/ws-sx/ws-trust/200512\">\r\n\t\t\t<wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>\r\n\t\t\t<wsp:AppliesTo xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2004/09/policy\">\r\n\t\t\t\t<wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t\t\t<wsa:Address>https://test.ahdis.ch/mag-cara</wsa:Address>\r\n\t\t\t\t</wsa:EndpointReference>\r\n\t\t\t</wsp:AppliesTo>\r\n\t\t\t<wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>\r\n\t\t\t<wst:Claims Dialect=\"http://www.bag.admin.ch/epr/2017/annex/5/amendment/2\">\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:resource:resource-id\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">{{eprSpid}}^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xspa:1.0:subject:purposeofuse\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:anyType\">\r\n\t\t\t\t\t\t<PurposeOfUse xmlns=\"urn:hl7-org:v3\" code=\"AUTO\" codeSystem=\"2.16.756.5.30.1.127.3.10.5\" codeSystemName=\"eHealth Suisse Verwendungszweck\" displayName=\"Automatic Upload\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:subject:role\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\r\n\t\t\t\t\t\t<Role xmlns=\"urn:hl7-org:v3\" code=\"TCU\" codeSystem=\"2.16.756.5.30.1.127.3.10.6\" codeSystemName=\"eHealth Suisse EPR Akteure\" displayName=\"Technical user\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n                <saml2:Attribute Name=\"urn:e-health-suisse:principal-id\" xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">\r\n                    <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">2012345681729</saml2:AttributeValue>\r\n                </saml2:Attribute>\r\n                    <saml2:Attribute Name=\"urn:e-health-suisse:principal-name\" xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">\r\n                    <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">Ludovic Frehner</saml2:AttributeValue>\r\n                </saml2:Attribute>\r\n\t\t\t</wst:Claims>\r\n\t\t</wst:RequestSecurityToken>\r\n\t</env:Body>\r\n</env:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/STS/services/SecurityTokenService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"STS",
+								"services",
+								"SecurityTokenService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STS Technical User Oliver",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"async function fetchTCUAssertion() {\r",
+									"    const response = await pmFetch({\r",
+									"        url: 'https://ikit.cara.ch/idp/tcu/epr_int_emedo_egger',\r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Accept': 'application/xml'\r",
+									"        }\r",
+									"    });\r",
+									"\r",
+									"    const htmlResponse = await response.text();\r",
+									"\r",
+									"    const matches = htmlResponse.match(/<saml2:Assertion.+<\\/saml2:Assertion>/s);\r",
+									"    if (matches && matches[0]) {\r",
+									"        pm.collectionVariables.set(\"idpToken\", matches[0]);\r",
+									"        console.log(\"SAML Assertion successfully retrieved and stored.\");\r",
+									"        console.log(matches[0]); // Affiche le contenu dans la console Postman\r",
+									"    } else {\r",
+									"        console.warn(\"SAML Assertion not found in response.\");\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"function pmFetch(options) {\r",
+									"    return new Promise((resolve, reject) => {\r",
+									"        pm.sendRequest(options, function (err, res) {\r",
+									"            if (err) reject(err);\r",
+									"            else resolve(res);\r",
+									"        });\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"fetchTCUAssertion();\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.text();\r",
+									"\r",
+									"function base64ToBytes(base64) {\r",
+									"  const binString = atob(base64);\r",
+									"  return Uint8Array.from(binString, (m) => m.codePointAt(0));\r",
+									"}\r",
+									"\r",
+									"function bytesToBase64(bytes) {\r",
+									"  const binString = Array.from(bytes, (byte) =>\r",
+									"    String.fromCodePoint(byte),\r",
+									"  ).join(\"\");\r",
+									"  return btoa(binString);\r",
+									"}\r",
+									"\r",
+									"const matches = response.match(/<saml:Assertion.+<\\/saml:Assertion>/s);\r",
+									"if (matches && matches[0]) {\r",
+									"  console.log(\"XUA Token Assertion successfully retrieved and stored.\");\r",
+									"  pm.collectionVariables.set(\"bearer\", bytesToBase64(new TextEncoder().encode(matches[0])));\r",
+									"  pm.collectionVariables.set(\"xuaToken\", matches[0]);\r",
+									"} else {\r",
+									"  console.log(\"XUA Token Assertion not retrieved.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<env:Envelope xmlns:env=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<env:Header xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t<wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>\r\n\t\t<wsa:MessageID>{{$guid}}</wsa:MessageID>\r\n        <wsa:To>{{host}}/STS/services/SecurityTokenService</wsa:To>\r\n\t\t<wsse:Security xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n\t\t\t{{idpToken}}\r\n\t\t</wsse:Security>\r\n\t</env:Header>\r\n\t<env:Body>\r\n        <wst:RequestSecurityToken xmlns:wst=\"http://docs.oasis-open.org/ws-sx/ws-trust/200512\">\r\n\t\t\t<wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>\r\n\t\t\t<wsp:AppliesTo xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2004/09/policy\">\r\n\t\t\t\t<wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t\t\t<wsa:Address>https://test.ahdis.ch/mag-cara</wsa:Address>\r\n\t\t\t\t</wsa:EndpointReference>\r\n\t\t\t</wsp:AppliesTo>\r\n\t\t\t<wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>\r\n\t\t\t<wst:Claims Dialect=\"http://www.bag.admin.ch/epr/2017/annex/5/amendment/2\">\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:resource:resource-id\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">{{eprSpid}}^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xspa:1.0:subject:purposeofuse\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:anyType\">\r\n\t\t\t\t\t\t<PurposeOfUse xmlns=\"urn:hl7-org:v3\" code=\"AUTO\" codeSystem=\"2.16.756.5.30.1.127.3.10.5\" codeSystemName=\"eHealth Suisse Verwendungszweck\" displayName=\"Automatic Upload\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n\t\t\t\t<saml2:Attribute xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" Name=\"urn:oasis:names:tc:xacml:2.0:subject:role\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified\">\r\n\t\t\t\t\t<saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\r\n\t\t\t\t\t\t<Role xmlns=\"urn:hl7-org:v3\" code=\"TCU\" codeSystem=\"2.16.756.5.30.1.127.3.10.6\" codeSystemName=\"eHealth Suisse EPR Akteure\" displayName=\"Technical user\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CE\"/>\r\n\t\t\t\t\t</saml2:AttributeValue>\r\n\t\t\t\t</saml2:Attribute>\r\n                <saml2:Attribute Name=\"urn:e-health-suisse:principal-id\" xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">\r\n                    <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">2000040030829</saml2:AttributeValue>\r\n                </saml2:Attribute>\r\n                    <saml2:Attribute Name=\"urn:e-health-suisse:principal-name\" xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\">\r\n                    <saml2:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">Oliver Egger</saml2:AttributeValue>\r\n                </saml2:Attribute>\r\n\t\t\t</wst:Claims>\r\n\t\t</wst:RequestSecurityToken>\r\n\t</env:Body>\r\n</env:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/STS/services/SecurityTokenService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"STS",
+								"services",
+								"SecurityTokenService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MPI",
+			"item": [
+				{
+					"name": "ITI-44 PIXv3 Feed",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n  <soap:Header>\r\n    <Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:hl7-org:v3:PRPA_IN201301UV02</Action>\r\n    <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">urn:uuid:580a2592-95e6-4eec-ac08-5b7a829121cd</MessageID>\r\n    <To xmlns=\"http://www.w3.org/2005/08/addressing\">https://ikit.cara.ch/dep/proxy/cara/int/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n                                                          \r\n    <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n      <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n    </ReplyTo>\r\n  </soap:Header>\r\n  <soap:Body>\r\n    <PRPA_IN201301UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n      <id extension=\"1663085780134\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n      <creationTime value=\"20250702000000\"/>\r\n      <interactionId extension=\"PRPA_IN201301UV02\" root=\"2.16.840.1.113883.1.18\"/>\r\n      <processingCode code=\"T\"/>\r\n      <processingModeCode code=\"T\"/>\r\n      <acceptAckCode code=\"AL\"/>\r\n      <receiver typeCode=\"RCV\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n          <id root=\"{{mpiOid}}\"/> \r\n        </device>\r\n      </receiver>\r\n    <sender typeCode=\"SND\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n            <id root=\"2.16.756.5.30.1.196.3.2.1\"/>\r\n        </device>\r\n    </sender>\r\n      <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n        <code code=\"PRPA_TE201301UV02\" codeSystem=\"2.16.840.1.113883.1.6\"/>\r\n        <subject contextConductionInd=\"false\" typeCode=\"SUBJ\">\r\n          <registrationEvent classCode=\"REG\" moodCode=\"EVN\">\r\n            <statusCode code=\"active\"/>\r\n            <subject1 typeCode=\"SBJ\">\r\n              <patient classCode=\"PAT\">\r\n                <!-- Only the new, local ID to be added, and the EPR-SPID SHALL be specified here -->\r\n                <id extension=\"{{localid}}\" root=\"{{orgOid}}\" assigningAuthorityName=\"CARA IKIT\"/>\r\n                <id extension=\"{{eprSpid}}\" root=\"2.16.756.5.30.1.127.3.10.3\"/>\r\n                <statusCode code=\"active\"/>\r\n                <patientPerson classCode=\"PSN\" determinerCode=\"INSTANCE\">\r\n                    <name>\r\n                        <given>Romain Théophile</given>\r\n                        <family>ZELLER-ROBERT-NICOUD</family>\r\n                        <family qualifier=\"BR\">Alder</family>\r\n                    </name>\r\n                    <telecom use=\"H\" value=\"mailto:mtan+7560741992116@cara.ch\"/>\r\n                    <telecom use=\"MC\" value=\"tel:+41765073112\"/>\r\n                    <administrativeGenderCode code=\"M\"/>\r\n                    <birthTime value=\"19840308\"/>\r\n                    <addr use=\"H\">\r\n                        <streetAddressLine>Route de la corniche 3A</streetAddressLine>\r\n                        <city>Epalinges</city>\r\n                        <country>CH</country>\r\n                        <postalCode>1066</postalCode>\r\n                    </addr>\r\n                </patientPerson>\r\n                <providerOrganization classCode=\"ORG\" determinerCode=\"INSTANCE\">\r\n                  <!-- The same systems as used in patient/id SHALL be specified here -->\r\n                  <id root=\"{{orgOid}}\"/>\r\n                  <id root=\"2.16.756.5.30.1.127.3.10.3\"/>\r\n                  <name>{{orgName}}</name>\r\n                  <contactParty classCode=\"CON\">\r\n                    <telecom value=\"mailto:ssi@cara.ch\"/>\r\n                  </contactParty>\r\n                </providerOrganization>\r\n              </patient>\r\n            </subject1>\r\n            <custodian typeCode=\"CST\">\r\n              <assignedEntity classCode=\"ASSIGNED\">\r\n                <id root=\"{{orgOid}}.1\"/>\r\n                <assignedOrganization classCode=\"ORG\" determinerCode=\"INSTANCE\">\r\n                  <name>{{orgName}}</name>\r\n                </assignedOrganization>\r\n              </assignedEntity>\r\n            </custodian>\r\n          </registrationEvent>\r\n        </subject>\r\n      </controlActProcess>\r\n    </PRPA_IN201301UV02>\r\n  </soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-45 PIXv3 with MPI-PID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n    <soap:Header>\r\n        <Action xmlns=\"http://www.w3.org/2005/08/addressing\" soap:mustUnderstand=\"true\">urn:hl7-org:v3:PRPA_IN201309UV02</Action>\r\n        <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n        <To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n        <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n            <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n        </ReplyTo>\r\n    </soap:Header>\r\n    <soap:Body>\r\n        <PRPA_IN201309UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n            <id extension=\"1663085902758\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n            <creationTime value=\"20220922053322\"/>\r\n            <interactionId extension=\"PRPA_IN201309UV02\" root=\"2.16.840.1.113883.1.18\"/>\r\n            <processingCode code=\"T\"/>\r\n            <processingModeCode code=\"T\"/>\r\n            <acceptAckCode code=\"AL\"/>\r\n            <receiver typeCode=\"RCV\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"{{mpiOid}}\"/>\r\n                </device>\r\n            </receiver>\r\n            <sender typeCode=\"SND\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"2.16.756.5.30.1.196.3.2.1\"/>\r\n                </device>\r\n            </sender>\r\n            <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n                <code code=\"PRPA_TE201309UV02\" displayName=\"2.16.840.1.113883.1.18\"/>\r\n                <queryByParameter>\r\n                    <queryId extension=\"1663085902759\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n                    <statusCode code=\"new\"/>\r\n                    <responsePriorityCode code=\"I\"/>\r\n                    <parameterList>\r\n            <dataSource>\r\n              <value root=\"{{mpiOid}}\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n            <dataSource>\r\n              <value root=\"2.16.756.5.30.1.127.3.10.3\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n                        <patientIdentifier>\r\n                        <value root=\"{{mpiOid}}\" extension=\"{{mpiPid}}\"/>\r\n                            <semanticsText>Patient.id</semanticsText>\r\n                        </patientIdentifier>\r\n                    </parameterList>\r\n                </queryByParameter>\r\n            </controlActProcess>\r\n        </PRPA_IN201309UV02>\r\n    </soap:Body>\r\n</soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-45 PIXv3 with EPR-SPID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n    <soap:Header>\r\n        <Action xmlns=\"http://www.w3.org/2005/08/addressing\" soap:mustUnderstand=\"true\">urn:hl7-org:v3:PRPA_IN201309UV02</Action>\r\n        <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n        <To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n        <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n            <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n        </ReplyTo>\r\n    </soap:Header>\r\n    <soap:Body>\r\n        <PRPA_IN201309UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n            <id extension=\"1663085902758\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n            <creationTime value=\"20220922053322\"/>\r\n            <interactionId extension=\"PRPA_IN201309UV02\" root=\"2.16.840.1.113883.1.18\"/>\r\n            <processingCode code=\"T\"/>\r\n            <processingModeCode code=\"T\"/>\r\n            <acceptAckCode code=\"AL\"/>\r\n            <receiver typeCode=\"RCV\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"{{mpiOid}}\"/> \r\n                </device>\r\n            </receiver>\r\n            <sender typeCode=\"SND\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"2.16.756.5.30.1.196.3.2.1\"/>\r\n                </device>\r\n            </sender>\r\n            <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n                <code code=\"PRPA_TE201309UV02\" displayName=\"2.16.840.1.113883.1.18\"/>\r\n                <queryByParameter>\r\n                    <queryId extension=\"1663085902759\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n                    <statusCode code=\"new\"/>\r\n                    <responsePriorityCode code=\"I\"/>\r\n                    <parameterList>\r\n            <dataSource>\r\n              <value root=\"{{mpiOid}}\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n            <dataSource>\r\n              <value root=\"2.16.756.5.30.1.127.3.10.3\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n                        <patientIdentifier>\r\n                            <value root=\"2.16.756.5.30.1.127.3.10.3\" extension=\"{{eprSpid}}\"/>\r\n                            <semanticsText>Patient.id</semanticsText>\r\n                        </patientIdentifier>\r\n                    </parameterList>\r\n                </queryByParameter>\r\n            </controlActProcess>\r\n        </PRPA_IN201309UV02>\r\n    </soap:Body>\r\n</soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-45 PIXv3 with AHV-N",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n    <soap:Header>\r\n        <Action xmlns=\"http://www.w3.org/2005/08/addressing\" soap:mustUnderstand=\"true\">urn:hl7-org:v3:PRPA_IN201309UV02</Action>\r\n        <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n        <To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n        <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n            <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n        </ReplyTo>\r\n    </soap:Header>\r\n    <soap:Body>\r\n        <PRPA_IN201309UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n            <id extension=\"1663085902758\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n            <creationTime value=\"20220922053322\"/>\r\n            <interactionId extension=\"PRPA_IN201309UV02\" root=\"2.16.840.1.113883.1.18\"/>\r\n            <processingCode code=\"T\"/>\r\n            <processingModeCode code=\"T\"/>\r\n            <acceptAckCode code=\"AL\"/>\r\n            <receiver typeCode=\"RCV\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"{{mpiOid}}\"/>\r\n                </device>\r\n            </receiver>\r\n            <sender typeCode=\"SND\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"2.16.756.5.30.1.196.3.2.1\"/>\r\n                </device>\r\n            </sender>\r\n            <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n                <code code=\"PRPA_TE201309UV02\" displayName=\"2.16.840.1.113883.1.18\"/>\r\n                <queryByParameter>\r\n                    <queryId extension=\"1663085902759\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n                    <statusCode code=\"new\"/>\r\n                    <responsePriorityCode code=\"I\"/>\r\n                    <parameterList>\r\n            <dataSource>\r\n              <value root=\"{{mpiOid}}\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n            <dataSource>\r\n              <value root=\"2.16.756.5.30.1.127.3.10.3\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n                        <patientIdentifier>\r\n                            <value root=\"2.16.756.5.32\" extension=\"{{socialsecurityid}}\"/>\r\n                            <semanticsText>Patient.id</semanticsText>\r\n                        </patientIdentifier>\r\n                    </parameterList>\r\n                </queryByParameter>\r\n            </controlActProcess>\r\n        </PRPA_IN201309UV02>\r\n    </soap:Body>\r\n</soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-45 PIXv3 with localID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n    <soap:Header>\r\n        <Action xmlns=\"http://www.w3.org/2005/08/addressing\" soap:mustUnderstand=\"true\">urn:hl7-org:v3:PRPA_IN201309UV02</Action>\r\n        <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n        <To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n        <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n            <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n        </ReplyTo>\r\n    </soap:Header>\r\n    <soap:Body>\r\n        <PRPA_IN201309UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n            <id extension=\"1663085902758\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n            <creationTime value=\"20220922053322\"/>\r\n            <interactionId extension=\"PRPA_IN201309UV02\" root=\"2.16.840.1.113883.1.18\"/>\r\n            <processingCode code=\"T\"/>\r\n            <processingModeCode code=\"T\"/>\r\n            <acceptAckCode code=\"AL\"/>\r\n            <receiver typeCode=\"RCV\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"{{mpiOid}}\"/>\r\n                </device>\r\n            </receiver>\r\n            <sender typeCode=\"SND\">\r\n                <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n                    <id root=\"2.16.756.5.30.1.196.3.2.1\"/>\r\n                </device>\r\n            </sender>\r\n            <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n                <code code=\"PRPA_TE201309UV02\" displayName=\"2.16.840.1.113883.1.18\"/>\r\n                <queryByParameter>\r\n                    <queryId extension=\"1663085902759\" root=\"1.3.6.1.4.1.21367.2017.2.1.104\"/>\r\n                    <statusCode code=\"new\"/>\r\n                    <responsePriorityCode code=\"I\"/>\r\n                    <parameterList>\r\n            <dataSource>\r\n              <value root=\"{{mpiOid}}\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n            <dataSource>\r\n              <value root=\"2.16.756.5.30.1.127.3.10.3\"/>\r\n              <semanticsText>DataSource.id</semanticsText>\r\n            </dataSource>\r\n                        <patientIdentifier>\r\n                            <value root=\"{{orgOid}}\" extension=\"{{localid}}\"/>\r\n                            <semanticsText>Patient.id</semanticsText>\r\n                        </patientIdentifier>\r\n                    </parameterList>\r\n                </queryByParameter>\r\n            </controlActProcess>\r\n        </PRPA_IN201309UV02>\r\n    </soap:Body>\r\n</soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-47 PDQv3 with family name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n<soap:Header>\r\n    <Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:hl7-org:v3:PRPA_IN201305UV02</Action>\r\n    <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">urn:uuid:{{$guid}}</MessageID>\r\n    <To xmlns=\"http://www.w3.org/2005/08/addressing\">https://{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n    <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n        <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n    </ReplyTo>\r\n</soap:Header>\r\n<soap:Body>\r\n<PRPA_IN201305UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n    <id root=\"{{$guid}}\"/>\r\n    <creationTime value=\"20230710120125\"/>\r\n    <interactionId extension=\"PRPA_IN201305UV02\" root=\"2.16.840.1.113883.1.6\"/>\r\n    <processingCode code=\"P\"/>\r\n    <processingModeCode code=\"T\"/>\r\n    <acceptAckCode code=\"AL\"/>\r\n    <receiver typeCode=\"RCV\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n        <id root=\"{{mpiOid}}\"/>\r\n        </device>\r\n    </receiver>\r\n    <sender typeCode=\"SND\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n            <id root=\"2.16.756.5.30.1.145.1.1\"\r\n            assigningAuthorityName=\"Cara Simulator\"/>\r\n        </device>\r\n    </sender>\r\n    <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n        <code code=\"PRPA_TE201305UV02\" codeSystem=\"2.16.840.1.113883.1.6\"/>\r\n        <queryByParameter>\r\n            <queryId root=\"{{$guid}}\"/>\r\n            <statusCode code=\"new\"/>\r\n            <responseModalityCode code=\"R\"/>\r\n            <responsePriorityCode code=\"I\"/>\r\n            <parameterList>\r\n                <livingSubjectName>\r\n                    <value use=\"SRCH\">\r\n                        <given>Romain Théophile</given>\r\n\t\t\t\t\t\t<family>ZELLER-ROBERT-NICOUD</family>\r\n                    </value>\r\n                    <semanticsText>LivingSubject.name</semanticsText>\r\n                </livingSubjectName>\r\n            </parameterList>\r\n        </queryByParameter>\r\n    </controlActProcess>\r\n</PRPA_IN201305UV02></soap:Body></soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-47 PDQv3 with MPI-PID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n<soap:Header>\r\n    <Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:hl7-org:v3:PRPA_IN201305UV02</Action>\r\n    <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n    <To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n    <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n        <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n    </ReplyTo>\r\n</soap:Header>\r\n<soap:Body>\r\n<PRPA_IN201305UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n    <id root=\"{{$guid}}\"/>\r\n    <creationTime value=\"20230710120125\"/>\r\n    <interactionId extension=\"PRPA_IN201305UV02\" root=\"2.16.840.1.113883.1.6\"/>\r\n    <processingCode code=\"P\"/>\r\n    <processingModeCode code=\"T\"/>\r\n    <acceptAckCode code=\"AL\"/>\r\n    <receiver typeCode=\"RCV\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n            <id root=\"{{mpiOid}}\"/>\r\n        </device>\r\n    </receiver>\r\n    <sender typeCode=\"SND\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n            <id root=\"2.16.756.5.30.1.145.1.1\"\r\n            assigningAuthorityName=\"Cara Simulator\"/>\r\n        </device>\r\n    </sender>\r\n    <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n        <code code=\"PRPA_TE201305UV02\" codeSystem=\"2.16.840.1.113883.1.6\"/>\r\n        <queryByParameter>\r\n            <queryId root=\"{{$guid}}\"/>\r\n            <statusCode code=\"new\"/>\r\n            <responseModalityCode code=\"R\"/>\r\n            <responsePriorityCode code=\"I\"/>\r\n            <parameterList>\r\n                <livingSubjectId>\r\n                    <value root=\"{{mpiOid}}\" extension=\"{{mpiPid}}\"/>\r\n                    <semanticsText>LivingSubject.id</semanticsText>\r\n                </livingSubjectId>\r\n            </parameterList>\r\n        </queryByParameter>\r\n    </controlActProcess>\r\n</PRPA_IN201305UV02></soap:Body></soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-47 PDQv3 with EPR-SPID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n<soap:Header>\r\n    <Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:hl7-org:v3:PRPA_IN201305UV02</Action>\r\n    <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n    <To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n    <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n        <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n    </ReplyTo>\r\n</soap:Header>\r\n<soap:Body>\r\n<PRPA_IN201305UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n    <id root=\"{{$guid}}\"/>\r\n    <creationTime value=\"20230710120125\"/>\r\n    <interactionId extension=\"PRPA_IN201305UV02\" root=\"2.16.840.1.113883.1.6\"/>\r\n    <processingCode code=\"P\"/>\r\n    <processingModeCode code=\"T\"/>\r\n    <acceptAckCode code=\"AL\"/>\r\n    <receiver typeCode=\"RCV\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n            <id root=\"2.16.756.5.30.1.191.1.0.2.1\"/>\r\n        </device>\r\n    </receiver>\r\n    <sender typeCode=\"SND\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n            <id root=\"2.16.756.5.30.1.145.1.1\"\r\n            assigningAuthorityName=\"Cara Simulator\"/>\r\n        </device>\r\n    </sender>\r\n    <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n        <code code=\"PRPA_TE201305UV02\" codeSystem=\"2.16.840.1.113883.1.6\"/>\r\n        <queryByParameter>\r\n            <queryId root=\"{{$guid}}\"/>\r\n            <statusCode code=\"new\"/>\r\n            <responseModalityCode code=\"R\"/>\r\n            <responsePriorityCode code=\"I\"/>\r\n            <parameterList>\r\n                <livingSubjectId>\r\n                    <value root=\"2.16.756.5.30.1.127.3.10.3\" extension=\"{{eprSpid}}\"/>\r\n                    <semanticsText>LivingSubject.id</semanticsText>\r\n                </livingSubjectId>\r\n            </parameterList>\r\n        </queryByParameter>\r\n    </controlActProcess>\r\n</PRPA_IN201305UV02></soap:Body></soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-47 PDQv3 with AHV-N",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml; charset=UTF-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n<soap:Header>\r\n    <Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:hl7-org:v3:PRPA_IN201305UV02</Action>\r\n    <MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n    <To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/UPIProxy/services/PIXPDQV3ManagerService</To>\r\n    <ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n        <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n    </ReplyTo>\r\n</soap:Header>\r\n<soap:Body>\r\n<PRPA_IN201305UV02 xmlns=\"urn:hl7-org:v3\" ITSVersion=\"XML_1.0\">\r\n    <id root=\"{{$guid}}\"/>\r\n    <creationTime value=\"20230710120125\"/>\r\n    <interactionId extension=\"PRPA_IN201305UV02\" root=\"2.16.840.1.113883.1.6\"/>\r\n    <processingCode code=\"P\"/>\r\n    <processingModeCode code=\"T\"/>\r\n    <acceptAckCode code=\"AL\"/>\r\n    <receiver typeCode=\"RCV\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n          <id root=\"{{mpiOid}}\"/> \r\n        </device>\r\n    </receiver>\r\n    <sender typeCode=\"SND\">\r\n        <device classCode=\"DEV\" determinerCode=\"INSTANCE\">\r\n            <id root=\"2.16.756.5.30.1.145.1.1\"\r\n            assigningAuthorityName=\"Cara Simulator\"/>\r\n        </device>\r\n    </sender>\r\n    <controlActProcess classCode=\"CACT\" moodCode=\"EVN\">\r\n        <code code=\"PRPA_TE201305UV02\" codeSystem=\"2.16.840.1.113883.1.6\"/>\r\n        <queryByParameter>\r\n            <queryId root=\"{{$guid}}\"/>\r\n            <statusCode code=\"new\"/>\r\n            <responseModalityCode code=\"R\"/>\r\n            <responsePriorityCode code=\"I\"/>\r\n            <parameterList>\r\n                <livingSubjectId>\r\n                    <value root=\"2.16.756.5.32\" extension=\"{{socialsecurityid}}\"/>\r\n                    <semanticsText>LivingSubject.id</semanticsText>\r\n                </livingSubjectId>\r\n            </parameterList>\r\n        </queryByParameter>\r\n    </controlActProcess>\r\n</PRPA_IN201305UV02></soap:Body></soap:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/UPIProxy/services/PIXPDQV3ManagerService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"UPIProxy",
+								"services",
+								"PIXPDQV3ManagerService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HPD",
+			"item": [
+				{
+					"name": "ITI-58 HPD Query by id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"pm.variables.set(\"queryId1\", Math.floor(Math.random() * (max - min) + min));\r",
+									"pm.variables.set(\"queryId2\", Math.floor(Math.random() * (max - min) + min));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2010:ProviderInformationQuery</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/HPD/services/HPDService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n\t\t<batchRequest xmlns=\"urn:oasis:names:tc:DSML:2:0:core\" requestID=\"{{queryId1}}\">\r\n\t\t\t<searchRequest dn=\"ou=HCRegulatedOrganization,dc=HPD,o=BAG,c=CH\" scope=\"wholeSubtree\" derefAliases=\"neverDerefAliases\" requestID=\"{{queryId2}}\">\r\n\t\t\t\t<filter>\r\n\t\t\t\t\t\t<substrings name=\"hcIdentifier\">\r\n\t\t\t\t\t\t\t<initial>RefData:OID:2.16.756.5.30.1.145:ACTIVE</initial>\r\n\t\t\t\t\t\t</substrings>\r\n\t\t\t\t</filter>\r\n\t\t\t\t<attributes>\r\n\t\t\t\t\t<attribute name=\"hcIdentifier\"/>\r\n\t\t\t\t</attributes>\r\n\t\t\t</searchRequest>\r\n\t\t</batchRequest>\r\n\t</soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/HPD/services/HPDService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"HPD",
+								"services",
+								"HPDService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-58 HPD Query by dn",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"pm.variables.set(\"queryId1\", Math.floor(Math.random() * (max - min) + min));\r",
+									"pm.variables.set(\"queryId2\", Math.floor(Math.random() * (max - min) + min));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2010:ProviderInformationQuery</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/HPD/services/HPDService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n\t\t<batchRequest xmlns=\"urn:oasis:names:tc:DSML:2:0:core\" requestID=\"{{queryId1}}\">\r\n<!-- original\t\t\t<searchRequest dn=\"OU=HCRegulatedOrganization,DC=HPD,o=BAG,c=CH\" scope=\"singleLevel\" derefAliases=\"neverDerefAliases\" requestID=\"{{queryId2}}\"> -->\r\n\t\t\t<searchRequest dn=\"OU=HCRegulatedOrganization,DC=HPD,o=BAG,c=CH\" scope=\"wholeSubtree\" derefAliases=\"neverDerefAliases\" requestID=\"{{queryId2}}\">\t\r\n                <filter>\r\n                    <substrings name=\"uid\">\r\n                        <initial>EMEDO</initial>\r\n                    </substrings>\r\n                </filter>\r\n\t\t\t</searchRequest>\r\n\t\t</batchRequest>\r\n\t</soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/HPD/services/HPDService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"HPD",
+								"services",
+								"HPDService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-58 HPD Query by GLN",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"pm.variables.set(\"queryId1\", Math.floor(Math.random() * (max - min) + min));\r",
+									"pm.variables.set(\"queryId2\", Math.floor(Math.random() * (max - min) + min));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2010:ProviderInformationQuery</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/HPD/services/HPDService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n\t\t<batchRequest requestID=\"{{queryId1}}\" xmlns=\"urn:oasis:names:tc:DSML:2:0:core\">\r\n            <searchRequest derefAliases=\"neverDerefAliases\" dn=\"ou=HCProfessional,dc=HPD,o=BAG,c=CH\" requestID=\"{{queryId2}}\" scope=\"wholeSubtree\">\r\n                <filter>\r\n                    <equalityMatch name=\"hcIdentifier\">\r\n                    <value>RefData:GLN:2000040030829:ACTIVE</value>\r\n                    </equalityMatch>\r\n                </filter>\r\n\t\t\t\t<attributes>\r\n                    <attribute name=\"uid\"/>\r\n                    <attribute name=\"cn\"/>\r\n                    <attribute name=\"hcIdentifier\" />\r\n                    <attribute name=\"hcProfession\" />\r\n                    <attribute name=\"hpdProviderStatus\" />\r\n                    <attribute name=\"displayName\" />\r\n                    <attribute name=\"title\" />\r\n                    <attribute name=\"givenName\" />\r\n                    <attribute name=\"sn\" />\r\n                    <attribute name=\"cn\" />\r\n                    <attribute name=\"hpdProviderLanguageSupported\" />\r\n                    <attribute name=\"gender\" />\r\n                    <attribute name=\"hpdProviderMailingAddress\" />\r\n                    <attribute name=\"telephoneNumber\" />\r\n                    <attribute name=\"facsimileTelephoneNumber\" />\r\n                    <attribute name=\"mail\" />\r\n                    <attribute name=\"objectClass\" />\r\n                    <attribute name=\"hcRegistrationStatus\" />\r\n                        </attributes>\r\n            </searchRequest>\r\n        </batchRequest>\r\n\t</soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/HPD/services/HPDService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"HPD",
+								"services",
+								"HPDService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-59 HPD Add a professional",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"pm.variables.set(\"queryId1\", Math.floor(Math.random() * (max - min) + min));\r",
+									"pm.variables.set(\"queryId2\", Math.floor(Math.random() * (max - min) + min));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2010:ProviderInformationFeed</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/HPD/services/HPDService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n      <batchRequest requestID=\"{{queryId1}}\" xmlns=\"urn:oasis:names:tc:DSML:2:0:core\">\r\n      <addRequest dn=\"uid=EMEDOINT:123456,ou=HCProfessional,dc=HPD,o=BAG,c=CH\" requestID=\"54321\">\r\n         <attr name=\"uid\">\r\n            <value>EMEDOINT:123456</value>\r\n          </attr>\r\n          <attr name=\"cn\">\r\n            <value>OTest</value>\r\n          </attr>\r\n          <attr name=\"hcIdentifier\">\r\n            <value>RefData:GLN:7601000458780:ACTIVE</value>\r\n          </attr>\r\n          <attr name=\"hcProfession\">\r\n            <value>BAG:2.16.756.5.30.1.127.3.10.9:00000</value>\r\n          </attr>\r\n          <attr name=\"hpdProviderStatus\">\r\n            <value>Active</value>\r\n          </attr>\r\n          <attr name=\"displayName\">\r\n            <value>Test2</value>\r\n          </attr>\r\n          <attr name=\"title\"></attr>\r\n          <attr name=\"givenName\">\r\n            <value>test2</value>\r\n          </attr>\r\n          <attr name=\"sn\">\r\n            <value>test2</value>\r\n          </attr>\r\n          <attr name=\"cn\">\r\n            <value>Test2</value>\r\n          </attr>\r\n          <attr name=\"hpdProviderLanguageSupported\">\r\n            <value>de</value>\r\n          </attr>\r\n          <attr name=\"gender\">\r\n            <value>m</value>\r\n          </attr>\r\n          <attr name=\"hpdProviderMailingAddress\"></attr>\r\n          <attr name=\"telephoneNumber\"></attr>\r\n          <attr name=\"facsimileTelephoneNumber\"></attr>\r\n          <attr name=\"mail\">\r\n            <value>test-oliver.egger@hintest.ch</value>\r\n          </attr>\r\n         <attr  name=\"objectClass\">\r\n            <value>top</value>\r\n            <value>naturalPerson</value>\r\n            <value>HPDProvider</value>\r\n            <value>person</value>\r\n            <value>organizationalPerson</value>\r\n            <value>inetOrgPerson</value>\r\n            <value>HCProfessional</value>\r\n          </attr>\r\n        </addRequest>\r\n      </batchRequest>\r\n   </soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/HPD/services/HPDService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"HPD",
+								"services",
+								"HPDService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-58 HPD Query by uid professional above",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"pm.variables.set(\"queryId1\", Math.floor(Math.random() * (max - min) + min));\r",
+									"pm.variables.set(\"queryId2\", Math.floor(Math.random() * (max - min) + min));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2010:ProviderInformationQuery</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/HPD/services/HPDService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n\t\t<batchRequest requestID=\"{{queryId1}}\" xmlns=\"urn:oasis:names:tc:DSML:2:0:core\">\r\n            <searchRequest derefAliases=\"neverDerefAliases\" dn=\"ou=HCProfessional,dc=HPD,o=BAG,c=CH\" requestID=\"{{queryId2}}\" scope=\"wholeSubtree\">\r\n                <filter>\r\n                    <substrings name=\"uid\">\r\n                        <initial>EMEDOINT:123456</initial>\r\n                    </substrings>\r\n                </filter>\r\n            </searchRequest>\r\n        </batchRequest>\r\n\t</soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/HPD/services/HPDService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"HPD",
+								"services",
+								"HPDService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-59 HPD Modify above professional",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"pm.variables.set(\"queryId1\", Math.floor(Math.random() * (max - min) + min));\r",
+									"pm.variables.set(\"queryId2\", Math.floor(Math.random() * (max - min) + min));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2010:ProviderInformationFeed</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">{{$guid}}</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">{{host}}/HPD/services/HPDService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n      <batchRequest requestID=\"{{queryId1}}\" xmlns=\"urn:oasis:names:tc:DSML:2:0:core\">\r\n         <modifyRequest dn=\"uid=EMEDOINT:123456,ou=HCProfessional,dc=HPD,o=BAG,c=CH\" requestID=\"54321\">\r\n            <modification name=\"displayname\" operation=\"replace\">\r\n               <value>Test2-modfied</value>\r\n            </modification>                        \r\n         </modifyRequest>\r\n      </batchRequest>\r\n   </soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/HPD/services/HPDService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"HPD",
+								"services",
+								"HPDService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-58 HPD Delete above professional",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"pm.variables.set(\"queryId1\", Math.floor(Math.random() * (max - min) + min));\r",
+									"pm.variables.set(\"queryId2\", Math.floor(Math.random() * (max - min) + min));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2010:ProviderInformationFeed</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">urn:uuid:9a770a33-15af-41b2-94a1-d2c3fa340813</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">https://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t</soap:Header>\r\n      <soap:Body>\r\n        <batchRequest requestID=\"1234\" xmlns=\"urn:oasis:names:tc:DSML:2:0:core\">\r\n            <delRequest dn=\"uid=EMEDOINT:123456,ou=HCProfessional,dc=HPD,o=BAG,c=CH\" requestID=\"54321\"/>\r\n        </batchRequest>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n"
+						},
+						"url": {
+							"raw": "{{host}}/HPD/services/HPDService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"HPD",
+								"services",
+								"HPDService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "XDS",
+			"item": [
+				{
+					"name": "ITI-41 Publish TCU - MTOM - VACD",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const { v4: uuidv4 } = require('uuid');\r",
+									"const moment = require('moment');\r",
+									"\r",
+									"pm.variables.set(\"uuid\", uuidv4());\r",
+									"pm.variables.set(\"uuid2\", uuidv4());\r",
+									"pm.variables.set(\"uuid4\", uuidv4());\r",
+									"pm.variables.set(\"uuid5\", uuidv4());\r",
+									"\r",
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"\r",
+									"pm.variables.set(\"docUniqueId\", \"2.16.756.5.30.1.145.1.4^\" + uuidv4());\r",
+									"pm.variables.set(\"ssUniqueId\", \"2.16.756.5.30.1.145.1.4.1.\" + Math.random() * (max - min) + min);\r",
+									"\r",
+									"pm.variables.set(\"assEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"pm.variables.set(\"ssEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"pm.variables.set(\"docEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"\r",
+									"pm.variables.set(\"dateNow\", moment().utc().format('YYYYMMDDHHmmss'));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/related; boundary=\"uuid:71766996-d9d7-484d-868d-8658c0c85d9a\";type=\"application/xop+xml\";start-info=\"application/soap+xml; charset=utf-8\"",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--uuid:71766996-d9d7-484d-868d-8658c0c85d9a\r\nContent-Type: application/xop+xml; charset=UTF-8; type=\"application/soap+xml\"\r\nContent-Transfer-Encoding: binary\r\nContent-ID: <root.message@cxf.apache.org>\r\n\r\n<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header><wsse:Security xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:s=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n{{xuaToken}}\r\n</wsse:Security>\r\n\r\n<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b</Action>\r\n<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">urn:uuid:ce9fcaa5-7a7d-4d5a-99c6-7cb1a9e09482</MessageID>\r\n<To xmlns=\"http://www.w3.org/2005/08/addressing\">http://test.ahdis.ch/eprik-proxy-cara/camel/cara/Repository/services/RepositoryService</To>\r\n<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n    <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n</ReplyTo>\r\n</soap:Header>\r\n<soap:Body>\r\n    <ns4:ProvideAndRegisterDocumentSetRequest xmlns:ns7=\"urn:ihe:iti:rmd:2017\" xmlns:ns6=\"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0\" xmlns:ns5=\"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0\" xmlns:ns4=\"urn:ihe:iti:xds-b:2007\" xmlns:ns3=\"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0\" xmlns:ns2=\"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0\">\r\n        <ns5:SubmitObjectsRequest>\r\n            <ns3:RequestSlotList />\r\n            <ns2:RegistryObjectList>\r\n                <ns2:ExtrinsicObject mimeType=\"application/fhir+json\" objectType=\"urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1\" status=\"urn:oasis:names:tc:ebxml-regrep:StatusType:Approved\" id=\"{{docEntryUuid}}\">\r\n                    <ns2:Slot name=\"creationTime\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>{{dateNow}}</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"languageCode\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>de-CH</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"repositoryUniqueId\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>{{mpiOid}}.2</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"sourcePatientId\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"sourcePatientInfo\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>PID-3|{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO^^^&amp;2.16.756.5.30.1.191.1.0.2.1&amp;ISO~3450294^^^&amp;2.16.756.5.30.1.191.1.0.12.3.101&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"urn:e-health-suisse:2020:originalProviderRole\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Name>\r\n                        <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Test PDF\" />\r\n                    </ns2:Name>\r\n                    <!-- XDSDocumentEntry.classCode -->\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"184216000\" id=\"urn:uuid:304ec109-f9dc-4e3e-b93b-5e2170ec15d4\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Patient record type (record artifact)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"urn:che:epr:ch-vacd:immunization-administration:2022\" id=\"urn:uuid:42b974ce-31dd-4504-93e8-fb09f2b9fb60\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.756.5.30.1.127.3.10.10</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"264358009\" id=\"urn:uuid:92539e8f-d779-47d0-b697-546d2d26e003\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"General practice premises(environment)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"394802001\" id=\"urn:uuid:73b694e3-5dc8-45ba-a890-52d890750dac\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"General medicine(qualifier value)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <!-- XDSDocumentEntry.typeCode -->\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f0306f51-975f-434e-a61c-c59651d33983\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"41000179103\" id=\"urn:uuid:db779c14-6c83-4f62-83ed-8976c13c7af5\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Immunization record (record artifact)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"17621005\" id=\"{{docEntryUuid}}\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Normally accessible\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d\" id=\"urn:uuid:{{uuid5}}\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"\" objectType=\"urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification\">\r\n                            <ns2:Slot name=\"authorPerson\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>^LastName^FirstName^^MD^DR</ns2:Value>\r\n                            </ns2:ValueList>\r\n                            </ns2:Slot>\r\n                            <ns2:Slot name=\"authorInstitution\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>Institution</ns2:Value>\r\n                            </ns2:ValueList>\r\n                            </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{docEntryUuid}}\" identificationScheme=\"urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427\" value=\"{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO\" id=\"urn:uuid:56ce4821-412d-469c-8a60-f04c09c19e51\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSDocumentEntry.patientId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{docEntryUuid}}\" identificationScheme=\"urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab\" value=\"{{docUniqueId}}\" id=\"urn:uuid:b70bf707-ffe4-4114-bb69-888028ef9228\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSDocumentEntry.uniqueId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                </ns2:ExtrinsicObject>\r\n                <ns2:RegistryPackage id=\"{{ssEntryUuid}}\">\r\n                    <ns2:Slot name=\"submissionTime\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>20230110085959</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d\" classifiedObject=\"{{ssEntryUuid}}\" id=\"{{ssUniqueId}}\">\r\n                        <ns2:Slot name=\"authorPerson\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>^---</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Slot name=\"authorRole\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:aa543740-bdda-424e-8c96-df4873be8500\" classifiedObject=\"{{ssEntryUuid}}\" nodeRepresentation=\"71388002\" id=\"urn:uuid:b7297bae-95a7-43ee-8842-953898b11407\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Procedure (procedure)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446\" value=\"{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO\" id=\"urn:uuid:0e82f039-a757-47f7-8938-fc2effc1d42c\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.patientId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8\" value=\"{{ssUniqueId}}\" id=\"urn:uuid:6d15d06a-ce3d-4121-a079-08b50e412b83\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.uniqueId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832\" value=\"2.16.756.5.30.1.145.20.1\" id=\"urn:uuid:24a67372-23be-4a2e-91b4-2000560235f0\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.sourceId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                </ns2:RegistryPackage>\r\n                <ns2:Classification classifiedObject=\"{{ssEntryUuid}}\" classificationNode=\"urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd\" id=\"urn:uuid:49664fc7-ccd7-4a69-a7e3-ed288c75e54d\" />\r\n                <ns2:Association associationType=\"urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember\" sourceObject=\"{{ssEntryUuid}}\" targetObject=\"{{docEntryUuid}}\" id=\"{{docUniqueId}}\">\r\n                    <ns2:Slot name=\"SubmissionSetStatus\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>Original</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                </ns2:Association>\r\n            </ns2:RegistryObjectList>\r\n        </ns5:SubmitObjectsRequest>\r\n<ns4:Document id=\"{{docEntryUuid}}\"><xop:Include xmlns:xop=\"http://www.w3.org/2004/08/xop/include\" href=\"cid:e57f250b-5f63-43c3-b294-f9be589aca16-1@urn%3Aihe%3Aiti%3Axds-b%3A2007\"/></ns4:Document></ns4:ProvideAndRegisterDocumentSetRequest></soap:Body></soap:Envelope>\r\n--uuid:71766996-d9d7-484d-868d-8658c0c85d9a\r\nContent-Type: application/fhir+json\r\nContent-Transfer-Encoding: binary\r\nContent-ID: <e57f250b-5f63-43c3-b294-f9be589aca16-1@urn:ihe:iti:xds-b:2007>\r\n\r\n{\r\n    \"resourceType\": \"Bundle\",\r\n    \"id\": \"Bundle-0001\",\r\n    \"meta\": {\r\n        \"profile\": [\r\n            \"http://fhir.ch/ig/ch-vacd/StructureDefinition/ch-vacd-document-immunization-administration|5.0.0\"\r\n        ]\r\n    },\r\n    \"identifier\": {\r\n        \"system\": \"urn:ietf:rfc:3986\",\r\n        \"value\": \"urn:uuid:446d5144-864f-49ab-8259-1419d7988fe9\"\r\n    },\r\n    \"type\": \"document\",\r\n    \"timestamp\": \"2024-12-26T14:39:23.466+01:00\",\r\n    \"entry\": [\r\n        {\r\n            \"fullUrl\": \"https://www.e-health-suisse.ch/Composition/Composition-0001\",\r\n            \"resource\": {\r\n                \"resourceType\": \"Composition\",\r\n                \"id\": \"Composition-0001\",\r\n                \"language\": \"en-US\",\r\n                \"identifier\": {\r\n                    \"system\": \"urn:ietf:rfc:3986\",\r\n                    \"value\": \"urn:uuid:82d12cf7-b7ca-463a-b167-a94003c87bdc\"\r\n                },\r\n                \"status\": \"final\",\r\n                \"type\": {\r\n                    \"coding\": [\r\n                        {\r\n                            \"system\": \"http://snomed.info/sct\",\r\n                            \"code\": \"41000179103\",\r\n                            \"display\": \"Immunization record\"\r\n                        }\r\n                    ]\r\n                },\r\n                \"category\": [\r\n                    {\r\n                        \"coding\": [\r\n                            {\r\n                                \"system\": \"urn:oid:2.16.756.5.30.1.127.3.10.10\",\r\n                                \"code\": \"urn:che:epr:ch-vacd:immunization-administration:2022\"\r\n                            }\r\n                        ]\r\n                    }\r\n                ],\r\n                \"subject\": {\r\n                    \"reference\": \"Patient/Patient-0001\"\r\n                },\r\n                \"date\": \"2024-12-26T14:39:23+01:00\",\r\n                \"author\": [\r\n                    {\r\n                        \"reference\": \"Patient/Patient-0001\"\r\n                    }\r\n                ],\r\n                \"title\": \"Immunization Administration\",\r\n                \"confidentiality\": \"N\",\r\n                \"_confidentiality\": {\r\n                    \"extension\": [\r\n                        {\r\n                            \"url\": \"http://fhir.ch/ig/ch-core/StructureDefinition/ch-ext-epr-confidentialitycode\",\r\n                            \"valueCodeableConcept\": {\r\n                                \"coding\": [\r\n                                    {\r\n                                        \"system\": \"http://snomed.info/sct\",\r\n                                        \"code\": \"17621005\",\r\n                                        \"display\": \"Normal\"\r\n                                    }\r\n                                ]\r\n                            }\r\n                        }\r\n                    ]\r\n                },\r\n                \"section\": [\r\n                    {\r\n                        \"id\": \"administration\",\r\n                        \"title\": \"Immunization Administration\",\r\n                        \"code\": {\r\n                            \"coding\": [\r\n                                {\r\n                                    \"system\": \"http://loinc.org\",\r\n                                    \"code\": \"11369-6\",\r\n                                    \"display\": \"Hx of Immunization\"\r\n                                }\r\n                            ]\r\n                        },\r\n                        \"text\": {\r\n                            \"status\": \"generated\",\r\n                            \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\">empty</div>\"\r\n                        },\r\n                        \"entry\": [\r\n                            {\r\n                                \"reference\": \"Immunization/Immunization-0001\"\r\n                            }\r\n                        ]\r\n                    }\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"fullUrl\": \"https://www.e-health-suisse.ch/Patient/Patient-0001\",\r\n            \"resource\": {\r\n                \"resourceType\": \"Patient\",\r\n                \"id\": \"Patient-0001\",\r\n                \"identifier\": [\r\n                    {\r\n                        \"system\": \"urn:oid:2.16.756.5.30.1.127.3.10.3\",\r\n                        \"value\": \"761337614242240684\"\r\n                    }\r\n                ],\r\n                \"active\": true,\r\n                \"name\": [\r\n                    {\r\n                        \"family\": \"ZELLER-ROBERT-NICOUD\",\r\n                        \"given\": [\r\n                            \"Romain Théophile\"\r\n                        ]\r\n                    }\r\n                ],\r\n                \"gender\": \"female\",\r\n                \"birthDate\": \"1984-08-03\"\r\n            }\r\n        },\r\n        {\r\n            \"fullUrl\": \"https://www.e-health-suisse.ch/PractitionerRole/PractitionerRole-0001\",\r\n            \"resource\": {\r\n                \"resourceType\": \"PractitionerRole\",\r\n                \"id\": \"PractitionerRole-0001\",\r\n                \"practitioner\": {\r\n                    \"reference\": \"Practitioner/Practitioner-0001\"\r\n                },\r\n                \"organization\": {\r\n                    \"reference\": \"Organization/Organization-0001\"\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"fullUrl\": \"https://www.e-health-suisse.ch/Practitioner/Practitioner-0001\",\r\n            \"resource\": {\r\n                \"resourceType\": \"Practitioner\",\r\n                \"id\": \"Practitioner-0001\",\r\n                \"name\": [\r\n                    {\r\n                        \"family\": \"Test\",\r\n                        \"given\": [\r\n                            \"John\"\r\n                        ]\r\n                    }\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"fullUrl\": \"https://www.e-health-suisse.ch/Organization/Organization-0001\",\r\n            \"resource\": {\r\n                \"resourceType\": \"Organization\",\r\n                \"id\": \"Organization-0001\",\r\n                \"name\": \"Pharmacy\"\r\n            }\r\n        },\r\n        {\r\n            \"fullUrl\": \"https://www.e-health-suisse.ch/Immunization/Immunization-0001\",\r\n            \"resource\": {\r\n                \"resourceType\": \"Immunization\",\r\n                \"id\": \"Immunization-0001\",\r\n                \"identifier\": [\r\n                    {\r\n                        \"system\": \"urn:ietf:rfc:3986\",\r\n                        \"value\": \"urn:uuid:d19e8827-3f9c-4802-8a54-f232eaf3d53e\"\r\n                    }\r\n                ],\r\n                \"status\": \"completed\",\r\n                \"vaccineCode\": {\r\n                    \"coding\": [\r\n                        {\r\n                            \"system\": \"http://fhir.ch/ig/ch-vacd/CodeSystem/ch-vacd-swissmedic-cs\",\r\n                            \"code\": \"450\",\r\n                            \"display\": \"FSME-Immun CC\"\r\n                        }\r\n                    ]\r\n                },\r\n                \"patient\": {\r\n                    \"reference\": \"Patient/Patient-0001\"\r\n                },\r\n                \"occurrenceDateTime\": \"2024-06-16T00:00:00+02:00\",\r\n                \"lotNumber\": \"-\",\r\n                \"performer\": [\r\n                    {\r\n                        \"actor\": {\r\n                            \"reference\": \"PractitionerRole/PractitionerRole-0001\"\r\n                        }\r\n                    }\r\n                ],\r\n                \"protocolApplied\": [\r\n                    {\r\n                        \"targetDisease\": [\r\n                            {\r\n                                \"coding\": [\r\n                                    {\r\n                                        \"system\": \"http://snomed.info/sct\",\r\n                                        \"code\": \"712986001\",\r\n                                        \"display\": \"Tickborne encephalitis\"\r\n                                    }\r\n                                ]\r\n                            }\r\n                        ],\r\n                        \"doseNumberPositiveInt\": 1\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}\r\n--uuid:71766996-d9d7-484d-868d-8658c0c85d9a--\r\n",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/Repository/services/RepositoryService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"Repository",
+								"services",
+								"RepositoryService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-41 Publish TCU - MTOM - PDF",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const { v4: uuidv4 } = require('uuid');\r",
+									"const moment = require('moment');\r",
+									"\r",
+									"pm.variables.set(\"uuid\", uuidv4());\r",
+									"pm.variables.set(\"uuid2\", uuidv4());\r",
+									"pm.variables.set(\"uuid4\", uuidv4());\r",
+									"pm.variables.set(\"uuid5\", uuidv4());\r",
+									"\r",
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"\r",
+									"pm.variables.set(\"docUniqueId\", \"2.16.756.5.30.1.145.1.4^\" + uuidv4());\r",
+									"pm.variables.set(\"ssUniqueId\", \"2.16.756.5.30.1.145.1.4.1.\" + Math.random() * (max - min) + min);\r",
+									"\r",
+									"pm.variables.set(\"assEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"pm.variables.set(\"ssEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"pm.variables.set(\"docEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"\r",
+									"pm.variables.set(\"dateNow\", moment().utc().format('YYYYMMDDHHmmss'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/related; boundary=\"uuid:71766996-d9d7-484d-868d-8658c0c85d9a\";type=\"application/xop+xml\";start-info=\"application/soap+xml; charset=utf-8\"",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--uuid:71766996-d9d7-484d-868d-8658c0c85d9a\r\nContent-Type: application/xop+xml; charset=UTF-8; type=\"application/soap+xml\"\r\nContent-Transfer-Encoding: binary\r\nContent-ID: <root.message@cxf.apache.org>\r\n\r\n<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header><wsse:Security xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:s=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n{{xuaToken}}\r\n</wsse:Security>\r\n\r\n<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b</Action>\r\n<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">urn:uuid:ce9fcaa5-7a7d-4d5a-99c6-7cb1a9e09482</MessageID>\r\n<To xmlns=\"http://www.w3.org/2005/08/addressing\">http://test.ahdis.ch/eprik-proxy-cara/camel/cara/Repository/services/RepositoryService</To>\r\n<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n    <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n</ReplyTo>\r\n</soap:Header>\r\n<soap:Body>\r\n    <ns4:ProvideAndRegisterDocumentSetRequest xmlns:ns7=\"urn:ihe:iti:rmd:2017\" xmlns:ns6=\"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0\" xmlns:ns5=\"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0\" xmlns:ns4=\"urn:ihe:iti:xds-b:2007\" xmlns:ns3=\"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0\" xmlns:ns2=\"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0\">\r\n        <ns5:SubmitObjectsRequest>\r\n            <ns3:RequestSlotList />\r\n            <ns2:RegistryObjectList>\r\n                <ns2:ExtrinsicObject mimeType=\"application/pdf\" objectType=\"urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1\" status=\"urn:oasis:names:tc:ebxml-regrep:StatusType:Approved\" id=\"{{docEntryUuid}}\">\r\n                    <ns2:Slot name=\"creationTime\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>{{dateNow}}</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"languageCode\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>de-CH</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"repositoryUniqueId\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>2.16.756.5.30.1.177.2.2.1.1.2</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"sourcePatientId\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"sourcePatientInfo\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>PID-3|{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO^^^&amp;2.16.756.5.30.1.191.1.0.2.1&amp;ISO~3450294^^^&amp;2.16.756.5.30.1.191.1.0.12.3.101&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"urn:e-health-suisse:2020:originalProviderRole\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Name>\r\n                        <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Test PDF\" />\r\n                    </ns2:Name>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"405624007\" id=\"urn:uuid:304ec109-f9dc-4e3e-b93b-5e2170ec15d4\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Administrative documentation\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"urn:che:epr:EPR_Unstructured_Document\" id=\"urn:uuid:42b974ce-31dd-4504-93e8-fb09f2b9fb60\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.756.5.30.1.127.3.10.10</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"264358009\" id=\"urn:uuid:92539e8f-d779-47d0-b697-546d2d26e003\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"General practice premises(environment)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"394802001\" id=\"urn:uuid:73b694e3-5dc8-45ba-a890-52d890750dac\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"General medicine(qualifier value)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f0306f51-975f-434e-a61c-c59651d33983\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"419891008\" id=\"urn:uuid:db779c14-6c83-4f62-83ed-8976c13c7af5\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Record artifact (record artifact)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"17621005\" id=\"{{docEntryUuid}}\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Normally accessible\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d\" id=\"urn:uuid:{{uuid5}}\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"\" objectType=\"urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification\">\r\n                            <ns2:Slot name=\"authorPerson\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>^LastName^FirstName^^^MD</ns2:Value>\r\n                            </ns2:ValueList>\r\n                            </ns2:Slot>\r\n                            <ns2:Slot name=\"authorInstitution\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>Institution</ns2:Value>\r\n                            </ns2:ValueList>\r\n                            <ns2:Slot name=\"authorTelecommunication\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>^^PH^^^^^^^^^+41765795005</ns2:Value>\r\n                            </ns2:ValueList>\r\n                            </ns2:Slot>\r\n                            </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{docEntryUuid}}\" identificationScheme=\"urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427\" value=\"{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO\" id=\"urn:uuid:56ce4821-412d-469c-8a60-f04c09c19e51\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSDocumentEntry.patientId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{docEntryUuid}}\" identificationScheme=\"urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab\" value=\"{{docUniqueId}}\" id=\"urn:uuid:b70bf707-ffe4-4114-bb69-888028ef9228\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSDocumentEntry.uniqueId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                </ns2:ExtrinsicObject>\r\n                <ns2:RegistryPackage id=\"{{ssEntryUuid}}\">\r\n                    <ns2:Slot name=\"submissionTime\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>20230110085959</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d\" classifiedObject=\"{{ssEntryUuid}}\" id=\"{{ssUniqueId}}\">\r\n                        <ns2:Slot name=\"authorPerson\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>^---</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Slot name=\"authorRole\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:aa543740-bdda-424e-8c96-df4873be8500\" classifiedObject=\"{{ssEntryUuid}}\" nodeRepresentation=\"71388002\" id=\"urn:uuid:b7297bae-95a7-43ee-8842-953898b11407\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Procedure (procedure)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446\" value=\"{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO\" id=\"urn:uuid:0e82f039-a757-47f7-8938-fc2effc1d42c\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.patientId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8\" value=\"{{ssUniqueId}}\" id=\"urn:uuid:6d15d06a-ce3d-4121-a079-08b50e412b83\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.uniqueId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832\" value=\"2.16.756.5.30.1.145.20.1\" id=\"urn:uuid:24a67372-23be-4a2e-91b4-2000560235f0\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.sourceId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                </ns2:RegistryPackage>\r\n                <ns2:Classification classifiedObject=\"{{ssEntryUuid}}\" classificationNode=\"urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd\" id=\"urn:uuid:49664fc7-ccd7-4a69-a7e3-ed288c75e54d\" />\r\n                <ns2:Association associationType=\"urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember\" sourceObject=\"{{ssEntryUuid}}\" targetObject=\"{{docEntryUuid}}\" id=\"{{docUniqueId}}\">\r\n                    <ns2:Slot name=\"SubmissionSetStatus\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>Original</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                </ns2:Association>\r\n            </ns2:RegistryObjectList>\r\n        </ns5:SubmitObjectsRequest>\r\n<ns4:Document id=\"{{docEntryUuid}}\"><xop:Include xmlns:xop=\"http://www.w3.org/2004/08/xop/include\" href=\"cid:e57f250b-5f63-43c3-b294-f9be589aca16-1@urn%3Aihe%3Aiti%3Axds-b%3A2007\"/></ns4:Document></ns4:ProvideAndRegisterDocumentSetRequest></soap:Body></soap:Envelope>\r\n--uuid:71766996-d9d7-484d-868d-8658c0c85d9a\r\nContent-Type: application/pdf\r\nContent-Transfer-Encoding: binary\r\nContent-ID: <e57f250b-5f63-43c3-b294-f9be589aca16-1@urn:ihe:iti:xds-b:2007>\r\n\r\n%PDF-1.1\r\n%¥±ë\r\n\r\n1 0 obj\r\n  << /Type /Catalog\r\n     /Pages 2 0 R\r\n  >>\r\nendobj\r\n\r\n2 0 obj\r\n  << /Type /Pages\r\n     /Kids [3 0 R]\r\n     /Count 1\r\n     /MediaBox [0 0 300 144]\r\n  >>\r\nendobj\r\n\r\n3 0 obj\r\n  <<  /Type /Page\r\n      /Parent 2 0 R\r\n      /Resources\r\n       << /Font\r\n           << /F1\r\n               << /Type /Font\r\n                  /Subtype /Type1\r\n                  /BaseFont /Times-Roman\r\n               >>\r\n           >>\r\n       >>\r\n      /Contents 4 0 R\r\n  >>\r\nendobj\r\n\r\n4 0 obj\r\n  << /Length 59 >>\r\nstream\r\n  BT\r\n    /F1 18 Tf\r\n    0 0 Td\r\n    (Hello World) Tj\r\n  ET\r\nendstream\r\nendobj\r\n\r\nxref\r\n0 5\r\n0000000000 65535 f\r\n0000000021 00000 n\r\n0000000086 00000 n\r\n0000000195 00000 n\r\n0000000490 00000 n\r\ntrailer\r\n  <<  /Root 1 0 R\r\n      /Size 5\r\n  >>\r\nstartxref\r\n609\r\n%%EOF\r\n--uuid:71766996-d9d7-484d-868d-8658c0c85d9a--",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/Repository/services/RepositoryService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"Repository",
+								"services",
+								"RepositoryService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-41 Publish TCU - base64 PDF (not official)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const { v4: uuidv4 } = require('uuid');\r",
+									"\r",
+									"pm.variables.set(\"uuid\", uuidv4());\r",
+									"pm.variables.set(\"uuid2\", uuidv4());\r",
+									"pm.variables.set(\"uuid4\", uuidv4());\r",
+									"pm.variables.set(\"uuid5\", uuidv4());\r",
+									"\r",
+									"const min = 200000;\r",
+									"const max = 900000;\r",
+									"\r",
+									"pm.variables.set(\"docUniqueId\", \"2.16.756.5.30.1.145.1.4^\" + uuidv4());\r",
+									"pm.variables.set(\"ssUniqueId\", \"2.16.756.5.30.1.145.1.4.1.\" + Math.random() * (max - min) + min);\r",
+									"\r",
+									"pm.variables.set(\"assEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"pm.variables.set(\"ssEntryUuid\", \"urn:uuid:\" + uuidv4());\r",
+									"pm.variables.set(\"docEntryUuid\", \"urn:uuid:\" + uuidv4());"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"><soap:Header><wsse:Security xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:s=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\r\n{{xuaToken}}\r\n</wsse:Security>\r\n\r\n<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b</Action>\r\n<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">urn:uuid:ce9fcaa5-7a7d-4d5a-99c6-7cb1a9e09482</MessageID>\r\n<To xmlns=\"http://www.w3.org/2005/08/addressing\">http://test.ahdis.ch/eprik-proxy-cara/camel/cara/Repository/services/RepositoryService</To>\r\n<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n    <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n</ReplyTo>\r\n</soap:Header>\r\n<soap:Body>\r\n    <ns4:ProvideAndRegisterDocumentSetRequest xmlns:ns7=\"urn:ihe:iti:rmd:2017\" xmlns:ns6=\"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0\" xmlns:ns5=\"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0\" xmlns:ns4=\"urn:ihe:iti:xds-b:2007\" xmlns:ns3=\"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0\" xmlns:ns2=\"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0\">\r\n        <ns5:SubmitObjectsRequest>\r\n            <ns3:RequestSlotList />\r\n            <ns2:RegistryObjectList>\r\n                <ns2:ExtrinsicObject mimeType=\"application/pdf\" objectType=\"urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1\" status=\"urn:oasis:names:tc:ebxml-regrep:StatusType:Approved\" id=\"{{docEntryUuid}}\">\r\n                    <ns2:Slot name=\"creationTime\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>{{dateNow}}</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"languageCode\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>de-CH</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"repositoryUniqueId\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>2.16.756.5.30.1.177.2.2.1.1.2</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"sourcePatientId\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"sourcePatientInfo\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>PID-3|100001177^^^&amp;2.16.756.5.30.1.177.2.2.1.1&amp;ISO^^^&amp;2.16.756.5.30.1.191.1.0.2.1&amp;ISO~3450294^^^&amp;2.16.756.5.30.1.191.1.0.12.3.101&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Slot name=\"urn:e-health-suisse:2020:originalProviderRole\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Name>\r\n                        <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Test PDF\" />\r\n                    </ns2:Name>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"405624007\" id=\"urn:uuid:304ec109-f9dc-4e3e-b93b-5e2170ec15d4\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Administrative documentation\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"urn:che:epr:EPR_Unstructured_Document\" id=\"urn:uuid:42b974ce-31dd-4504-93e8-fb09f2b9fb60\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.756.5.30.1.127.3.10.10</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"264358009\" id=\"urn:uuid:92539e8f-d779-47d0-b697-546d2d26e003\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"General practice premises(environment)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"394802001\" id=\"urn:uuid:73b694e3-5dc8-45ba-a890-52d890750dac\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"General medicine(qualifier value)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f0306f51-975f-434e-a61c-c59651d33983\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"419891008\" id=\"urn:uuid:db779c14-6c83-4f62-83ed-8976c13c7af5\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Record artifact\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f\" classifiedObject=\"{{docEntryUuid}}\" nodeRepresentation=\"17621005\" id=\"{{docEntryUuid}}\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Normally accessible\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{docEntryUuid}}\" identificationScheme=\"urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427\" value=\"{{mpiPid}}^^^&amp;{{mpiOid}}&amp;ISO\" id=\"urn:uuid:56ce4821-412d-469c-8a60-f04c09c19e51\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSDocumentEntry.patientId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{docEntryUuid}}\" identificationScheme=\"urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab\" value=\"{{docUniqueId}}\" id=\"urn:uuid:b70bf707-ffe4-4114-bb69-888028ef9228\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSDocumentEntry.uniqueId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                </ns2:ExtrinsicObject>\r\n                <ns2:RegistryPackage id=\"{{ssEntryUuid}}\">\r\n                    <ns2:Slot name=\"submissionTime\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>20230110085959</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d\" classifiedObject=\"{{ssEntryUuid}}\" id=\"{{ssUniqueId}}\">\r\n                        <ns2:Slot name=\"authorPerson\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>^---</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Slot name=\"authorRole\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                    </ns2:Classification>\r\n                    <ns2:Classification classificationScheme=\"urn:uuid:aa543740-bdda-424e-8c96-df4873be8500\" classifiedObject=\"{{ssEntryUuid}}\" nodeRepresentation=\"71388002\" id=\"urn:uuid:b7297bae-95a7-43ee-8842-953898b11407\">\r\n                        <ns2:Slot name=\"codingScheme\">\r\n                            <ns2:ValueList>\r\n                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>\r\n                            </ns2:ValueList>\r\n                        </ns2:Slot>\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString xml:lang=\"en\" charset=\"UTF-8\" value=\"Procedure (procedure)\" />\r\n                        </ns2:Name>\r\n                    </ns2:Classification>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446\" value=\"{{mpiPid^^^&amp;{{mpiOid}}&amp;ISO\" id=\"urn:uuid:0e82f039-a757-47f7-8938-fc2effc1d42c\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.patientId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8\" value=\"{{ssUniqueId}}\" id=\"urn:uuid:6d15d06a-ce3d-4121-a079-08b50e412b83\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.uniqueId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                    <ns2:ExternalIdentifier registryObject=\"{{ssEntryUuid}}\" identificationScheme=\"urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832\" value=\"2.16.756.5.30.1.145.20.1\" id=\"urn:uuid:24a67372-23be-4a2e-91b4-2000560235f0\">\r\n                        <ns2:Name>\r\n                            <ns2:LocalizedString value=\"XDSSubmissionSet.sourceId\" />\r\n                        </ns2:Name>\r\n                    </ns2:ExternalIdentifier>\r\n                </ns2:RegistryPackage>\r\n                <ns2:Classification classifiedObject=\"{{ssEntryUuid}}\" classificationNode=\"urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd\" id=\"urn:uuid:49664fc7-ccd7-4a69-a7e3-ed288c75e54d\" />\r\n                <ns2:Association associationType=\"urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember\" sourceObject=\"{{ssEntryUuid}}\" targetObject=\"{{docEntryUuid}}\" id=\"{{docUniqueId}}\">\r\n                    <ns2:Slot name=\"SubmissionSetStatus\">\r\n                        <ns2:ValueList>\r\n                            <ns2:Value>Original</ns2:Value>\r\n                        </ns2:ValueList>\r\n                    </ns2:Slot>\r\n                </ns2:Association>\r\n            </ns2:RegistryObjectList>\r\n        </ns5:SubmitObjectsRequest>\r\n<ns4:Document id=\"{{docEntryUuid}}\">{{base64Pdf}}</ns4:Document></ns4:ProvideAndRegisterDocumentSetRequest></soap:Body></soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/Repository/services/RepositoryService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"Repository",
+								"services",
+								"RepositoryService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-18 GetDocuments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.text();",
+									"",
+									"const matches = response.match(/<rim:Slot name=\"repositoryUniqueId\">.+<\\/rim:Slot>/s);",
+									"if (matches && matches[0]) {",
+									"  console.log(\"repositoryUniqueId retrieved\");",
+									"  const values = matches[0].match(/<rim:Value>(.+)<\\/rim:Value>/s);",
+									"  if (values && values[0]) {",
+									"    console.log(\"repositoryUniqueId value retrieved and stored.\");",
+									"    pm.collectionVariables.set(\"repositoryUniqueId\", values[1]);",
+									"  }",
+									"} else {",
+									"  console.log(\"repositoryUniqueId not retrieved.\");",
+									"}",
+									"",
+									"const matches2 = response.match(/<rim:ExternalIdentifier.+identificationScheme=\"urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab\".+>/s);",
+									"if (matches2 && matches2[0]) {",
+									"  console.log(\"XDSDocumentEntry.uniqueId retrieved\");",
+									"  const values = matches2[0].match(value=\"(.+)\");",
+									"  if (values && values[0]) {",
+									"    console.log(\"XDSDocumentEntry.uniqueId value retrieved and stored.\");",
+									"    pm.collectionVariables.set(\"uniqueId\", values[1]);",
+									"  }",
+									"} else {",
+									"  console.log(\"XDSDocumentEntry not retrieved.\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2007:RegistryStoredQuery</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">37dd8054-e894-4180-bd3c-6d4ba7b7d417</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">https://ikit.cara.ch/dep/proxy/cara/ahdis/Registry/services/RegistryService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t\t<wsse:Security xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:s=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">{{xuaToken}}</wsse:Security>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n\t\t<ns4:AdhocQueryRequest xmlns:ns6=\"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0\" xmlns:ns5=\"urn:ihe:iti:xds-b:2007\" xmlns:ns4=\"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0\" xmlns:ns3=\"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0\" xmlns:ns2=\"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0\">\r\n\t\t\t<ns4:ResponseOption returnType=\"LeafClass\" returnComposedObjects=\"true\"/>\r\n\t\t\t<ns2:AdhocQuery id=\"urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d\">\r\n\t\t\t\t<ns2:Slot name=\"$XDSDocumentEntryPatientId\">\r\n\t\t\t\t\t<ns2:ValueList>\r\n\t\t\t\t\t\t<ns2:Value>'100001181^^^&amp;2.16.756.5.30.1.177.2.2.1.1&amp;ISO'</ns2:Value>\r\n\t\t\t\t\t</ns2:ValueList>\r\n\t\t\t\t</ns2:Slot>\r\n\t\t\t\t<ns2:Slot name=\"$XDSDocumentEntryStatus\">\r\n\t\t\t\t\t<ns2:ValueList>\r\n\t\t\t\t\t\t<ns2:Value>('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')</ns2:Value>\r\n\t\t\t\t\t</ns2:ValueList>\r\n\t\t\t\t</ns2:Slot>\r\n\t\t\t</ns2:AdhocQuery>\r\n\t\t</ns4:AdhocQueryRequest>\r\n\t</soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/Registry/services/RegistryService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"Registry",
+								"services",
+								"RegistryService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ITI-43 GetFirstDocument from ITI-18 above",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/soap+xml;charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\r\n\t<soap:Header>\r\n\t\t<Action soap:mustUnderstand=\"true\" xmlns=\"http://www.w3.org/2005/08/addressing\">urn:ihe:iti:2007:RegistryStoredQuery</Action>\r\n\t\t<MessageID xmlns=\"http://www.w3.org/2005/08/addressing\">37dd8054-e894-4180-bd3c-6d4ba7b7d417</MessageID>\r\n\t\t<To xmlns=\"http://www.w3.org/2005/08/addressing\">https://ikit.cara.ch/dep/proxy/cara/ahdis/Registry/services/RegistryService</To>\r\n\t\t<ReplyTo xmlns=\"http://www.w3.org/2005/08/addressing\">\r\n\t\t\t<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>\r\n\t\t</ReplyTo>\r\n\t\t<wsse:Security xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:s=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">{{xuaToken}}</wsse:Security>\r\n\t</soap:Header>\r\n\t<soap:Body>\r\n\t\t<ns4:AdhocQueryRequest xmlns:ns6=\"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0\" xmlns:ns5=\"urn:ihe:iti:xds-b:2007\" xmlns:ns4=\"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0\" xmlns:ns3=\"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0\" xmlns:ns2=\"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0\">\r\n\t\t\t<ns4:ResponseOption returnType=\"LeafClass\" returnComposedObjects=\"true\"/>\r\n\t\t\t<ns2:AdhocQuery id=\"urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d\">\r\n\t\t\t\t<ns2:Slot name=\"$XDSDocumentEntryPatientId\">\r\n\t\t\t\t\t<ns2:ValueList>\r\n\t\t\t\t\t\t<ns2:Value>'100001143^^^&amp;2.16.756.5.30.1.177.2.2.1.1&amp;ISO'</ns2:Value>\r\n\t\t\t\t\t</ns2:ValueList>\r\n\t\t\t\t</ns2:Slot>\r\n\t\t\t\t<ns2:Slot name=\"$XDSDocumentEntryStatus\">\r\n\t\t\t\t\t<ns2:ValueList>\r\n\t\t\t\t\t\t<ns2:Value>('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')</ns2:Value>\r\n\t\t\t\t\t</ns2:ValueList>\r\n\t\t\t\t</ns2:Slot>\r\n\t\t\t</ns2:AdhocQuery>\r\n\t\t</ns4:AdhocQueryRequest>\r\n\t</soap:Body>\r\n</soap:Envelope>"
+						},
+						"url": {
+							"raw": "{{host}}/Registry/services/RegistryService",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"Registry",
+								"services",
+								"RegistryService"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://ikit.cara.ch/dep/proxy/cara/int"
+		},
+		{
+			"key": "idpToken",
+			"value": "<saml:Assertion xmlns:saml=\"urn:oasis:names:tc:SAML:2.0:assertion\" ID=\"ID_0300de40-56c4-4c1e-9d45-c20254d666dd\" IssueInstant=\"2023-07-12T13:53:01.584Z\" Version=\"2.0\"><saml:Issuer>https://idp-int.trustid.ch/auth/realms/cara</saml:Issuer><dsig:Signature xmlns:dsig=\"http://www.w3.org/2000/09/xmldsig#\"><dsig:SignedInfo><dsig:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><dsig:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256\"/><dsig:Reference URI=\"#ID_0300de40-56c4-4c1e-9d45-c20254d666dd\"><dsig:Transforms><dsig:Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/><dsig:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/></dsig:Transforms><dsig:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/><dsig:DigestValue>DtECbQJXBG0Oy608q0/2RI/d54azwKo+IojJTuKQPrI=</dsig:DigestValue></dsig:Reference></dsig:SignedInfo><dsig:SignatureValue>d6/lnu/6dDMC/Q/Hn7lfF0kvpILnDQY8oBhsmNIlnciRM0kyztWHlGYbcfw6OfAL/ZLdLKB0qAWI1/jHmO1DAfT+77bmAvV6iXFcDMzRLjIVGGWGdagdDKJxly8HLWAjGY/VOL4yTWAcCFixH5mJp1IoeniF5UbjrezP4kTrJU7iMY/sE23WQTey57VzAluuXYyNqbnQ7hyiFS0KkLouCdbb1qw+epHcRQDiao8Reh04PhY5dhCp6MxsZPy1tq1KT3eicntUuV16IJAWwTezR8AlkDEm1Q8CcXZAjjvoFnKKXizGOv9yEcVpFAJefx1nGtfmy1BVWl/M2s+hdZR8nA==</dsig:SignatureValue><dsig:KeyInfo><dsig:KeyName>Qr9SLGy2gYI4rbtKoC0qwzCRd8t7uG4qqBCHeABFGWQ</dsig:KeyName><dsig:X509Data><dsig:X509Certificate>MIIClzCCAX8CBgFzoAKIGTANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARjYXJhMB4XDTIwMDczMDEzNTQ0N1oXDTMwMDczMDEzNTYyN1owDzENMAsGA1UEAwwEY2FyYTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANA3sGw+o4jBu27WaDaBBoW0aeCJn+6AfdZvIAdEb+9+1agynYMV0UANRy6PqoUmbhHfNiLHw9ACk2T+9q/QETe3uCRuQaOaFEmDUZLXuUxeHQy1ggcWBaalUo1MuZMqbCEyF/iv5jqElC2PuZTVmuY7y4Gqlen4pdkPycdq56D/ZhgG0XMSoK1TUh4LSAmzw44uhfWU/BBIxPHmz1h9uTi4kkVtuJBDQVtowcSppTIFsW/IYbqaIconSZpxI0Hr4F5f1oP+18S3ijPHiFhQzeY11o14x+J7+bPv9WhRsI22g/f4anWpYGZuE93BjDiAo+0P1j2DsBLQ4MBEOOGMrRkCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAQT2CjEkr3seeJqqjaS6WxvaAmTWnsEHAA5+X7874xacJWgxcDscIY7q9H4FLSuvUiPfp0oUbyeIcpTCfaJpnbaqyEm4BqlzwjTmkqZUbpyQcBzIHiV0/OJJpaMa4lgZ0qsBJi4kFv3JNRtjMhVpCDwSV0ivKrLAV4eMj2SLYPqCc01Xay0G8YPPh3pk/vIZKUmTbnjHpuKLCUnni3BOPcUbqx0ODi5JGriLNdiD/M96/wDAjJFttkpYzdSmOtIuOcuKep0m4qHNVy5rWwnLpZeF2TKKkkrVli9RE0MF/huo83xZ2+KUTmdefVrsklxrJV9489CXo8Old8H+NHoJdzA==</dsig:X509Certificate></dsig:X509Data><dsig:KeyValue><dsig:RSAKeyValue><dsig:Modulus>0DewbD6jiMG7btZoNoEGhbRp4Imf7oB91m8gB0Rv737VqDKdgxXRQA1HLo+qhSZuEd82IsfD0AKTZP72r9ARN7e4JG5Bo5oUSYNRkte5TF4dDLWCBxYFpqVSjUy5kypsITIX+K/mOoSULY+5lNWa5jvLgaqV6fil2Q/Jx2rnoP9mGAbRcxKgrVNSHgtICbPDji6F9ZT8EEjE8ebPWH25OLiSRW24kENBW2jBxKmlMgWxb8hhupohyidJmnEjQevgXl/Wg/7XxLeKM8eIWFDN5jXWjXjH4nv5s+/1aFGwjbaD9/hqdalgZm4T3cGMOICj7Q/WPYOwEtDgwEQ44YytGQ==</dsig:Modulus><dsig:Exponent>AQAB</dsig:Exponent></dsig:RSAKeyValue></dsig:KeyValue></dsig:KeyInfo></dsig:Signature><saml:Subject><saml:NameID Format=\"urn:oasis:names:tc:SAML:2.0:nameid-format:persistent\">g-f42e3cc2-f5bb-4a9b-9815-efbb8b1584f3</saml:NameID><saml:SubjectConfirmation Method=\"urn:oasis:names:tc:SAML:2.0:cm:bearer\"><saml:SubjectConfirmationData InResponseTo=\"a42ba041b6aeiiad38j433igj7d574h\" NotOnOrAfter=\"2023-07-12T13:57:59.584Z\" Recipient=\"https://test.ahdis.ch/eprik-cara/saml/SSO/alias/trustid\"/></saml:SubjectConfirmation></saml:Subject><saml:Conditions NotBefore=\"2023-07-12T13:52:59.584Z\" NotOnOrAfter=\"2023-07-12T13:57:59.584Z\"><saml:AudienceRestriction><saml:Audience>https://test.ahdis.ch/eprik-cara/saml/SSO/alias/trustid</saml:Audience></saml:AudienceRestriction></saml:Conditions><saml:AuthnStatement AuthnInstant=\"2023-07-12T13:53:01.584Z\" SessionIndex=\"30ec6b0f-caab-4c5b-9817-ff8a3e64ace2::1c95752b-7ec5-4916-83e1-08c4459c6d85\" SessionNotOnOrAfter=\"2023-07-12T23:53:01.584Z\"><saml:AuthnContext><saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified</saml:AuthnContextClassRef></saml:AuthnContext></saml:AuthnStatement><saml:AttributeStatement><saml:Attribute FriendlyName=\"firstName\" Name=\"firstname\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:basic\"><saml:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">Quentin</saml:AttributeValue></saml:Attribute><saml:Attribute FriendlyName=\"lastName\" Name=\"lastname\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:basic\"><saml:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">Ligier</saml:AttributeValue></saml:Attribute><saml:Attribute FriendlyName=\"gender\" Name=\"gender\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:basic\"><saml:AttributeValue xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xs:string\">M</saml:AttributeValue></saml:Attribute></saml:AttributeStatement></saml:Assertion>"
+		},
+		{
+			"key": "mpiOid",
+			"value": "2.16.756.5.30.1.177.2.2.1.1"
+		},
+		{
+			"key": "orgOid",
+			"value": "2.16.756.5.30.1.191.4.100"
+		},
+		{
+			"key": "mpiPid",
+			"value": "100001143"
+		},
+		{
+			"key": "eprSpid",
+			"value": "761337612097656117"
+		},
+		{
+			"key": "samlToken",
+			"value": "<saml2:Assertion xmlns:saml2=\"urn:oasis:names:tc:SAML:2.0:assertion\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" ID=\"_90dbc87f-49b9-42ec-ad35-940291047937\" IssueInstant=\"2023-07-12T13:53:18.439Z\" Version=\"2.0\"><saml2:Issuer>http://ith-icoserve.com/eHealthSolutionsSTS</saml2:Issuer><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/><ds:SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256\"/><ds:Reference URI=\"#_90dbc87f-49b9-42ec-ad35-940291047937\"><ds:Transforms><ds:Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/><ds:Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"><ec:InclusiveNamespaces xmlns:ec=\"http://www.w3.org/2001/10/xml-exc-c14n#\" PrefixList=\"xsd\"/></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/><ds:DigestValue>R0/H3KimMlHL6MjW415yMtarNFS3HotpZbqs5PWYynE=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>DRvC9+SMriF9suTtAfUTyOmRmjn9JuxV42n33T31dE25DgNXxjX8ewrgwFJUK8UiuqSEt0XE5ZR0UuNh0F6h1gYhnw45UehNdl0RoRKckL60tpFUx16WK0wq44SNbfoDnep/WLTqfBsgZ7HxRlbQ/Y0Db7NJz4+25+FXdrewm5IhEawxAjiT6vwTVWpd95CN7Aw9WpfE5XTjdeyNl39kDkJ6lm0eldb0ym4Xn51TCLqjcrEjB7uVWlW+Y66Rpfpbxxug6uFYE6/XHPZbjN2QeUPNyhIG28ymQqfWzzxzgGTz+kqJk7KNrgJ5vpN9PNXhLX99dFQClRvJlLtJlwn8TA==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIHdTCCBV2gAwIBAgIUa8JbPqcop+lBbkGXWs7uyHMBJAQwDQYJKoZIhvcNAQELBQAwXDELMAkG\nA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzE2MDQGA1UEAxMtU3dpc3NTaWduIFJTQSBT\nTUlNRSBOQ1AgZXh0ZW5kZWQgSUNBIDIwMjEgLSAxMB4XDTIyMTIxNjEwMDU0N1oXDTIzMTIxNjEw\nMDU0N1owgaExCzAJBgNVBAYTAkNIMQ0wCwYDVQQIEwRCZXJuMRMwEQYDVQQKEwpQb3N0IENIIEFH\nMRcwFQYDVQQLEw5EaWdpdGFsIEhlYWx0aDEqMCgGCSqGSIb3DQEJARYbb3BlcmF0aW9ucy5lLWhl\nYWx0aEBwb3N0LmNoMSkwJwYDVQQDEyBwc2V1ZG86IFNBTUwgU2lnbmVyIENBUkEgSU5UIEVQRDCC\nASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKxdaX72TQqqBFfwLRdelpPMcTr6dqLEVwgX\nPWhgZceRe4BMfbYcftA3WeKsCcF6g74F9avwyiQ1EdNcWrJKuKD7C5k1Lu7J3sQcq7x1u+UNWBDa\n0ygGQxG14d9gfIfgT83fsua9aW58bm2KLBh4PGB2HVmKRdCUtkAOlDMx7AYMCOzK595omPITBanv\nr6WULuEmbmggL2n5NqyqOmVkSYub60P5DXdczVt/FupgzAH+IJOeiM/bZAwMqYC4oKBpDfHfLsgk\nwT57OnFTAXZqTTquzoHvLtmbT7RQcNXuI5n514oXeZFS4kW9I3WmMadMngtohBcjrzDJdswvhYjW\n/FMCAwEAAaOCAucwggLjMCYGA1UdEQQfMB2BG29wZXJhdGlvbnMuZS1oZWFsdGhAcG9zdC5jaDAO\nBgNVHQ8BAf8EBAMCA/gwNQYDVR0lBC4wLAYIKwYBBQUHAwIGCCsGAQUFBwMEBgorBgEEAYI3CgME\nBgorBgEEAYI3FAICMB0GA1UdDgQWBBTNRKdPjHh/7yESJocs2chwY13POjAfBgNVHSMEGDAWgBQr\nZhpjBBkDpxn8NefDuNE2j06aQTCB/wYDVR0fBIH3MIH0MEegRaBDhkFodHRwOi8vY3JsLnN3aXNz\nc2lnbi5uZXQvMkI2NjFBNjMwNDE5MDNBNzE5RkMzNUU3QzNCOEQxMzY4RjRFOUE0MTCBqKCBpaCB\nooaBn2xkYXA6Ly9kaXJlY3Rvcnkuc3dpc3NzaWduLm5ldC9DTj0yQjY2MUE2MzA0MTkwM0E3MTlG\nQzM1RTdDM0I4RDEzNjhGNEU5QTQxJTJDTz1Td2lzc1NpZ24lMkNDPUNIP2NlcnRpZmljYXRlUmV2\nb2NhdGlvbkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1jUkxEaXN0cmlidXRpb25Qb2ludDBnBgNVHSAE\nYDBeMFIGCGCFdAFZAgENMEYwRAYIKwYBBQUHAgEWOGh0dHBzOi8vcmVwb3NpdG9yeS5zd2lzc3Np\nZ24uY29tL1N3aXNzU2lnbl9DUFNfU01JTUUucGRmMAgGBgQAj3oBATCBxgYIKwYBBQUHAQEEgbkw\ngbYwZAYIKwYBBQUHMAKGWGh0dHA6Ly9zd2lzc3NpZ24ubmV0L2NnaS1iaW4vYXV0aG9yaXR5L2Rv\nd25sb2FkLzJCNjYxQTYzMDQxOTAzQTcxOUZDMzVFN0MzQjhEMTM2OEY0RTlBNDEwTgYIKwYBBQUH\nMAGGQmh0dHA6Ly9vY3NwLnN3aXNzc2lnbi5uZXQvMkI2NjFBNjMwNDE5MDNBNzE5RkMzNUU3QzNC\nOEQxMzY4RjRFOUE0MTANBgkqhkiG9w0BAQsFAAOCAgEAiuH3flknxtbQRv6etdPywbYpng/6HFuz\n/KaKxiGzZiztmwO0YHCMyYfEzhmQqtaYgkVh2/Mb/+spBXsCpxmOBIQSV1Zvc88g6AS4huaWzFO1\nWE7IkY2u+bzLacwWpEd8Cvwx3PWP2TN8Nf8EVOLzPOqHUehDVZC1J3UcdSq+drsgeJO3vfNOZZNX\nRP3+tr30l3weYreE4xPeH+t70+/WWdD50wFdSbEnTw4l8HSIHJ/hbi7YxXeB3yOHcPiP/tnWdiBW\ngETmdtSN6jyjskr2Ouzx8sdT3oKoFUtGhO681Tl2mqU69xmrn8OdZLlvSEYuT4QNreVN7wvOqvOM\nyr3f37dII/w9MBNHNwo6Wh9TUJtYhnK9UwAT5X7F8xGYwHtCbvjNpre3IN/3YVBQ5UWVbXNuJj8b\n47yrMNn/K75SrEhJ91vOqcjTyu5mbILD+InESvP6eRQm5Wg82gv6bIEI/cooguxNRN46pGtms6vA\nU33yaw8DTs9xGaWg+17iqJYMUUDIccLoPp72CLblHOhzhI9a/4GPY/JwY1cpLyLmjDpTiaNbZrjx\n3ppZqoLwuswXxCxy2xzaW6P6K/DwWky8vdKgS64EUVa5RNhhHJWAKfPMDxXCzVql7TC5RY1VgjGB\nMJU4yyacvC+/pDylqKGe/jIz1pk7vJARnlsTe3OsYbM=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject><saml2:NameID Format=\"urn:oasis:names:tc:SAML:2.0:nameid-format:persistent\" NameQualifier=\"urn:e-health-suisse:2015:epr-spid\">761337618424274719</saml2:NameID><saml2:SubjectConfirmation Method=\"urn:oasis:names:tc:SAML:2.0:cm:bearer\"><saml2:SubjectConfirmationData InResponseTo=\"ID_0300de40-56c4-4c1e-9d45-c20254d666dd\" NotOnOrAfter=\"2023-07-12T13:58:18.439Z\" Recipient=\"https://test.ahdis.ch/mag-cara\"/></saml2:SubjectConfirmation></saml2:Subject><saml2:Conditions NotBefore=\"2023-07-12T13:53:17.439Z\" NotOnOrAfter=\"2023-07-12T13:58:18.439Z\"><saml2:AudienceRestriction><saml2:Audience>urn:e-health-suisse:token-audience:all-communities</saml2:Audience></saml2:AudienceRestriction></saml2:Conditions><saml2:AuthnStatement AuthnInstant=\"2023-07-12T13:53:18.439Z\"><saml2:AuthnContext><saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml2:AuthnContextClassRef></saml2:AuthnContext></saml2:AuthnStatement><saml2:AttributeStatement><saml2:Attribute Name=\"urn:oasis:names:tc:xspa:1.0:subject:subject-id\"><saml2:AttributeValue xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xsd:string\">Marion Jeanne Suzanne SOARES JESUS</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name=\"urn:oasis:names:tc:xacml:2.0:subject:role\"><saml2:AttributeValue><Role xmlns=\"urn:hl7-org:v3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" code=\"PAT\" codeSystem=\"2.16.756.5.30.1.127.3.10.6\" codeSystemName=\"eHealth Suisse EPR Actors\" displayName=\"Patient\" xsi:type=\"CE\"/></saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name=\"urn:oasis:names:tc:xspa:1.0:subject:organization-id\"/><saml2:Attribute Name=\"urn:oasis:names:tc:xspa:1.0:subject:organization\"/><saml2:Attribute Name=\"urn:oasis:names:tc:xspa:1.0:subject:purposeofuse\"><saml2:AttributeValue><PurposeOfUse xmlns=\"urn:hl7-org:v3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" code=\"NORM\" codeSystem=\"2.16.756.5.30.1.127.3.10.5\" codeSystemName=\"eHealth Suisse Verwendungszweck\" displayName=\"Normal Access\" xsi:type=\"CE\"/></saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name=\"urn:oasis:names:tc:xacml:2.0:resource:resource-id\"><saml2:AttributeValue xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xsd:string\">761337618424274719^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name=\"urn:ihe:iti:xca:2010:homeCommunityId\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:uri\"><saml2:AttributeValue xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xsd:anyURI\">urn:oid:2.16.756.5.30.1.191.1.0</saml2:AttributeValue></saml2:Attribute></saml2:AttributeStatement></saml2:Assertion>"
+		},
+		{
+			"key": "hostLocal",
+			"value": "http://localhost:18002/eprik-cara/camel/cara/ahdis"
+		},
+		{
+			"key": "socialsecurityid",
+			"value": "7560741992116"
+		},
+		{
+			"key": "sndOid",
+			"value": "2.16.756.5.30.1.191.4.100.8.1"
+		},
+		{
+			"key": "orgName",
+			"value": ""
+		},
+		{
+			"key": "localid",
+			"value": "A0001"
+		},
+		{
+			"key": "xuaToken",
+			"value": ""
+		},
+		{
+			"key": "base64Pdf",
+			"value": "JVBERi0xLjcKJeLjz9MKNSAwIG9iago8PAovRmlsdGVyIC9GbGF0ZURlY29kZQovTGVuZ3RoIDgKPj4Kc3RyZWFtCnicAwAAAAABCmVuZHN0cmVhbQplbmRvYmoKNCAwIG9iago8PAovVHlwZSAvUGFnZQovTWVkaWFCb3ggWzAgMCA1OTQuOTU5OTYgODQwLjk1OTk2XQovUmVzb3VyY2VzIDw8Cj4+Ci9Db250ZW50cyA1IDAgUgovUGFyZW50IDIgMCBSCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9UeXBlIC9NZXRhZGF0YQovU3VidHlwZSAvWE1MCi9MZW5ndGggMjExOQo+PgpzdHJlYW0KPD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iNC1IZWlnaHRzKFRNKSBYTVAgTGlicmFyeSAxLjkuMS4wIChodHRwOi8vd3d3LnBkZi10b29scy5jb20pIj4KICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgPHJkZjpEZXNjcmlwdGlvbiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHJkZjphYm91dD0iIj4KICAgICAgPHhtcDpDcmVhdG9yVG9vbD5Nb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMF8xNV83KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTA1LjAuMC4wIFNhZmFyaS81MzcuMzY8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMjItMDktMjhUMTE6MzU6MTJaPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMjUtMDgtMjhUMTc6NDg6NDErMDI6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDI1LTA4LTI4VDE3OjQ4OjQxKzAyOjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgICA8cmRmOkRlc2NyaXB0aW9uIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgcmRmOmFib3V0PSIiPgogICAgICA8ZGM6Zm9ybWF0PmFwcGxpY2F0aW9uL3BkZjwvZGM6Zm9ybWF0PgogICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgICA8cmRmOkRlc2NyaXB0aW9uIHhtbG5zOnBkZj0iaHR0cDovL25zLmFkb2JlLmNvbS9wZGYvMS4zLyIgcmRmOmFib3V0PSIiPgogICAgICA8cGRmOlBERlZlcnNpb24+MS43PC9wZGY6UERGVmVyc2lvbj4KICAgICAgPHBkZjpQcm9kdWNlcj5Db252ZXJzaW9uIFNlcnZpY2UgNi40LjAuMTYyNzIgKHd3dy5wZGYtdG9vbHMuY29tKTwvcGRmOlByb2R1Y2VyPgogICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgICA8cmRmOkRlc2NyaXB0aW9uIHhtbG5zOnBkZmFpZD0iaHR0cDovL3d3dy5haWltLm9yZy9wZGZhL25zL2lkLyIgcmRmOmFib3V0PSIiPgogICAgICA8cGRmYWlkOnBhcnQ+MjwvcGRmYWlkOnBhcnQ+CiAgICAgIDxwZGZhaWQ6Y29uZm9ybWFuY2U+VTwvcGRmYWlkOmNvbmZvcm1hbmNlPgogICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgICA8cmRmOkRlc2NyaXB0aW9uIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiByZGY6YWJvdXQ9IiI+CiAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnVybjp1dWlkOkIzMzIwNTJGLTIxM0MtNEVFOS05QUU5LUI2Q0ZFRkQzQzA2QzwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgPHhtcE1NOkhpc3Rvcnk+CiAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+dXJuOnV1aWQ6QjMzMjA1MkYtMjEzQy00RUU5LTlBRTktQjZDRkVGRDNDMDZDPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICA8c3RFdnQ6cGFyYW1ldGVycz5Db252ZXJ0ZWQgdG8gUERGL0EtMnU6CiAgLSBSZXBhaXJlZCBjb3JydXB0IGlucHV0IGRvY3VtZW50Lgo8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkNvbnZlcnNpb24gU2VydmljZSA2LjQuMC4xNjI3MiAod3d3LnBkZi10b29scy5jb20pPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDI1LTA4LTI4VDE3OjQ4OjQxKzAyOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgPC9yZGY6U2VxPgogICAgICA8L3htcE1NOkhpc3Rvcnk+CiAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSd3Jz8+CgplbmRzdHJlYW0KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFs0IDAgUl0KL0NvdW50IDEKPj4KZW5kb2JqCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCi9NZXRhZGF0YSA2IDAgUgo+PgplbmRvYmoKMyAwIG9iago8PAovQ3JlYXRvciAoTW96aWxsYS81LjAgXChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzdcKSBBcHBsZVdlYktpdC81MzcuMzYgXChLSFRNTCwgbGlrZSBHZWNrb1wpIENocm9tZS8xMDUuMC4wLjAgU2FmYXJpLzUzNy4zNikKL0NyZWF0aW9uRGF0ZSAoRDoyMDIyMDkyODExMzUxMlopCi9Nb2REYXRlIChEOjIwMjUwODI4MTc0ODQxKzAyJzAwKQovUHJvZHVjZXIgKENvbnZlcnNpb24gU2VydmljZSA2LjQuMC4xNjI3MiBcKHd3dy5wZGYtdG9vbHMuY29tXCkpCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9TaXplIDgKL1Jvb3QgMSAwIFIKL0luZm8gMyAwIFIKL0lEIFs8ODJGN0M0NzdBMjYzQjZFQzhCRTI5NTJDMTI0Mjc5OTg+IDw5NDU3M0M1RUFDQzJBMjI1ODM0ODlBOEU5QzA5RjZBMj5dCi9UeXBlIC9YUmVmCi9XIFsxIDIgMl0KL0ZpbHRlciAvRmxhdGVEZWNvZGUKL0luZGV4IFswIDhdCi9MZW5ndGggMzgKPj4Kc3RyZWFtCnicY2Bg+P+fkXMxAwMjZxaIeAIkGGJBBD+IuAgkuJkZGACPmwVdCmVuZHN0cmVhbQplbmRvYmoKc3RhcnR4cmVmCjI4MTkKJSVFT0YK",
+			"type": "string"
+		},
+		{
+			"key": "repositoryUniqueId",
+			"value": ""
+		},
+		{
+			"key": "uniqueId",
+			"value": ""
+		},
+		{
+			"key": "bearer",
+			"value": ""
+		}
+	]
+}
