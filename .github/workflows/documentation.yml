@@ -9,6 +9,8 @@ jobs:
   build:
     name: Deploy docs
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to commit on the gh-pages branch
     steps:
       - name: Checkout main
         uses: actions/checkout@v6
