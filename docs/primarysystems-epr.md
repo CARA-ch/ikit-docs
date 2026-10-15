@@ -24,7 +24,7 @@ Please find below additional information relevant for CARA and IKIT:
 
 ## 1. Integrate the strong authentication into the primary system with and IdP
 
-If you have a test user you can [use the IdP Assertion from IKIT](usecases/#use-the-idp-assertion-from-eprik) until you
+If you have a test user you can [use the IdP Assertion from IKIT](usecases.md#use-the-idp-assertion-from-ikit) until you
 have done the IdP integration yourself. 
 
 Note: The NameID has to be currently registered manually on the plattform, please contact us if you want to use strong authentication.
@@ -129,7 +129,7 @@ IKIT example [request, response](https://ikit.cara.ch/dep/#/transaction/46565ff4
 For the Query the MPI-ID of the patient needs to be added. This example requests includes the security token necessary.
 
 With the IKIT you can do the user authentication there and reuse the
-token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
+token [see](usecases.md#use-the-idp-assertion-from-ikit). For the communication you need a client certificate but with
 IKIT a client certificate is not necessary.
 
 Note 1: You need to add two namespace prefix to your XDS request if you copy the assertion into your request (add xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s="http://www.w3.org/2001/XMLSchema" to wsse:Security).
@@ -151,7 +151,7 @@ description [here](https://github.com/ehealthsuisse/EPD-by-example/blob/main/fil
 
 IKIT example [request,response](https://ikit.cara.ch/dep/#/transaction/60ab92ac-d1f2-4548-9a4d-764b9e0becd2).
 With IKIT you can do the user authentication there and reuse the
-token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
+token [see](usecases.md#use-the-idp-assertion-from-ikit). For the communication you need a client certificate but with
 IKIT a client certificate is not necessary. You will need to add the HomeCommunityId, RepositoryUniqueId and
 DocumentUniqueId.
 
@@ -176,7 +176,7 @@ detailed description [here](https://github.com/ehealthsuisse/EPD-by-example/blob
 
 IKIT example [request,response](https://test.ahdis.ch/eprik-cara/#/transaction/5e770d0b-db8c-4fda-8ed5-8a2128a162c8).
 With IKIT you can do the user authentication there and reuse the
-token [see](usecases/#use-the-idp-assertion-from-eprik). For the communication you need a client certificate but with
+token [see](usecases.md#use-the-idp-assertion-from-ikit). For the communication you need a client certificate but with
 IKIT a client certificate is not necessary. You will need to add metadata for the document.
 
 ### confidentiality code in metadata
