@@ -1,0 +1,145 @@
+### Add an healthcare professional to the HPD
+
+POST https://ikit.cara.ch/dep/proxy/cara/ahdis/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationFeed</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:9a770a33-15af-41b2-94a1-d2c3fa340813</MessageID>
+		<To xmlns="http://www.w3.org/2005/08/addressing">https://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService</To>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+   <soap:Body>
+      <batchRequest requestID="12345" xmlns="urn:oasis:names:tc:DSML:2:0:core">
+      <addRequest dn="uid=EMEDOINT:12345,ou=HCProfessional,dc=HPD,o=BAG,c=CH" requestID="54321">
+         <attr name="uid">
+            <value>EMEDOINT:12345</value>
+          </attr>
+          <attr name="cn">
+            <value>OTest</value>
+          </attr>
+          <attr name="hcIdentifier">
+            <value>RefData:GLN:7601000458780:ACTIVE</value>
+          </attr>
+          <attr name="hcProfession">
+            <value>BAG:2.16.756.5.30.1.127.3.10.9:00000</value>
+          </attr>
+          <attr name="hpdProviderStatus">
+            <value>Active</value>
+          </attr>
+          <attr name="displayName">
+            <value>Test</value>
+          </attr>
+          <attr name="title"></attr>
+          <attr name="givenName">
+            <value>test</value>
+          </attr>
+          <attr name="sn">
+            <value>test</value>
+          </attr>
+          <attr name="cn">
+            <value>Test</value>
+          </attr>
+          <attr name="hpdProviderLanguageSupported">
+            <value>de</value>
+          </attr>
+          <attr name="gender">
+            <value>m</value>
+          </attr>
+          <attr name="hpdProviderMailingAddress"></attr>
+          <attr name="telephoneNumber"></attr>
+          <attr name="facsimileTelephoneNumber"></attr>
+          <attr name="mail">
+            <value>test-oliver.egger@hintest.ch</value>
+          </attr>
+         <attr  name="objectClass">
+            <value>top</value>
+            <value>naturalPerson</value>
+            <value>HPDProvider</value>
+            <value>person</value>
+            <value>organizationalPerson</value>
+            <value>inetOrgPerson</value>
+            <value>HCProfessional</value>
+          </attr>
+        </addRequest>
+      </batchRequest>
+   </soap:Body>
+</soap:Envelope>
+
+### Add an organization to the HPD
+
+POST http://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+accept: */*
+user-agent: Apache-CXF/3.5.5
+cache-control: no-cache
+pragma: no-cache
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationFeed</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:9a770a33-15af-41b2-94a1-d2c3fa340813</MessageID>
+		<To xmlns="http://www.w3.org/2005/08/addressing">https://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService</To>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+   <soap:Body>
+      <batchRequest requestID="12345" xmlns="urn:oasis:names:tc:DSML:2:0:core">
+         <addRequest dn="uid=1.2.3.4:org12345,ou=HCRegulatedOrganization,dc=HPD,o=CARA,c=CH" requestID="54321">
+            <attr name="uid">
+               <value>1.2.3.4:org12345</value>
+            </attr>
+            <attr name="HcIdentifier">
+               <value>CARA:OrgId:org1234:active</value>
+            </attr>
+            <attr name="HcRegisteredName">
+               <value>Hospital of Lausanne</value>
+            </attr>
+         </addRequest>
+      </batchRequest>
+   </soap:Body>
+</soap:Envelope>
+
+### Add a relationship to the HPD
+
+POST http://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService HTTP/1.1
+content-type: application/soap+xml; charset=UTF-8
+accept: */*
+user-agent: Apache-CXF/3.5.5
+cache-control: no-cache
+pragma: no-cache
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Header>
+		<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2010:ProviderInformationFeed</Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:9a770a33-15af-41b2-94a1-d2c3fa340813</MessageID>
+		<To xmlns="http://www.w3.org/2005/08/addressing">https://test.ahdis.ch/eprik-cara/camel/cara/HPD/services/HPDService</To>
+		<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+			<Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+		</ReplyTo>
+	</soap:Header>
+   <soap:Body>
+      <batchRequest requestID="12345" xmlns="urn:oasis:names:tc:DSML:2:0:core">
+         <addRequest dn="cn=relation1234,ou=Relationship,DC=HPD,O=CARA,C=CH" requestID="54321">
+            <attr name="cn">
+               <value>relation1234</value>
+            </attr>
+            <attr name="owner">
+               <value>uid=1.2.3.4:org12345,ou=HCRegulatedOrganization,dc=HPD,o=icoserve,c=AUT</value>
+            </attr>
+            <attr name="member">
+               <value>uid=Cara:12345,ou=HCProfessional,dc=HPD,o=CARA,c=CH</value>
+               <!--value></value-->
+            </attr>
+            <attr name="objectClass">
+               <value>top</value>
+               <value>groupOfNames</value>
+            </attr>
+         </addRequest>
+      </batchRequest>
+   </soap:Body>
+</soap:Envelope>

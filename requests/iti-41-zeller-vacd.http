@@ -1,0 +1,519 @@
+### Need first to get an IDP Token, use https://test.ahdis.ch/eprik-cara/ to Login and copy saml2 asseriton on Line 6
+### to get the token (will be only valid for short time)
+
+# @name sts 
+POST  https://ikit.cara.ch/dep/proxy/cara/ahdis/STS/services/SecurityTokenService HTTP/1.1
+Content-Type: application/soap+xml;charset=UTF-8
+
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+   <env:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+      <wsa:Action>http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</wsa:Action>
+   <wsa:MessageID>6ed3440a-0164-49c4-b9d2-235422819e90</wsa:MessageID>
+   <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+
+<saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="Assertion_fcb42211-5faa-4363-a36c-bebd0a5a14a9" IssueInstant="2025-08-28T11:15:37.131Z" Version="2.0"><saml2:Issuer>urn:oid:2.16.756.5.30.1.191.999.10</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+<ds:Reference URI="#Assertion_fcb42211-5faa-4363-a36c-bebd0a5a14a9">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+<ds:DigestValue>zx+2EQVV7uJDQ+CAKwlyFIQpePuAVthCfIUrRA3XqOI=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue>
+ii+QOSmSVXid3FLnpJxvsg70WoFe2N6ZqpDDVpr+Sf9miLLT888GMcLuaqRia8vxDa+8VqDD08Ji&#13;
+Q2yJHTya1Jf2lPvL1ACWpvXaYzoCvUNiu2V3GCE776fnKwjviUKsizuqpfsJJPas+Ard8k3aUBED&#13;
+lyavYxZ5j8jLVPyq9NvimgSN33kb5ryIAS5Qrkb5GN5XxIXuH4DySJsNhbo7VaC0A+EfXXeLwRYx&#13;
+nov1W7LpHrRW5/QIjXQTwIMzO8tLGObXvSo3kjvu2SoEH+owgrLDd+o1QQaL7P9D1ucOPZ++8N/n&#13;
+Cv3G7ozrqOz/BXUGg82FRA6QGtDJ6hscQaSwiWPkeQBAft4Q6U/2ZQOP+MmFpPyAXFdH+rHHxn2W&#13;
+tw18mt9dguh+NAvwwIhhThPHmcJGGzVSvpHjmKw9YBGoKY1GoW+EF+/N1jSX7Ot3jmzYpDMInQEI&#13;
+68yZ+Gu91tdacTCiZmIWCtSLXsE0kpCL3eP3SsFnHxrArTDO5ikFqtxV
+</ds:SignatureValue>
+<ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIF7DCCBNSgAwIBAgIQAtkW5++akCVO2v2+bczREDANBgkqhkiG9w0BAQsFADBTMQswCQYDVQQG
+EwJVUzEWMBQGA1UEChMNRGlnaUNlcnQgSW5jLjEsMCoGA1UEAxMjRGlnaUNlcnQgUHJpdmF0ZSBT
+U0wgU0hBMjU2IENBIC0gRzIwHhcNMjUwNTIzMDAwMDAwWhcNMjYwNTIzMjM1OTU5WjCBkzELMAkG
+A1UEBhMCQ0gxEjAQBgNVBAcTCUVwYWxpbmdlczEZMBcGA1UEChMQQXNzb2NpYXRpb24gQ0FSQTEW
+MBQGA1UECxMNMjAwMDAxMDY2MDAxODEZMBcGA1UEAwwQdGN1X2NhcmFpa2l0X2ludDEiMCAGCSqG
+SIb3DQEJARYTaW50ZWdyYXRpb25AY2FyYS5jaDCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoC
+ggGBAKo5v4QGZJ9JObIyZnaHcLcyXDctPbWrAcrh67I9jY5OBTg1pQC0+cSb2ev8sIXrDooh6MHK
+rr/ww9auJUDcmlyXsybGx1Qc4xchD65EzJdDYwYuIiGN9aFVLQXNkq7T27Q0gBnV+26XWL0Rmv8r
+uKCRmrCsVFaFoRkTVNLbLYof3FoURAOet53uB2LgTPwibfzlmGKBRkspjdZv/4gFsOqOsw39wAx/
+olgxIzxRky2A/UvuAwQnzoI8aghSGfC04Q97zLqu1oG0eDXCMFp6FajSA94+yd41t5LyA9qARncD
+Zf0OGYz8nRY66AdlRvEVtIuvBiraXl59k2KFkJIScB7EDyoFtAPVZnsOT895KfOj/uhVuZQqaDb0
+E1uhF6ykpAhkqO1l579wT++JXQbR0lPomnc08UxvOlxd8URzEt++MSzlbqlt5cvUwjU/Y1aw4+4c
+STeA8isEWYYN1Yb+ZWijFbJV61MfkbrasrIyEiPhnCDMbXi1n/dFanqFRSjMlQIDAQABo4IB+TCC
+AfUwHwYDVR0jBBgwFoAUVu2GFAl6E83cCXPDA/Gdt9p2KxQwHQYDVR0OBBYEFEjPdP8JTaMkz2+p
+Yo8wOLevrILdMAwGA1UdEwEB/wQCMAAwHgYDVR0RBBcwFYETaW50ZWdyYXRpb25AY2FyYS5jaDAO
+BgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMEMGA1UdIAQ8MDow
+OAYKYIZIAYb9bAQBAjAqMCgGCCsGAQUFBwIBFhxodHRwczovL3d3dy5kaWdpY2VydC5jb20vQ1BT
+MIGPBgNVHR8EgYcwgYQwQKA+oDyGOmh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFBy
+aXZhdGVTU0xTSEEyNTZDQS1HMi5jcmwwQKA+oDyGOmh0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9E
+aWdpQ2VydFByaXZhdGVTU0xTSEEyNTZDQS1HMi5jcmwwfwYIKwYBBQUHAQEEczBxMCQGCCsGAQUF
+BzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wSQYIKwYBBQUHMAKGPWh0dHA6Ly9jYWNlcnRz
+LmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydFByaXZhdGVTU0xTSEEyNTZDQS1HMi5jcnQwDQYJKoZIhvcN
+AQELBQADggEBAK8JxXjbG0MD6nm5hDx54St1jf1dvMUC+UOfjBw66vHAADeN9FeNakYeGXrDHeza
+dplcpoZRElWNOJ+afB8GKOMe1oNSYscNwYF3aWTz3jyatWR8UjJVR09z9PzgRTkIuX2vv+wuPZbt
+APefSvJ7DxQkYNN9Bt31x7mtAV2KLtcplQ/V3Guj8okPQBIb0WzGWODuMwo1X28qBqYP200Lzds7
+hZKO9ZgHmhNxjILeOFZadgLyz0xFEj3zcVjN4RUomrhW7JrxfTrb8v0Z++mXZ59z+q47pPQjgSNG
+q3G8cwjVdVv/RDx+lL9wwPjPshgIZrSMYeoqBfQSGuA2BdMKhok=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject>
+<saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">2.16.756.5.30.1.191.999.10</saml2:NameID>
+    <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"/>
+</saml2:Subject><saml2:Conditions NotBefore="2025-08-28T11:15:37.131Z" NotOnOrAfter="2025-08-28T11:25:37.131Z"/><saml2:AuthnStatement AuthnInstant="2025-08-28T11:15:37.131Z" SessionNotOnOrAfter="2025-08-28T11:25:37.131Z"><saml2:AuthnContext>
+<saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified</saml2:AuthnContextClassRef>
+</saml2:AuthnContext></saml2:AuthnStatement></saml2:Assertion>
+
+  </wsse:Security></env:Header>
+   <env:Body>
+      <wst:RequestSecurityToken xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512">
+         <wst:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</wst:RequestType>
+         <wsp:AppliesTo xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+               <wsa:Address>https://test.ahdis.ch/mag-cara</wsa:Address>
+            </wsa:EndpointReference>
+         </wsp:AppliesTo>
+         <wst:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</wst:TokenType>
+         <wst:Claims Dialect="http://www.bag.admin.ch/epr/2017/annex/5/amendment/2">
+         <saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:resource:resource-id"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">761337614242240684^^^&amp;2.16.756.5.30.1.127.3.10.3&amp;ISO</saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xspa:1.0:subject:purposeofuse"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType"><PurposeOfUse xmlns="urn:hl7-org:v3" code="AUTO" codeSystem="2.16.756.5.30.1.127.3.10.5" codeSystemName="eHealth Suisse Verwendungszweck" displayName="Normal Access" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute><saml2:Attribute xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Name="urn:oasis:names:tc:xacml:2.0:subject:role" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"><saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema"><Role xmlns="urn:hl7-org:v3" code="TCU" codeSystem="2.16.756.5.30.1.127.3.10.6" codeSystemName="eHealth Suisse EPR Akteure" displayName="Technical User" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CE"/></saml2:AttributeValue></saml2:Attribute>                  
+         <saml2:Attribute
+                    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+                    Name="urn:e-health-suisse:principal-id">
+                    <saml2:AttributeValue
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:type="xs:string">2012345681729</saml2:AttributeValue>
+                </saml2:Attribute>
+                <saml2:Attribute
+                    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+                    Name="urn:e-health-suisse:principal-name">
+                    <saml2:AttributeValue
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:type="xs:string">Frehner, Ludovic, emedoint:eb0850e0-8557-4411-9d28-1b71dfde7444</saml2:AttributeValue>
+                </saml2:Attribute></wst:Claims>
+      </wst:RequestSecurityToken>
+   </env:Body>
+</env:Envelope>
+
+### ITI-41 Publish Document Set
+### Will return an error: The XDS document with the unique ID &quot;b9e04e7d-6af0-4cf9-a952-5c3a6f9a7aa2&quot; already exists in the sense repository, but the hash of the provided document does not match the hash of the stored document!" errorCode="XDSNonIdenticalHash" severity="urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error" location="Repository"/>
+
+@uuid = {{$guid}}
+@uuid2 = {{$guid}}
+@uuid3 = {{$guid}}
+
+@uuid4 = {{$guid}}
+
+@uuid5 = {{$guid}}
+
+
+@uniqueId = {{$randomInt 200000 900000}}
+
+#name iti41
+POST  https://ikit.cara.ch/dep/proxy/cara/ahdis/Repository/services/RepositoryService HTTP/1.1
+Content-Type: multipart/related; boundary=uuid:71766996-d9d7-484d-868d-8658c0c85d9a;type="application/xop+xml";start-info="application/soap+xml; charset=utf-8"
+
+--uuid:71766996-d9d7-484d-868d-8658c0c85d9a
+Content-Type: application/xop+xml; charset=UTF-8; type="application/soap+xml"
+Content-Transfer-Encoding: binary
+Content-ID: <root.message@cxf.apache.org>
+
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><wsse:Security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+{{sts.response.body./*[local-name()='Envelope']/*[local-name()='Body']/*[local-name()='RequestSecurityTokenResponseCollection']/*[local-name()='RequestSecurityTokenResponse']/*[local-name()='RequestedSecurityToken']}}
+
+</wsse:Security>
+
+<Action soap:mustUnderstand="true" xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b</Action>
+<MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:ce9fcaa5-7a7d-4d5a-99c6-7cb1a9e09482</MessageID>
+<To xmlns="http://www.w3.org/2005/08/addressing">http://test.ahdis.ch/eprik-proxy-cara/camel/cara/Repository/services/RepositoryService</To>
+<ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+    <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+</ReplyTo>
+</soap:Header>
+<soap:Body>
+    <ns4:ProvideAndRegisterDocumentSetRequest xmlns:ns7="urn:ihe:iti:rmd:2017" xmlns:ns6="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:ns5="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" xmlns:ns4="urn:ihe:iti:xds-b:2007" xmlns:ns3="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" xmlns:ns2="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+        <ns5:SubmitObjectsRequest>
+            <ns3:RequestSlotList />
+            <ns2:RegistryObjectList>
+                <ns2:ExtrinsicObject mimeType="application/fhir+json" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1" status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" id="urn:uuid:{{uuid}}">
+                    <ns2:Slot name="creationTime">
+                        <ns2:ValueList>
+                            <ns2:Value>20230110085913</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                    <ns2:Slot name="languageCode">
+                        <ns2:ValueList>
+                            <ns2:Value>de-CH</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                    <ns2:Slot name="repositoryUniqueId">
+                        <ns2:ValueList>
+                            <ns2:Value>2.16.756.5.30.1.177.2.2.1.1.2</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                    <ns2:Slot name="sourcePatientId">
+                        <ns2:ValueList>
+                            <ns2:Value>A0001^^^&amp;2.16.756.5.30.1.145&amp;ISO</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                    <ns2:Slot name="sourcePatientInfo">
+                        <ns2:ValueList>
+                            <ns2:Value>PID-3|100001177^^^&amp;2.16.756.5.30.1.177.2.2.1.1&amp;ISO^^^&amp;2.16.756.5.30.1.191.1.0.2.1&amp;ISO~3450294^^^&amp;2.16.756.5.30.1.191.1.0.12.3.101&amp;ISO</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                    <ns2:Slot name="urn:e-health-suisse:2020:originalProviderRole">
+                        <ns2:ValueList>
+                            <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                    <ns2:Name>
+                        <ns2:LocalizedString xml:lang="en" charset="UTF-8" value="Test PDF" />
+                    </ns2:Name>
+                    <!-- XDSDocumentEntry.classCode -->>
+                    <ns2:Classification classificationScheme="urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a" classifiedObject="urn:uuid:{{uuid}}" nodeRepresentation="184216000" id="urn:uuid:304ec109-f9dc-4e3e-b93b-5e2170ec15d4">
+                        <ns2:Slot name="codingScheme">
+                            <ns2:ValueList>
+                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                        <ns2:Name>
+                            <ns2:LocalizedString xml:lang="en" charset="UTF-8" value="Patient record type (record artifact)" />
+                        </ns2:Name>
+                    </ns2:Classification>
+                    <ns2:Classification classificationScheme="urn:uuid:a09d5840-386c-46f2-b5ad-9c3699a4309d" classifiedObject="urn:uuid:{{uuid}}" nodeRepresentation="urn:che:epr:ch-vacd:immunization-administration:2022" id="urn:uuid:42b974ce-31dd-4504-93e8-fb09f2b9fb60">
+                        <ns2:Slot name="codingScheme">
+                            <ns2:ValueList>
+                                <ns2:Value>2.16.756.5.30.1.127.3.10.10</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                    </ns2:Classification>
+                    <ns2:Classification classificationScheme="urn:uuid:f33fb8ac-18af-42cc-ae0e-ed0b0bdb91e1" classifiedObject="urn:uuid:{{uuid}}" nodeRepresentation="264358009" id="urn:uuid:92539e8f-d779-47d0-b697-546d2d26e003">
+                        <ns2:Slot name="codingScheme">
+                            <ns2:ValueList>
+                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                        <ns2:Name>
+                            <ns2:LocalizedString xml:lang="en" charset="UTF-8" value="General practice premises(environment)" />
+                        </ns2:Name>
+                    </ns2:Classification>
+                    <ns2:Classification classificationScheme="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead" classifiedObject="urn:uuid:{{uuid}}" nodeRepresentation="394802001" id="urn:uuid:73b694e3-5dc8-45ba-a890-52d890750dac">
+                        <ns2:Slot name="codingScheme">
+                            <ns2:ValueList>
+                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                        <ns2:Name>
+                            <ns2:LocalizedString xml:lang="en" charset="UTF-8" value="General medicine(qualifier value)" />
+                        </ns2:Name>
+                    </ns2:Classification>
+                    <!-- XDSDocumentEntry.typeCode -->
+                    <ns2:Classification classificationScheme="urn:uuid:f0306f51-975f-434e-a61c-c59651d33983" classifiedObject="urn:uuid:{{uuid}}" nodeRepresentation="41000179103" id="urn:uuid:db779c14-6c83-4f62-83ed-8976c13c7af5">
+                        <ns2:Slot name="codingScheme">
+                            <ns2:ValueList>
+                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                        <ns2:Name>
+                            <ns2:LocalizedString xml:lang="en" charset="UTF-8" value="Immunization record (record artifact)" />
+                        </ns2:Name>
+                    </ns2:Classification>
+                    <ns2:Classification classificationScheme="urn:uuid:f4f85eac-e6cb-4883-b524-f2705394840f" classifiedObject="urn:uuid:{{uuid}}" nodeRepresentation="17621005" id="urn:uuid:{{uuid}}">
+                        <ns2:Slot name="codingScheme">
+                            <ns2:ValueList>
+                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                        <ns2:Name>
+                            <ns2:LocalizedString xml:lang="en" charset="UTF-8" value="Normally accessible" />
+                        </ns2:Name>
+                    </ns2:Classification>
+                    <ns2:ExternalIdentifier registryObject="urn:uuid:{{uuid}}" identificationScheme="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427" value="100001177^^^&amp;2.16.756.5.30.1.177.2.2.1.1&amp;ISO" id="urn:uuid:56ce4821-412d-469c-8a60-f04c09c19e51">
+                        <ns2:Name>
+                            <ns2:LocalizedString value="XDSDocumentEntry.patientId" />
+                        </ns2:Name>
+                    </ns2:ExternalIdentifier>
+                    <ns2:ExternalIdentifier registryObject="urn:uuid:{{uuid}}" identificationScheme="urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab" value="{{uuid5}}" id="urn:uuid:b70bf707-ffe4-4114-bb69-888028ef9228">
+                        <ns2:Name>
+                            <ns2:LocalizedString value="XDSDocumentEntry.uniqueId" />
+                        </ns2:Name>
+                    </ns2:ExternalIdentifier>
+                </ns2:ExtrinsicObject>
+                <ns2:RegistryPackage id="urn:uuid:{{uuid4}}">
+                    <ns2:Slot name="submissionTime">
+                        <ns2:ValueList>
+                            <ns2:Value>20230110085959</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                    <ns2:Classification classificationScheme="urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d" classifiedObject="urn:uuid:{{uuid4}}" id="urn:uuid:{{$guid}}">
+                        <ns2:Slot name="authorPerson">
+                            <ns2:ValueList>
+                                <ns2:Value>^---</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                        <ns2:Slot name="authorRole">
+                            <ns2:ValueList>
+                                <ns2:Value>HCP^^^&amp;2.16.756.5.30.1.127.3.10.6&amp;ISO</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                    </ns2:Classification>
+                    <ns2:Classification classificationScheme="urn:uuid:aa543740-bdda-424e-8c96-df4873be8500" classifiedObject="urn:uuid:{{uuid4}}" nodeRepresentation="71388002" id="urn:uuid:b7297bae-95a7-43ee-8842-953898b11407">
+                        <ns2:Slot name="codingScheme">
+                            <ns2:ValueList>
+                                <ns2:Value>2.16.840.1.113883.6.96</ns2:Value>
+                            </ns2:ValueList>
+                        </ns2:Slot>
+                        <ns2:Name>
+                            <ns2:LocalizedString xml:lang="en" charset="UTF-8" value="Procedure (procedure)" />
+                        </ns2:Name>
+                    </ns2:Classification>
+                    <ns2:ExternalIdentifier registryObject="urn:uuid:{{uuid4}}" identificationScheme="urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446" value="100001177^^^&amp;2.16.756.5.30.1.177.2.2.1.1&amp;ISO" id="urn:uuid:0e82f039-a757-47f7-8938-fc2effc1d42c">
+                        <ns2:Name>
+                            <ns2:LocalizedString value="XDSSubmissionSet.patientId" />
+                        </ns2:Name>
+                    </ns2:ExternalIdentifier>
+                    <ns2:ExternalIdentifier registryObject="urn:uuid:{{uuid4}}" identificationScheme="urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8" value="2.25.{{uniqueId}}" id="urn:uuid:6d15d06a-ce3d-4121-a079-08b50e412b83">
+                        <ns2:Name>
+                            <ns2:LocalizedString value="XDSSubmissionSet.uniqueId" />
+                        </ns2:Name>
+                    </ns2:ExternalIdentifier>
+                    <ns2:ExternalIdentifier registryObject="urn:uuid:{{uuid4}}" identificationScheme="urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832" value="2.16.756.5.30.1.145.20.1" id="urn:uuid:24a67372-23be-4a2e-91b4-2000560235f0">
+                        <ns2:Name>
+                            <ns2:LocalizedString value="XDSSubmissionSet.sourceId" />
+                        </ns2:Name>
+                    </ns2:ExternalIdentifier>
+                </ns2:RegistryPackage>
+                <ns2:Classification classifiedObject="urn:uuid:{{uuid4}}" classificationNode="urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd" id="urn:uuid:49664fc7-ccd7-4a69-a7e3-ed288c75e54d" />
+                <ns2:Association associationType="urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember" sourceObject="urn:uuid:{{uuid4}}" targetObject="urn:uuid:{{uuid}}" id="urn:uuid:{{uuid2}}">
+                    <ns2:Slot name="SubmissionSetStatus">
+                        <ns2:ValueList>
+                            <ns2:Value>Original</ns2:Value>
+                        </ns2:ValueList>
+                    </ns2:Slot>
+                </ns2:Association>
+            </ns2:RegistryObjectList>
+        </ns5:SubmitObjectsRequest>
+<ns4:Document id="urn:uuid:{{uuid}}"><xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include" href="cid:e57f250b-5f63-43c3-b294-f9be589aca16-1@urn%3Aihe%3Aiti%3Axds-b%3A2007"/></ns4:Document></ns4:ProvideAndRegisterDocumentSetRequest></soap:Body></soap:Envelope>
+--uuid:71766996-d9d7-484d-868d-8658c0c85d9a
+Content-Type: application/fhir+json
+Content-Transfer-Encoding: binary
+Content-ID: <e57f250b-5f63-43c3-b294-f9be589aca16-1@urn:ihe:iti:xds-b:2007>
+
+{
+    "resourceType": "Bundle",
+    "id": "Bundle-0001",
+    "meta": {
+        "profile": [
+            "http://fhir.ch/ig/ch-vacd/StructureDefinition/ch-vacd-document-immunization-administration|5.0.0"
+        ]
+    },
+    "identifier": {
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:446d5144-864f-49ab-8259-1419d7988fe9"
+    },
+    "type": "document",
+    "timestamp": "2024-12-26T14:39:23.466+01:00",
+    "entry": [
+        {
+            "fullUrl": "https://www.e-health-suisse.ch/Composition/Composition-0001",
+            "resource": {
+                "resourceType": "Composition",
+                "id": "Composition-0001",
+                "language": "en-US",
+                "identifier": {
+                    "system": "urn:ietf:rfc:3986",
+                    "value": "urn:uuid:82d12cf7-b7ca-463a-b167-a94003c87bdc"
+                },
+                "status": "final",
+                "type": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "41000179103",
+                            "display": "Immunization record"
+                        }
+                    ]
+                },
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "urn:oid:2.16.756.5.30.1.127.3.10.10",
+                                "code": "urn:che:epr:ch-vacd:immunization-administration:2022"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "Patient/Patient-0001"
+                },
+                "date": "2024-12-26T14:39:23+01:00",
+                "author": [
+                    {
+                        "reference": "Patient/Patient-0001"
+                    }
+                ],
+                "title": "Immunization Administration",
+                "confidentiality": "N",
+                "_confidentiality": {
+                    "extension": [
+                        {
+                            "url": "http://fhir.ch/ig/ch-core/StructureDefinition/ch-ext-epr-confidentialitycode",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://snomed.info/sct",
+                                        "code": "17621005",
+                                        "display": "Normal"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "section": [
+                    {
+                        "id": "administration",
+                        "title": "Immunization Administration",
+                        "code": {
+                            "coding": [
+                                {
+                                    "system": "http://loinc.org",
+                                    "code": "11369-6",
+                                    "display": "Hx of Immunization"
+                                }
+                            ]
+                        },
+                        "text": {
+                            "status": "generated",
+                            "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">empty</div>"
+                        },
+                        "entry": [
+                            {
+                                "reference": "Immunization/Immunization-0001"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://www.e-health-suisse.ch/Patient/Patient-0001",
+            "resource": {
+                "resourceType": "Patient",
+                "id": "Patient-0001",
+                "identifier": [
+                    {
+                        "system": "urn:oid:2.16.756.5.30.1.127.3.10.3",
+                        "value": "761337614242240684"
+                    }
+                ],
+                "active": true,
+                "name": [
+                    {
+                        "family": "ZELLER-ROBERT-NICOUD",
+                        "given": [
+                            "Romain Théophile"
+                        ]
+                    }
+                ],
+                "gender": "female",
+                "birthDate": "1984-08-03"
+            }
+        },
+        {
+            "fullUrl": "https://www.e-health-suisse.ch/PractitionerRole/PractitionerRole-0001",
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "PractitionerRole-0001",
+                "practitioner": {
+                    "reference": "Practitioner/Practitioner-0001"
+                },
+                "organization": {
+                    "reference": "Organization/Organization-0001"
+                }
+            }
+        },
+        {
+            "fullUrl": "https://www.e-health-suisse.ch/Practitioner/Practitioner-0001",
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "Practitioner-0001",
+                "name": [
+                    {
+                        "family": "Test",
+                        "given": [
+                            "John"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://www.e-health-suisse.ch/Organization/Organization-0001",
+            "resource": {
+                "resourceType": "Organization",
+                "id": "Organization-0001",
+                "name": "Pharmacy"
+            }
+        },
+        {
+            "fullUrl": "https://www.e-health-suisse.ch/Immunization/Immunization-0001",
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "Immunization-0001",
+                "identifier": [
+                    {
+                        "system": "urn:ietf:rfc:3986",
+                        "value": "urn:uuid:d19e8827-3f9c-4802-8a54-f232eaf3d53e"
+                    }
+                ],
+                "status": "completed",
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://fhir.ch/ig/ch-vacd/CodeSystem/ch-vacd-swissmedic-cs",
+                            "code": "450",
+                            "display": "FSME-Immun CC"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/Patient-0001"
+                },
+                "occurrenceDateTime": "2024-06-16T00:00:00+02:00",
+                "lotNumber": "-",
+                "performer": [
+                    {
+                        "actor": {
+                            "reference": "PractitionerRole/PractitionerRole-0001"
+                        }
+                    }
+                ],
+                "protocolApplied": [
+                    {
+                        "targetDisease": [
+                            {
+                                "coding": [
+                                    {
+                                        "system": "http://snomed.info/sct",
+                                        "code": "712986001",
+                                        "display": "Tickborne encephalitis"
+                                    }
+                                ]
+                            }
+                        ],
+                        "doseNumberPositiveInt": 1
+                    }
+                ]
+            }
+        }
+    ]
+}
+--uuid:71766996-d9d7-484d-868d-8658c0c85d9a--
