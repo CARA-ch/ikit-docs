@@ -1,3 +1,23 @@
+## Version 2.0.16 - 11/11/2026
+
+- Fix the schema validation of Get-X-User-Assertion requests.
+- Improve caching of the HTML index page, to avoid issues after a new deployment.
+- Improve the dark theme.
+- Ignore more garbage traffic on the syslog socket (other protocols, scanners, exploits), and close the connection
+  after receiving garbage (#177).
+- Add a binary viewer for the request and response bodies, to inspect their bytes (e.g. charset issues). Press 'b' on
+  the 'Request' or 'Response' tab to toggle it (#180).
+- Fix the 'Download original message' links, which re-encoded the message instead of returning the original bytes.
+- Add support for the 'UNDEFINED' result status in the EVSClient validator (#169).
+
+## Version 2.0.15 - 26/10/2026
+
+- Display the changelog in the Settings tab.
+- Fix the splitter scrolling away with the transaction details (#176).
+- Add a 'Known' value to the client search filter, matching all transactions associated to a client (#178).
+- Add a setting to persist and restore the 'client' search filter, enabled by default (#179).
+- Update to IPF 6.0.0, Spring Boot 4.1 and Camel 4.22.
+
 ## Version 2.0.14 - 23/09/2026
 
 - Store the request even if an exception happens before the first store attempt, to avoid losing the request and its
